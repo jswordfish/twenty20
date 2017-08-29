@@ -20,7 +20,7 @@ import com.twenty20.domain.User;
 @Path("/userService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class UserService {
+public class UserWebService {
 	@Autowired
 	com.twenty20.services.UserService userService;
 	

@@ -35,7 +35,7 @@ public class User extends Base{
 	//@Email
 	String email;
 	
-	Boolean validated;
+	Boolean validated = false;
 	
 	@Enumerated(EnumType.STRING)
 	UserType userType = UserType.SUPPLIER;

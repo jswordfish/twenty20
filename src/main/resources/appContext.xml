@@ -89,14 +89,15 @@
     <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
     
     
-    <bean id="companyService" class="com.twenty20.webservices.CompanyService" />
-    <bean id="userService" class="com.twenty20.webservices.UserService" />
-    
+    <bean id="companyWebService" class="com.twenty20.webservices.CompanyWebService" />
+    <bean id="userWebService" class="com.twenty20.webservices.UserWebService" />
+    <bean id="rebateWebService" class="com.twenty20.webservices.RebateWebService" />
     
     <jaxrs:server id="twenty20Sys" address="/rest/">
 		<jaxrs:serviceBeans>
-			<ref bean="companyService" />
-			<ref bean="userService" />
+			<ref bean="companyWebService" />
+			<ref bean="userWebService" />
+			<ref bean="rebateWebService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jsonProvider" />

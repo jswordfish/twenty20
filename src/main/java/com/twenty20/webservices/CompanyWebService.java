@@ -14,12 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.twenty20.common.Twenty20Exception;
 import com.twenty20.domain.Company;
-import com.twenty20.domain.User;
 
 @Path("/companyService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class CompanyService {
+public class CompanyWebService {
 
 	@Autowired
 	com.twenty20.services.CompanyService companyService;
