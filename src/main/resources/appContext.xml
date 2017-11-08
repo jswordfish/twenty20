@@ -21,7 +21,7 @@
         default-lazy-init="true" >
 
 <bean id="confUtil" class="com.twenty20.util.ConfUtil">
-	<property name="documentsLocation" value="D:\codebase\twenty20\images"></property>
+	<property name="documentsLocation" value="C:\codebase\twenty20\images"></property>
 	<property name="documentsServerBaseUrl" value="http://localhost/hirebuddy/documents/"></property>
 </bean>
 
@@ -89,14 +89,20 @@
     <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
     
     
-<!--     <jaxrs:server id="twenty20Sys" address="/rest/"> -->
-<!-- 		<jaxrs:serviceBeans> -->
-			
-<!-- 		</jaxrs:serviceBeans> -->
-<!-- 		<jaxrs:providers> -->
-<!-- 			<ref bean="jsonProvider" /> -->
-<!-- 		</jaxrs:providers> -->
-<!-- 	</jaxrs:server> -->
+    <bean id="companyWebService" class="com.twenty20.webservices.CompanyWebService" />
+    <bean id="userWebService" class="com.twenty20.webservices.UserWebService" />
+    <bean id="rebateWebService" class="com.twenty20.webservices.RebateWebService" />
+    
+    <jaxrs:server id="twenty20Sys" address="/rest/">
+		<jaxrs:serviceBeans>
+			<ref bean="companyWebService" />
+			<ref bean="userWebService" />
+			<ref bean="rebateWebService" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean="jsonProvider" />
+		</jaxrs:providers>
+	</jaxrs:server>
  
 </beans>
  

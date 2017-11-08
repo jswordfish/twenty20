@@ -44,6 +44,17 @@ public class Company extends com.twenty20.domain.Base{
 	@Transient
 	String companyLogoExtension;
 	
+	public Company(){
+		
+	}
+	
+	public Company(String companyName, String companyRegistrationNumber){
+		this.companyName = companyName;
+		this.companyRegistrationNumber = companyRegistrationNumber;
+	}
+	
+	
+	
 	public String getCompanyLogoExtension() {
 		return companyLogoExtension;
 	}
