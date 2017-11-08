@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+<h:body>
+    <h:form> 
+	<rich:tabPanel id="myTabPanel" switchType="ajax" activeItem="#{tabtest.displayTab}">
+	
+	
+		  <rich:tab name="TAB 1" >
+		  	
+		      <ui:include src="/index.xhtml">
+			 <ui:param name="dataModel" value="#{companiesManager}" />
+		      </ui:include>
+		  </rich:tab>
+		  <rich:tab name="TAB 2" >
+		     ttt
+		     
+		  </rich:tab>
+		  <rich:tab name="TAB 3">
+		  444
+		    
+		  </rich:tab>
+		  <rich:tab name="TAB 4">
+		  ggg
+		     
+		  </rich:tab>
+	</rich:tabPanel>
+</h:form> 
+</h:body>
+</ui:composition>

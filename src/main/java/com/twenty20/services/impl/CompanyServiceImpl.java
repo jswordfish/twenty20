@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManager;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -21,14 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
-import com.google.api.services.sqladmin.model.User;
-import com.thoughtworks.xstream.mapper.Mapper;
 import com.twenty20.common.Twenty20Exception;
 import com.twenty20.dao.CompanyDao;
 import com.twenty20.dao.JPADAO;
 import com.twenty20.domain.Company;
 import com.twenty20.services.CompanyService;
 import com.twenty20.util.ConfUtil;
+
 
 @Service("companyService")
 @org.springframework.transaction.annotation.Transactional(propagation= Propagation.REQUIRED, rollbackFor=Twenty20Exception.class)

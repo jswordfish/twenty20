@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	
+<h:head>
+	<title>DataTable tag Example</title>
+</h:head>
+
+
+
+<h:body>  
+<h:form id="form" class="form-horizontal" enctype="multipart/form-data">  
+
+<hr/>  
+
+<div class="form-group">  
+	<h:outputLabel for="companyName" class="control-label col-sm-4">Company Name</h:outputLabel>  
+	<div class="col-sm-4">  
+		<h:inputText id="name-id" value="#{companiesManager.companyName}" class="form-control"   pt:required="required"
+		validatorMessage="Company name is required">  
+		<f:validateRequired />  
+		</h:inputText>  
+	</div>  
+</div>  
+<div class="form-group">  
+	<h:outputLabel for="registrationNo" class="control-label col-sm-4">Registration Number</h:outputLabel>  
+		<div class="col-sm-4">  
+			<h:inputText id="registrationNo-id" value="#{companiesManager.companyRegistrationNumber}" class="form-control"  pt:required="required" 
+			validatorMessage="Registration No is required">  
+			
+			</h:inputText>  
+		</div>  
+</div>  
+
+<div class="form-group">  
+<h:outputLabel for="logo" class="control-label col-sm-4">Upload Company Logo</h:outputLabel>  
+	<div class="col-sm-4">  
+		<p:fileUpload mode="simple" value="#{companiesManager.uploadedFile}"  />
+		<p:commandButton value="Upload" action="#{companiesManager.upload}" ajax="false" />
+		
+	
+		<c:if test="${companiesManager.uploadedFile != null}">  
+			(File Attached - "${companiesManager.uploadedFile.fileName}")
+		</c:if>
+	
+	</div>  
+</div>  
+
+<div class="form-group">  
+	<h:outputLabel for="cons" class="control-label col-sm-4">Type of Construction Work Undertaken</h:outputLabel>  
+		<div class="col-sm-4">  
+			<h:inputText id="cons-id" value="#{companiesManager.typeOConstrunctionWorkUndertaken}" class="form-control">  
+			
+			</h:inputText>  
+		</div>  
+</div>
+
+<div class="form-group">  
+	<h:outputLabel for="nop" class="control-label col-sm-4">No of Projects Under Construction
+	</h:outputLabel>  
+		<div class="col-sm-4">  
+			<h:inputText id="nop-id" value="#{companiesManager.numberOfPRojectsUnderConstruction}" class="form-control" pt:type="number" p:title="Enter a number" pt:required="required">  
+				
+			</h:inputText>  
+		</div>  
+</div>
+
+<div class="form-group">  
+	Select Org Type
+		<div class="col-sm-4">  
+			<h:selectOneRadio value="#{companiesManager.orgType}" validatorMessage="Org Type is required" pt:required="required">  
+				<f:selectItem itemValue="COMPANY_LIMITED_BY_SHARES" itemLabel="Company limited by Shares" />  
+				<f:selectItem itemValue="CORPORATION" itemLabel="Corporation" />
+				<f:selectItem itemValue="LIMITED_LIABILITY_PARTNERSHIP" itemLabel="Limited Liability Partnership" />  
+			 
+			
+			</h:selectOneRadio>  
+		</div>  
+</div>  
+
+<div class="form-group">  
+
+	<div class="col-sm-4">  
+		<div class="col-sm-2">  
+		<h:commandButton value="Save" action="#{companiesManager.addCompany()}" class="btn btn-success"   
+		style="width: 80px;"></h:commandButton>  
+		</div>  
+		<div class="col-sm-1">  
+		</div>  
+		<div class="col-sm-2">  
+		
+		</div>  
+	</div>  
+</div>  
+</h:form>  
+</h:body>  
+</html>  
