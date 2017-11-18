@@ -1,0 +1,77 @@
+.fontClass	{
+	text-align:left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	}
+
+.underConstruction{
+	text-align:left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	}
+	
+.bitBold{
+	text-align:left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	}
+	
+.nav-tabs > li.active > a {
+	  
+	  font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	background-color:cadetblue;
+	}
+.nav-tabs > li > a {
+	  font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	
+	}
+	
+
+	
+.headerStyle	{
+	text-align:left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	margin-top: 0;
+	margin-bottom: 0;
+	}
+	
+.general{
+	text-align:left;
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	margin-left: 20px;
+	font-weight: normal;
+	}
+	
+
+	
+.form-control{
+	text-align:left;
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	margin-left: 20px;
+	margin-right: 20px;
+	font-weight: normal;
+	size:40;
+	}
+	
+.nav-tabs > li.rounded > a:active,
+.nav-tabs > li.rounded > a:hover,
+.nav-tabs > li.rounded > a:focus  {
+    background-color:cadetblue;
+    font-weight:bolder;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+}	
+
+

@@ -1,7 +1,5 @@
 package com.twenty20.services.impl;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,27 +13,26 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import org.apache.commons.io.FileUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
 import com.twenty20.common.Twenty20Exception;
-import com.twenty20.dao.CompanyDao;
 import com.twenty20.dao.JPADAO;
+import com.twenty20.dao.ProjectDao;
 import com.twenty20.dao.ProjectSubTypeDao;
 import com.twenty20.domain.Company;
+import com.twenty20.domain.Project;
 import com.twenty20.domain.ProjectSubType;
-import com.twenty20.domain.Rebate;
+import com.twenty20.services.ProjectService;
 import com.twenty20.services.ProjectSubTypeService;
 import com.twenty20.util.ConfUtil;
-
-@Service("projectSubTypeService")
+@Service("projectService")
 @org.springframework.transaction.annotation.Transactional(propagation= Propagation.REQUIRED, rollbackFor=Twenty20Exception.class)
-public class ProjectSubTypeServiceImpl extends BaseServiceImpl<Long, ProjectSubType> implements ProjectSubTypeService{
+public class ProjectServiceImpl extends BaseServiceImpl<Long, Project> implements ProjectService{
 	@Autowired
-    protected ProjectSubTypeDao dao;
+    protected ProjectDao dao;
 	
 //	ValidatorFactor
 	@Autowired
@@ -58,39 +55,53 @@ public class ProjectSubTypeServiceImpl extends BaseServiceImpl<Long, ProjectSubT
     	dao.setEntityManager(entityManager);
     }
 
+	
+
 	@Override
-	public void saveOrUpdate(ProjectSubType projectSubType) throws Twenty20Exception {
+	public void saveOrUpdate(Project project) throws Twenty20Exception {
 		// TODO Auto-generated method stub
-		if(projectSubType.getProjecttype() == null){
-			throw new Twenty20Exception("CAN_NOT_BE_NULL");
-		}
+		Set<ConstraintViolation<Project>> violations = validator.validate(project);
+		if(violations.size() > 0){
+			throw new Twenty20Exception("MISSING_MANDATORY_PARAMS");
+		}	
 		
-		ProjectSubType projectSubType2 = getProjectSubType(projectSubType.getProjecttype());
-			if(projectSubType2 == null){
-				dao.persist(projectSubType);
+		Project project2 = getProject(project.getProjectName(), project.getBuyer());
+			if(project2 == null){
+				//create
+				dao.persist(project);
 			}
 			else{
-				projectSubType.setId(projectSubType2.getId());
-				projectSubType2.setSubTypes(projectSubType.getSubTypes());
-				dao.merge(projectSubType2);
+				//update
+				project.setId(project2.getId());
+				org.dozer.Mapper mapper = new DozerBeanMapper();
+				mapper.map(project, project2);
+				dao.merge(project2);
 			}
 	}
 
 	@Override
-	public ProjectSubType getProjectSubType(String project) throws Twenty20Exception {
+	public Project getProject(String projectName, String buyer)
+			throws Twenty20Exception {
+		//Company.getUniqueCompany
 		Map<String, String> queryParams = new HashMap<String, String>();
-		queryParams.put("projecttype", project.toUpperCase());
+		queryParams.put("projectName", projectName);
+		queryParams.put("buyer", buyer);
 		
-		List<ProjectSubType> subTypes = findByNamedQueryAndNamedParams(
-				"ProjectSubType.getProjectSubType", queryParams);
-		if(subTypes.size() > 1){
-			throw new Twenty20Exception("MULTIPLE_Project_SubTypes_With_SAME_IDENTITY");
+		List<Project> projects = findByNamedQueryAndNamedParams(
+				"Project.getProject", queryParams);
+		if(projects.size() > 1){
+			throw new Twenty20Exception("TOO_MANY_PROJECTS_BY_SAME_NAME");
 		}
-		
-		if(subTypes.size() == 0){
+		if(projects.size() == 0){
 			return null;
 		}
-		return subTypes.get(0);
+		return projects.get(0);
+	}
+
+	@Override
+	public void remove(long id) throws Twenty20Exception {
+		// TODO Auto-generated method stub
+		super.delete(id);
 	}
 
 	

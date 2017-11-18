@@ -3,7 +3,7 @@ package com.twenty20.domain;
 public enum ProjectType {
 	
 	RESIDENTIAL("RESIDENTIAL"), COMMERCIAL("COMMERCIAL"), INFRASTRUCTURE("INFRASTRUCTURE");
-	String type;
+	public String type;
 	
 	private ProjectType(String type){
 		this.type = type;

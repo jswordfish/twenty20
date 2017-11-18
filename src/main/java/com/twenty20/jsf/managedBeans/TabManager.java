@@ -7,7 +7,7 @@ import javax.faces.event.ActionEvent;
 @ManagedBean(name="tabtest")
 @SessionScoped 
 public class TabManager {
-	String displayTab = "TAB 1";
+	String displayTab = "Companies";
 
 	public String getDisplayTab() {
 		return displayTab;

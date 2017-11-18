@@ -80,11 +80,14 @@ public class CompanyManager  {
 	}
 	
 	public void upload() {
-	    String fileName = uploadedFile.getFileName();
-	    String contentType = uploadedFile.getContentType();
-	    byte[] contents = uploadedFile.getContents(); // Or getInputStream()
-	    setLogo(contents);
-	    setCompanyLogoExt(fileName.substring(fileName.lastIndexOf("."), fileName.length()));
+		if(uploadedFile != null){
+			String fileName = uploadedFile.getFileName();
+		    String contentType = uploadedFile.getContentType();
+		    byte[] contents = uploadedFile.getContents(); // Or getInputStream()
+		    setLogo(contents);
+		    setCompanyLogoExt(fileName.substring(fileName.lastIndexOf("."), fileName.length()));
+		}
+	    
 	    // ... Save it, now!
 	}
 

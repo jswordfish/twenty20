@@ -26,10 +26,11 @@ public class User extends Base{
 	@NotNull
 	String lastName;
 	
-	@Size(min=8, max=20)
+	@NotNull
+	@Size(min=4, max=40)
 	String userName;
 	
-	@Size(min=8, max=20)
+	@Size(min=4, max=30)
 	String password;
 	
 	//@Email

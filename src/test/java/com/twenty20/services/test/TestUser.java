@@ -29,12 +29,12 @@ public class TestUser {
 	@Rollback(value=false)
 	public void testUser() throws Exception{
 		User user = new User();
-		user.setFirstName("jatin");
-		user.setLastName("sutaria");
-		user.setUserName("jswordfish");
-		user.setPassword("asdfgfaq");
-		user.setEmail("test@test.com");
-		user.setUserType(UserType.SUPPLIER);
+		user.setFirstName("Mike");
+		user.setLastName("Glover");
+		user.setUserName("mglover");
+		user.setPassword("secret");
+		user.setEmail("mglover@twenty20.com");
+		user.setUserType(UserType.BUYER);
 		UserForgotQuestions userForgotQuestions = new UserForgotQuestions();
 		userForgotQuestions.setQuestionChosen("question2");
 		userForgotQuestions.setAnswer("Nilesh");

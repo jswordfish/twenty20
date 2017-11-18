@@ -65,6 +65,9 @@ public class UserServiceImpl extends BaseServiceImpl<Long, User> implements User
 	public void saveOrUpdate(User user) throws Twenty20Exception {
 		// TODO Auto-generated method stub
 		Company company = companyService.getUniqueCompany(user.getCompany().getCompanyName(), user.getCompany().getCompanyRegistrationNumber());
+			if(company == null){
+				throw new Twenty20Exception("NO_COMPANY_EXISTS");
+			}
 		user.setCompany(company);
 		
 		Set<ConstraintViolation<User>> violations = validator.validate(user);
