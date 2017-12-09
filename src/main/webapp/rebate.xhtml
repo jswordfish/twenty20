@@ -1,0 +1,261 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <title>"#{rebateManager.title}"</title>
+    <style type="text/css">
+        .col-xs-updated {        
+            width: 92% !important;
+        }
+	
+	
+	.indivcheckbox .ui-chkbox-icon {
+	   background-position-x: -66px;
+    background-position-y: -147px;
+	}
+
+	.indivcheckbox .ui-icon-check {
+	    text-align:left;
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	margin-left: 80px;
+	font-weight: normal;
+	}
+	
+    </style>
+</h:head>
+
+
+
+<h:body>  
+ 
+ <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand" style="bitBold">
+		
+		<h:outputText id="displayTitle" value="#{rebateManager.title}" />
+	    
+	    </div>
+        </div>
+	<b><hr/> </b>
+       
+		<h:form id="rebateForm" class="form-horizontal"  >  
+
+			<fieldset>
+    
+    <div class='row'>
+	        <div class='col-sm-10'>    
+	            <div class='form-group'>
+	                <h:outputLabel for="projectName-id"  styleClass="general" >Rebate Name</h:outputLabel>  
+	                <h:inputText id="projectName-id" value="#{rebateManager.rebate.rebateName}"  styleClass="general"  pt:required="required"  >  
+						
+						</h:inputText>
+	            </div>
+	        </div>
+			
+     </div>
+     <div class='row'>
+     
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="supplier-id"  styleClass="general" >Supplier</h:outputLabel>  
+                <h:inputText id="supplier-id" value="#{rebateManager.rebate.supplier}" disabled="true" class="form-control" styleClass="general" >  
+					
+					</h:inputText> 
+            </div>
+        </div>
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="buyerCompany-id"  styleClass="general" >Company</h:outputLabel>  
+                <h:inputText id="buyerCompany-id" value="#{rebateManager.rebate.company}" disabled="true" class="form-control" styleClass="general" >  
+					
+		</h:inputText>  
+            </div>
+        </div>
+	
+    </div>
+    
+   
+	
+	<div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="rebateOpenDate"  styleClass="general" >Select Rebate Open Date</h:outputLabel>  
+				
+				<input type="date" id="rebateOpenDate" a:value="#{rebateManager.fromDate}"  class="general" required="true" />
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+		    <div class='form-group'>
+			<h:outputLabel for="requestCloseDate"  styleClass="general" >Select Rebate Close Date</h:outputLabel>  
+					
+					<input type="date" id="requestCloseDate" a:value="#{rebateManager.toDate}"  class="general" required="true" />
+					
+		    </div>
+		</div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-10'>
+            <div class='form-group'>
+                <h:outputLabel for="rebateReference"  styleClass="general" >Rebate Reference</h:outputLabel>  
+				
+				<h:inputTextarea id="rebateReference" value="#{rebateManager.rebate.rebateReference}" class="form-control" styleClass="general"  pt:required="required" rows="8"/>
+				
+            </div>
+        </div>
+        
+		
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+		
+                <h:outputLabel for="baseOfferSalesValue"  styleClass="general" >Base Offer Threshold Amount (INR)</h:outputLabel>  
+				
+				<h:inputText id="baseOfferSalesValue-id" value="#{rebateManager.rebate.baseOfferSalesValue}"  class="form-control" styleClass="general" pt:type="number" pt:required="required">  
+					<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+				</h:inputText>
+				
+		
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="baseOfferRebateOfferInPercent"  styleClass="general" >Rebate Percent for Base Offer</h:outputLabel>  
+				
+				<h:inputText id="baseOfferRebateOfferInPercent-id" value="#{rebateManager.rebate.baseOfferRebateOfferInPercent}" class="form-control" styleClass="general" pt:type="number" pt:required="required"/>  
+				
+				
+            </div>
+        </div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+		
+                <h:outputLabel for="tier1OfferSalesValue"  styleClass="general" >Tier 1 Offer Threshold Amount (INR)</h:outputLabel>  
+				
+				<h:inputText id="tier1OfferSalesValue-id" value="#{rebateManager.rebate.tier1OfferSalesValue}"  class="form-control" styleClass="general" pt:type="number" pt:required="required">  
+					<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+				</h:inputText>
+				 
+				
+		
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="tier1OfferRebateOfferInPercent"  styleClass="general" >Rebate Percentage for Tier 1</h:outputLabel>  
+				
+				<h:inputText id="tier1OfferRebateOfferInPercent-id" value="#{rebateManager.rebate.tier1OfferRebateOfferInPercent}"  class="form-control" styleClass="general" pt:type="number" pt:required="required"/>  
+				
+				
+            </div>
+        </div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+		
+                <h:outputLabel for="tier2OfferSalesValue"  styleClass="general" >Tier 2 Offer Threshold Amount (INR)</h:outputLabel>  
+				
+				<h:inputText id="tier2OfferSalesValue-id" value="#{rebateManager.rebate.tier2OfferSalesValue}"  class="form-control" styleClass="general" pt:type="number" pt:required="required">  
+					<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+				</h:inputText>
+				  
+				
+		
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="tier2OfferRebateOfferInPercent"  styleClass="general" >Rebate Percentage for Tier 2</h:outputLabel>  
+				
+				<h:inputText id="tier2OfferRebateOfferInPercent-id" value="#{rebateManager.rebate.tier2OfferRebateOfferInPercent}"  class="form-control" styleClass="general" pt:type="number" pt:required="required"/>  
+				
+				
+            </div>
+        </div>
+	
+    </div>
+    
+   <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+		
+                <h:outputLabel for="tier3OfferSalesValue"  styleClass="general" >Tier 3 Offer Threshold Amount (INR)</h:outputLabel>  
+				
+				<h:inputText id="tier3OfferSalesValue-id" value="#{rebateManager.rebate.tier3OfferSalesValue}"  class="form-control" styleClass="general"  pt:type="number"   pt:required="required">  
+					<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+				</h:inputText>
+				  
+				
+		
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="tier3OfferRebateOfferInPercent"  styleClass="general" >Rebate Percentage for Tier 3</h:outputLabel>  
+				
+				<h:inputText id="tier3OfferRebateOfferInPercent-id" value="#{rebateManager.rebate.tier3OfferRebateOfferInPercent}"  class="form-control" styleClass="general" pt:type="number" pt:required="required"/>  
+				
+				
+            </div>
+        </div>
+	
+    </div>
+			
+	<div class='row'>
+		<div class='col-sm-5'>    
+		 	<h:commandButton id="saveRequest" value="Save" action="#{rebateManager.saveOrUpdate()}" class="btn btn-success col-sm-7" style="width:100px;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:commandButton>  
+					
+		</div>
+		<div class='col-sm-5'>    
+		    	<h:button value="Go Back"  outcome="supplierTabs"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:button>  
+					
+		</div>
+        </div>
+    
+</fieldset>
+
+			
+		</h:form>	
+	     
+	<b><hr/> </b>
+</div>	
+  
+</h:body>  
+</html>  

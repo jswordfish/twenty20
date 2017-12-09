@@ -1,0 +1,387 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <title>"#{requestManager.title}"</title>
+    <style type="text/css">
+        .col-xs-updated {        
+            width: 92% !important;
+        }
+	
+	
+	.indivcheckbox .ui-chkbox-icon {
+	   background-position-x: -66px;
+    background-position-y: -147px;
+	}
+
+	.indivcheckbox .ui-icon-check {
+	    text-align:left;
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	margin-left: 80px;
+	font-weight: normal;
+	}
+	
+	.table-light thead > tr > th {
+	    border-bottom: none;
+	}
+
+	
+    </style>
+</h:head>
+
+
+
+<h:body>  
+ 
+ <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand" style="bitBold">
+		
+		<h:outputText id="displayTitle" value="#{requestManager.title}" />
+	    
+	    </div>
+        </div>
+	<b><hr/> </b>
+       
+		<h:form id="requestForm" class="form-horizontal" enctype="multipart/form-data" >  
+
+			<fieldset>
+    
+    <div class='row'>
+	        <div class='col-sm-5'>    
+	            <div class='form-group'>
+	                <h:outputLabel for="projectName-id"  styleClass="general" >Request Name</h:outputLabel>  
+	                <h:inputText id="projectName-id" value="#{requestManager.request.requestName}" class="form-control" styleClass="general"  pt:required="required"
+						validatorMessage="Request name is required">  
+						<f:validateRequired />  
+						</h:inputText>
+	            </div>
+	        </div>
+			<div class='col-sm-5'>    
+	           
+		            <div class='form-group'>
+		                <h:outputLabel for="rType"  styleClass="general">Select Request Type </h:outputLabel>
+						
+							<h:selectOneMenu id="rType" value="#{requestManager.request.requestType}" styleClass="general" >  
+									<f:selectItem itemValue="Cement" itemLabel="Cement" />  
+									<f:selectItem itemValue="Stone Chips" itemLabel="Stone Chips" />
+									<f:selectItem itemValue="Sand" itemLabel="Sand"  /> 
+									<f:selectItem itemValue="Ready Mix" itemLabel="Ready Mix"  /> 
+									<f:selectItem itemValue="Steel ReBar" itemLabel="Steel ReBar"  /> 
+									<f:selectItem itemValue="Formwork" itemLabel="Formwork"  /> 
+									<f:selectItem itemValue="Others" itemLabel="Others"  /> 
+								
+								</h:selectOneMenu>
+						
+		            </div>
+	           
+	       </div>
+     </div>
+     <div class='row'>
+     
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="buyer-id"  styleClass="general" >Buyer</h:outputLabel>  
+                <h:inputText id="buyer-id" value="#{requestManager.request.buyer}" disabled="true" class="form-control" styleClass="general" >  
+					
+					</h:inputText> 
+            </div>
+        </div>
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="buyerCompany-id"  styleClass="general" >Company</h:outputLabel>  
+                <h:inputText id="buyerCompany-id" value="#{requestManager.request.company}" disabled="true" class="form-control" styleClass="general" >  
+					
+		</h:inputText>  
+            </div>
+        </div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>    
+	            
+		            <div class='form-group'>
+		                <h:outputLabel for="pType"  styleClass="general">Select Project Type </h:outputLabel>
+						
+							<h:selectOneMenu id="pType" value="#{requestManager.request.project}" styleClass="general" >  
+									 <f:selectItems value="#{requestManager.projects}"
+								            var="project"
+								            itemValue="#{project}"
+								            itemLabel="#{project}" /> 
+								
+								</h:selectOneMenu>
+						
+		            </div>
+	           
+	       </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="duration-id"  styleClass="general" >Approximate Request Value</h:outputLabel>  
+				  
+				<h:inputText id="duration-id" value="#{requestManager.request.approxValueFixed}"   class="general" >  
+				
+				</h:inputText>
+				
+            </div>
+        </div>
+	
+    </div>
+    
+    
+        
+	<div class='row'>
+		<div class='col-sm-5'>   
+		   	<div class="form-group">  
+				<h:outputLabel for="logo" class="control-label col-sm-5" styleClass="general">Upload Request Specifications File</h:outputLabel>  
+				 
+					<p:fileUpload mode="simple" value="#{requestManager.uploadedFile}"   styleClass="general"/>
+					
+				
+				
+			</div>  
+	    </div>
+	    
+		<div class='col-sm-5'>
+		    <div class='form-group'>
+					<h:outputLabel for="logo" class="control-label col-sm-5" styleClass="general">Click </h:outputLabel>  
+					<p:commandButton value="Upload" action="#{requestManager.upload}" ajax="false"  styleClass="general">
+						
+					</p:commandButton>
+					
+				
+					<!--<c:if test="${requestManager.uploadedFile != null}">  
+						(File Attached - "${requestManager.request.requestSpecificationUrl}")
+					</c:if> -->
+					(File Attached - "${requestManager.request.requestSpecificationUrl}")
+					
+		    </div>
+		</div>
+	</div>
+	
+	
+	<div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="requestOpenDate"  styleClass="general" >Select Request Open Date</h:outputLabel>  
+				
+				<input type="date" id="requestOpenDate" a:value="#{requestManager.requestOpenDate}"  class="general" />
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+		    <div class='form-group'>
+			<h:outputLabel for="requestCloseDate"  styleClass="general" >Select Request Close Date</h:outputLabel>  
+					
+					<input type="date" id="requestCloseDate" a:value="#{requestManager.requestCloseDate}"  class="general" />
+					
+		    </div>
+		</div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="deliveryStartDate"  styleClass="general" >Select Delivery Date</h:outputLabel>  
+				
+				<input type="date" id="deliveryStartDate" a:value="#{requestManager.deliveryStartDate}"  class="general" />
+				
+            </div>
+        </div>
+        
+		
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+		
+                <h:outputLabel for="minimumTurnOverRequired"  styleClass="general" >Is Min Turnover Required?</h:outputLabel>  
+				
+				<h:selectBooleanCheckbox id="minimumTurnOverRequired" value="#{requestManager.request.minimumTurnOverRequired}" styleClass="general" update="minimumTurnOverRequiredText">
+				    <f:ajax listener="#{requestManager.setEnableMinTurnOverTextField}" />
+				</h:selectBooleanCheckbox>
+		
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="minimumTurnOverRequiredText"  styleClass="general" >Min Turnover</h:outputLabel>  
+				
+				<h:inputText id="minimumTurnOverRequiredText" value="#{requestManager.request.minimumTurnOverRequiredText}"   styleClass="general" disabled="#{requestManager.enableMinTurnOverTextField == false}" >  </h:inputText>
+				
+            </div>
+        </div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="referencesRequired"  styleClass="general" >Are References Required?</h:outputLabel>  
+				
+				<h:selectBooleanCheckbox id="referencesRequired" value="#{requestManager.request.referencesRequired}" styleClass="general" update="referencesRequiredText">
+				    <f:ajax listener="#{requestManager.setEnableReferencesRequired}" />
+				</h:selectBooleanCheckbox>
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="referencesRequiredText"  styleClass="general" >References</h:outputLabel>  
+				
+				<h:inputText id="referencesRequiredText" value="#{requestManager.request.referencesRequiredText}"   styleClass="general" disabled="#{requestManager.enableReferencesRequired == false}" >  </h:inputText>
+				
+            </div>
+        </div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="tradeAssociationRequired"  styleClass="general" >Are Trade Associations Required?</h:outputLabel>  
+				
+				<h:selectBooleanCheckbox id="tradeAssociationRequired" value="#{requestManager.request.tradeAssociationRequired}" styleClass="general" update="tradeAssociationRequiredText">
+				    <f:ajax listener="#{requestManager.setEnableTradeAssociationRequired}" />
+				</h:selectBooleanCheckbox>
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="tradeAssociationRequiredText"  styleClass="general" >Trade Associations</h:outputLabel>  
+				
+				<h:inputText id="tradeAssociationRequiredText" value="#{requestManager.request.tradeAssociationRequiredText}"   styleClass="general" disabled="#{requestManager.enableTradeAssociationRequired == false}" >  </h:inputText>
+				
+            </div>
+        </div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="certificateRequired"  styleClass="general" >Are Certificates Or Licenses Required?</h:outputLabel>  
+				
+				<h:selectBooleanCheckbox id="certificateRequired" value="#{requestManager.request.certificateRequired}" styleClass="general" update="certificateRequiredText">
+				    <f:ajax listener="#{requestManager.setEnableCertificateRequired}" />
+				</h:selectBooleanCheckbox>
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="certificateRequiredText"  styleClass="general" >Trade Associations</h:outputLabel>  
+				
+				<h:inputText id="certificateRequiredText" value="#{requestManager.request.certificateRequiredText}"   styleClass="general" disabled="#{requestManager.enableCertificateRequired == false}" >  </h:inputText>
+				
+            </div>
+        </div>
+	
+    </div>
+    
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="insurancesRequired"  styleClass="general" >Is Insured?</h:outputLabel>  
+				
+				<h:selectBooleanCheckbox id="insurancesRequired" value="#{requestManager.request.insurancesRequired}" styleClass="general" update="insurancesRequiredText">
+				    <f:ajax listener="#{requestManager.setEnableInsurancesRequired}" />
+				</h:selectBooleanCheckbox>
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="insurancesRequiredText"  styleClass="general" >Insurance Details</h:outputLabel>  
+				
+				<h:inputText id="insurancesRequiredText" value="#{requestManager.request.insurancesRequiredText}"   styleClass="general" disabled="#{requestManager.enableInsurancesRequired == false}" >  </h:inputText>
+				
+            </div>
+        </div>
+	
+    </div>
+    
+    <b>Request Description </b>
+    <hr></hr>
+	<div class='row'>
+		<h:dataTable id="reqDescsTable"  value="#{requestManager.request.requestDescriptions}" var="desc"   
+			class="table table-light" >  
+			<h:column>  
+				<f:facet name="header">ID</f:facet>  
+				<h:outputText value="#{table.rowIndex + 1}" styleClass="general"/>  
+			</h:column>  
+			<h:column>  
+				<f:facet name="header">Sub Product </f:facet>  
+				<h:inputText value="#{desc.subProduct}" styleClass="general" pt:required="required"/>  
+			</h:column>  
+			<h:column>  
+				<f:facet name="header">Volume Required </f:facet>  
+				<h:inputText value="#{desc.volumeRequired}" styleClass="general" pt:type="number" pt:required="required"/>  
+			</h:column>  
+			<h:column>  
+				<f:facet name="header">Unit </f:facet>  
+				<h:inputText value="#{desc.unit}" styleClass="general" pt:required="required"/>  
+			</h:column>
+			<h:column>  
+				<f:facet name="header">Delete </f:facet>  
+				<h:commandLink  id="delDesc" value="Delete"  action="#{requestManager.deleteRequestDescription(desc)}" styleClass="general" >
+					<f:ajax/>
+				</h:commandLink>
+			</h:column>
+		</h:dataTable>  
+		<h:commandLink  id="addDesc" value="Add Request Description"  action="#{requestManager.addRequestDesc}" styleClass="general">
+					<f:ajax/>
+				</h:commandLink>
+        </div>
+			
+	<div class='row'>
+		<div class='col-sm-5'>    
+		 	<h:commandButton id="saveRequest" value="Save" action="#{requestManager.saveOrUpdate()}" class="btn btn-success col-sm-7" style="width:100px;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:commandButton>  
+					
+		</div>
+		<div class='col-sm-5'>    
+		    	<h:button value="Go Back"  outcome="bootstrapTabs"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:button>  
+					
+		</div>
+        </div>
+    
+</fieldset>
+
+			
+		</h:form>	
+	     
+	<b><hr/> </b>
+</div>	
+  
+</h:body>  
+</html>  

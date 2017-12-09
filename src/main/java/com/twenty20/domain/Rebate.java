@@ -1,5 +1,7 @@
 package com.twenty20.domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,17 +11,18 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Rebate.getRebateUniqueId", 
-			query="SELECT r FROM Rebate r WHERE r.rebateUniqueId=:rebateUniqueId"),
+	@NamedQuery(name="Rebate.getUniqueRebateByNameAndCompany", 
+			query="SELECT r FROM Rebate r WHERE r.rebateName=:rebateName AND r.company=:company AND r.rebateActive=true"),
 	
 	@NamedQuery(name="Rebate.getRebates", 
 	query="SELECT r FROM Rebate r WHERE r.rebateActive=:rebateActive"),
 	
 	@NamedQuery(name="Rebate.getActiveRebatesBySupplierNoAndCompanyNo", 
-	query="SELECT r FROM Rebate r WHERE r.rebateActive=true AND r.suppilierNo=:suppilierNo AND r.company=:company"),
+	query="SELECT r FROM Rebate r WHERE r.rebateActive=true AND r.supplier=:supplier AND r.company=:company"),
 	
 	@NamedQuery(name="Rebate.getActiveRebatesByCompanyNo", 
 	query="SELECT r FROM Rebate r WHERE r.rebateActive=true AND r.company=:company")
@@ -27,12 +30,12 @@ import javax.validation.constraints.NotNull;
 
 public class Rebate extends Base{
 	
-	//@NotNull
+	@NotNull
 	@Column(unique=true)
-	String rebateUniqueId;
+	String rebateName;
 	
 	@NotNull
-	String suppilierNo;
+	String supplier;
 	
 	@NotNull
 	String company;
@@ -40,26 +43,32 @@ public class Rebate extends Base{
 	String rebateReference;
 	
 	@Temporal(TemporalType.DATE)
-	Date rebateValidFrom;
+	Date rebateValidFrom = new Date();
 	
 	@Temporal(TemporalType.DATE)
 	Date rebateValidTo;
 	
-	Double baseOfferSalesValue;
+	@Transient
+	String fromDt;
 	
-	Float baseOfferRebateOfferInPercent;
+	@Transient
+	String toDt;
+	
+	Double baseOfferSalesValue = 0d;
+	
+	Float baseOfferRebateOfferInPercent = 3f;
 	
 	Double tier1OfferSalesValue;
 	
-	Float tier1OfferRebateOfferInPercent;
+	Float tier1OfferRebateOfferInPercent = 5f;
 	
 	Double tier2OfferSalesValue;
 	
-	Float tier2OfferRebateOfferInPercent;
+	Float tier2OfferRebateOfferInPercent = 7f;
 	
 	Double tier3OfferSalesValue;
 	
-	Float tier3OfferRebateOfferInPercent;
+	Float tier3OfferRebateOfferInPercent = 10f;
 	
 	Boolean rebateActive = true;
 	
@@ -72,13 +81,7 @@ public class Rebate extends Base{
 	    this.rebateValidTo = myCal.getTime();
 	}
 	
-	public String getSuppilierNo() {
-		return suppilierNo;
-	}
 
-	public void setSuppilierNo(String suppilierNo) {
-		this.suppilierNo = suppilierNo;
-	}
 
 	public String getCompany() {
 		return company;
@@ -105,6 +108,12 @@ public class Rebate extends Base{
 	}
 
 	public Date getRebateValidTo() {
+		if(rebateValidTo == null) {
+			Calendar myCal = Calendar.getInstance();
+			myCal.setTime(this.rebateValidFrom);    
+			myCal.add(Calendar.MONTH, +1);   
+			rebateValidTo = myCal.getTime();
+		}
 		return rebateValidTo;
 	}
 
@@ -184,15 +193,65 @@ public class Rebate extends Base{
 		this.rebateActive = rebateActive;
 	}
 
-	public String getRebateUniqueId() {
-		return rebateUniqueId;
+
+
+	public String getRebateName() {
+		return rebateName;
 	}
 
-	public void setRebateUniqueId(String rebateUniqueId) {
-		this.rebateUniqueId = rebateUniqueId;
+
+
+	public void setRebateName(String rebateName) {
+		this.rebateName = rebateName;
 	}
-	
-	
+
+
+
+	public String getSupplier() {
+		return supplier;
+	}
+
+
+
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
+	}
+
+
+
+	public String getFromDt() {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		if(getRebateValidFrom() != null){
+			String dt = df.format(getRebateValidFrom());
+			this.fromDt = dt;
+			return dt;
+		}
+		return "";
+	}
+
+
+
+	public void setFromDt(String fromDt) {
+		this.fromDt = fromDt;
+	}
+
+
+
+	public String getToDt() {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		if(getRebateValidTo() != null){
+			String dt = df.format(getRebateValidTo());
+			this.toDt = dt;
+			return dt;
+		}
+		return "";
+	}
+
+
+
+	public void setToDt(String toDt) {
+		this.toDt = toDt;
+	}
 	
 	
 	

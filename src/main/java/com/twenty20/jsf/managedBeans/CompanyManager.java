@@ -51,11 +51,6 @@ public class CompanyManager  {
 	
 	@PostConstruct
     private void init() {
-//        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//        ServletContext servletContext = (ServletContext) externalContext.getContext();
-//    WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).
-//                                   getAutowireCapableBeanFactory().
-//                                   autowireBean(this);
 		companyService = SpringUtil.getService(CompanyService.class);
 		companies = companyService.findAll();
 		System.out.println(companyService);

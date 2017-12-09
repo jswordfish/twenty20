@@ -8,7 +8,7 @@ xmlns:ui="http://java.sun.com/jsf/facelets"
 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 <h:head>  
-<title>Company Details</title>  
+<title>Buyer Area</title>  
 <h:outputStylesheet name="css/bootstrap.min.css"/>  
 
 
@@ -20,14 +20,23 @@ xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 	crossorigin="anonymous"></script>
 	
 <h:outputScript>
-    $(document).ready(function(){ 
-       
-      var bean = { display: "#{projectsManager.source}" };
-      var b = "#{projectsManager.source}";
-	$('#second_tab').trigger('click');
-     
-	
-   });
+  
+   
+    
+        window.onload = function() {
+            if("#{tab.displayTab}"=="Projects"){
+		$('#second_tab').trigger('click');
+	    }
+	    else if("#{tab.displayTab}"=="Requests"){
+		$('#third_tab').trigger('click');
+	    
+	    }
+	    else{
+		$('#first_tab').trigger('click');
+	    }
+	   
+        }
+
 </h:outputScript>
 <style type="text/css">  
 .tab-content{
@@ -36,6 +45,7 @@ xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 </style> 
 
 </h:head>  
+
 <body>
 
  
@@ -50,6 +60,7 @@ xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
      <li class="rounded"><a href="#fifth" data-toggle="tab" id="fifth_tab" >Rebate Management</a></li>
       <li class="rounded"><a href="#sixth" data-toggle="tab" id="sixth_tab" >Meeting Schedules</a></li>
       <li class="rounded"><a href="#seventh" data-toggle="tab" id="seventh_tab" >Notifications (2 New)</a></li>
+    <li class="rounded"><a href="login.xhtml" id="eight_tab" > Log Off</a></li>
 </ul>
 
 <div class="tab-content">
@@ -78,7 +89,13 @@ xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     </div>
 
     <div id="third" class="tab-pane fade in">
-	<span class="underConstruction"> Under Construction</span>
+		 <h:form>
+			<ui:include src="/requests.xhtml">
+					
+				      </ui:include>
+			
+			
+		</h:form>
     </div>
     
     <div id="fourth" class="tab-pane fade in">

@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <link type="text/css" rel="stylesheet" href="css/response.css" />
+    <title>"#{responseManager.responsePageTitle}"</title>
+    <style type="text/css">
+        .col-xs-updated {        
+            width: 92% !important;
+        }
+	
+	
+	.indivcheckbox .ui-chkbox-icon {
+	   background-position-x: -66px;
+    background-position-y: -147px;
+	}
+
+	.indivcheckbox .ui-icon-check {
+	    text-align:left;
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	margin-left: 80px;
+	font-weight: normal;
+	}
+	
+	.table-light thead > tr > th {
+	    border-bottom: none;
+	}
+
+	
+    </style>
+</h:head>
+
+
+
+<h:body>  
+ 
+ <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand" style="bitBold">
+		
+		<h:outputText id="displayTitle" value="#{responseManager.responsePageTitle}" />
+	    
+	    </div>
+        </div>
+	<b><hr/> </b>
+		<h2 class="general"> Request Details </h2>
+		
+		<div class="panel panel-default panel-table">
+		    <div class="panel-heading">
+			<div class="tr">
+			    <div class="td">Basic Request Info</div>
+			    <div class="td">Specifics</div>
+			    <div class="td">Pre-Requisites forSupplier</div>
+			</div>
+		    </div>
+		    <div class="panel-body">
+			<div class="tr">
+			    <div class="td">
+				<table class="table">
+				  
+				  <tbody>
+				    <tr>
+				      <td>Request Name</td>
+				      <td><h:outputText id="requestName" value="#{responseManager.response.requestName}" /></td>
+				    </tr>
+				    <tr>
+				      <td>Originator</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.buyer}" /></td>
+				    </tr>
+				    <tr>
+				      <td>Company</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.buyerCompany}" /></td>
+				    </tr>
+				     <tr>
+				      <td>Request Type</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.request.requestType}" /></td>
+				    </tr>
+				     <tr>
+				      <td>Project</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.request.project}" /></td>
+				    </tr>
+				    <tr>
+				      <td>Project Location</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.request.projectLocation}" /></td>
+				    </tr>
+				    <tr>
+				      <td>Download Specification Document</td>
+				      <td><h:outputLink value="#{responseManager.response.request.requestSpecificationUrl}" >Download</h:outputLink></td>
+				    </tr>
+				  </tbody>
+				</table>
+			    
+			 
+
+			    </div>
+			    <div class="td">
+				<table class="table">
+				  
+				  <tbody>
+				    <tr>
+				      <td>Request Open Date</td>
+				      <td><h:outputText id="requestName" value="#{responseManager.response.request.requestOpenDate.toString()}" /></td>
+				    </tr>
+				    <tr>
+				      <td>Request Close Date</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.request.requestCloseDate.toString()}" /></td>
+				    </tr>
+				    <tr>
+				      <td>Approximate Fixed Value</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.request.approxValueFixed}" /></td>
+				    </tr>
+				     <tr>
+				      <td>Approximate Fixed Value Range</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.request.approxValueInRange	}" /></td>
+				    </tr>
+				     <tr>
+				      <td>Project Delivery Start Date</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.request.deliveryStartDate.toString()}" /></td>
+				    </tr>
+				    <tr>
+				      <td>Minimum Turnover Required by Supplier</td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.request.minimumTurnOverRequiredText}" /></td>
+				    </tr>
+				    <tr>
+				      <td>References Required</td>
+				      <td>No</td>
+				    </tr>
+				    <tr>
+				      <td>Trade Associations Required</td>
+				      <td>No</td>
+				    </tr>
+				    <tr>
+				      <td>Certificates Required </td>
+				      <td>No</td>
+				    </tr>
+				    <tr>
+				      <td>Insurances Required </td>
+				      <td>No</td>
+				    </tr>
+				  </tbody>
+				</table>
+			    </div>
+			    <div class="td">
+			  dd
+			    </div>
+			</div>
+		    </div>
+		    <div class="panel-footer">
+			<div class="tr">
+			    <div class="td">Basic Request Info</div>
+			    <div class="td">Specifics</div>
+			    <div class="td">Pre-Requisites forSupplier</div>
+			</div>
+		    </div>
+		</div>
+	<b><hr/> </b>
+       
+		<h2 class="general"> Add or Update Response </h2>
+	     
+	<b><hr/> </b>
+</div>	
+  
+</h:body>  
+</html>  

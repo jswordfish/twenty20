@@ -39,28 +39,28 @@ public class RebateWebService {
 		}
 	}
 	
-	@POST
-	@Path("/delete/rebate/token/{token}")
-	@Produces("application/json")
-	@Consumes("application/json")
-	public javax.ws.rs.core.Response deleteRebate(Rebate rebate, @PathParam("token") String token){
-		try {
-			Rebate rebate2 = rebateService.getUniqueRebate(rebate.getRebateUniqueId());
-			if(rebate2 != null){
-				rebate2.setRebateActive(false);
-				rebateService.saveOrUpdate(rebate2);
-				return javax.ws.rs.core.Response.ok().build();
-			}
-			else{
-				return javax.ws.rs.core.Response.status(Status.BAD_REQUEST).build();
-			}
-			
-		} catch (Twenty20Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return javax.ws.rs.core.Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
-		}
-	}
+//	@POST
+//	@Path("/delete/rebate/token/{token}")
+//	@Produces("application/json")
+//	@Consumes("application/json")
+//	public javax.ws.rs.core.Response deleteRebate(Rebate rebate, @PathParam("token") String token){
+//		try {
+//			Rebate rebate2 = rebateService.getUniqueRebate(rebate.getRebateUniqueId());
+//			if(rebate2 != null){
+//				rebate2.setRebateActive(false);
+//				rebateService.saveOrUpdate(rebate2);
+//				return javax.ws.rs.core.Response.ok().build();
+//			}
+//			else{
+//				return javax.ws.rs.core.Response.status(Status.BAD_REQUEST).build();
+//			}
+//			
+//		} catch (Twenty20Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return javax.ws.rs.core.Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+//		}
+//	}
 	
 	@GET
 	@Path("/rebates/supplier/{supplier}/company/{company}/token/{token}")

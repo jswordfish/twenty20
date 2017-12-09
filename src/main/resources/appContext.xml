@@ -21,8 +21,8 @@
         default-lazy-init="true" >
 
 <bean id="confUtil" class="com.twenty20.util.ConfUtil">
-	<property name="documentsLocation" value="C:\codebase\twenty20\images"></property>
-	<property name="documentsServerBaseUrl" value="http://localhost/hirebuddy/documents/"></property>
+	<property name="documentsLocation" value="D:\apache-tomcat-8.0.3\webapps\file-server"></property>
+	<property name="documentsServerBaseUrl" value="http://localhost/file-server/"></property>
 </bean>
 
  <context:component-scan base-package="com.twenty20"  />

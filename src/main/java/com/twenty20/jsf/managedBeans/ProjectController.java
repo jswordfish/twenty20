@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
@@ -52,6 +53,9 @@ public class ProjectController {
 	
 	String source = "first_tab";
 	
+	 @ManagedProperty(value="#{tab}") 
+	 TabManager tabManager;
+	
 	@PostConstruct
 	public void init(){
 		projectService = (ProjectService) SpringUtil.getService(ProjectService.class);
@@ -88,7 +92,7 @@ public class ProjectController {
 	public String saveProject(){
 		projectService.saveOrUpdate(project);
 		this.projects = projectService.findAll();
-		setSource("third_tab");
+		tabManager.setDisplayTab("Projects");
 		return "bootstrapTabs.xhtml?faces-redirect=false&fromSource=Project";
 	}
 
@@ -177,6 +181,17 @@ public class ProjectController {
 	public void setSource(String source) {
 		this.source = source;
 	}
+
+	public TabManager getTabManager() {
+		return tabManager;
+	}
+
+	public void setTabManager(TabManager tabManager) {
+		this.tabManager = tabManager;
+	}
 	
-	
+	public String navigateToHomePage() {
+		tabManager.setDisplayTab("Projects");
+		return "bootstrapTabs.xhtml?faces-redirect=false";
+	}
 }

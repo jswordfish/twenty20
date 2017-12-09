@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+xmlns:h="http://xmlns.jcp.org/jsf/html"  
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+xmlns:rich="http://richfaces.org/rich"
+xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+xmlns:b="http://bootsfaces.net/ui"
+xmlns:a="http://xmlns.jcp.org/jsf">
+
+<h:head>  
+<title>See Requests</title>  
+<h:outputStylesheet name="css/bootstrap.min.css"/>  
+
+
+<link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+<link type="text/css" rel="stylesheet" href="resources/css/bootstrap-theme.css" />
+
+
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+
+
+
+<style type="text/css">
+
+.div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: 400px;
+  
+}
+
+</style>
+
+</h:head>  
+
+
+<h:body>  
+
+
+ <b:panelGrid colSpans="2,10" size="sm" fluid="true">
+  <b:panel title="Get Going.."  collapsible="false" look="primary" fluid="true" class="underConstruction">
+ 
+	<div class="container-fluid">
+    <div class="row">
+		<div >
+			<div id="accordion" class="panel panel-primary behclick-panel">
+				
+				<div class="panel-body" >
+					<div class="panel-heading" >
+						<h:commandButton id="seeResponses" value="Fetch All Requests" action="#{responseManager.allRequests}" styleClass="generalSmall" >
+							<f:ajax execute="@form"  />
+						</h:commandButton>
+						<br/>
+						<h:commandButton id="s1" value="Search Requests" action="#{responseManager.searchRequests}" styleClass="generalSmall">
+							 <f:ajax execute="@form"  />
+						</h:commandButton>
+					</div>
+					
+				
+					<div class="panel-heading" >
+						<h4 class="panel-title">
+							<a  class="generalSmall">
+								<i ></i> Request Amount
+							</a>
+						</h4>
+					</div>
+					<div id="collapse0"  >
+						<ul class="list-group">
+							
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.between1And10Lacs}"  />
+										Between 1 And 10 Lacs INR
+									</label>
+								</div>
+							</li>
+							
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.between10LacsAnd1Crore}"  />
+										Between 10 Lacs And 1 Crore INR
+									</label>
+								</div>
+							</li>
+							
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.moreThan1Crore}"  />
+										More than 1 Crore INR
+									</label>
+								</div>
+							</li>
+							
+						</ul>
+					</div>
+
+					<div class="panel-heading " >
+						<h4 class="panel-title">
+							<a class="generalSmall">
+								<i></i> Product
+							</a>
+						</h4>
+					</div>
+					<div id="collapse1" class="panel-collapse collapse in" >
+						<ul class="list-group">
+							<li class="list-group-item">
+								<div class="checkbox">
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.cement}"  />
+										Cement
+
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.stoneChips}"  />
+										Stone chips
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.sand}"  />
+										Sand
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.readyMix}"  />
+										Readymix
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.steelBar}"  />
+										Steel rebar
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.formWork}"  />
+										Formwork
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.allProducts}"  />
+										All
+									</label>
+								</div>
+							</li>
+							
+						</ul>
+					</div>
+					
+					<div class="panel-heading " >
+						<h4 class="panel-title">
+							<a class="generalSmall">
+								 Date Range
+							</a>
+						</h4>
+					</div>
+					<div id="collapse1"  >
+						<label class="generalSmall"> From 
+							<input type="date" id="rebateOpenDate" a:value="#{responseManager.searchParams.fromDate}"    />
+						</label>
+						
+						
+						<label class="generalSmall"> To 
+							<input type="date" id="rebateOpenDate" a:value="#{responseManager.searchParams.toDate}"  />
+						</label>
+						
+					</div>
+					
+					<div class="panel-heading " >
+						<h4 class="panel-title">
+							<a class="generalSmall">
+								<i></i> By Request Criteria
+							</a>
+						</h4>
+					</div>
+					<div id="collapse1"  >
+						<ul class="list-group">
+							<li class="list-group-item">
+								<div class="checkbox">
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.turnoverGreaterThan1Crore}"  />
+										Minimum Turnover Greater than 1 Crore
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.turnoverGreaterThan10Crore}"  />
+										Minimum Turnover Greater than 10 Crore
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="checkbox" >
+									<label class="generalSmall">
+										<h:selectBooleanCheckbox value="#{responseManager.searchParams.turnoverGreaterThan100Crore}"  />
+										Minimum Turnover Greater than 100 Crore
+									</label>
+								</div>
+							</li>
+							
+						</ul>
+					</div>
+					
+					
+					
+					
+					<div class="panel-heading" >
+						<h:commandButton id="s2" value="Search Requests" action="#{responseManager.searchRequests}" styleClass="generalSmall">
+							<f:ajax execute="@form"  />
+						</h:commandButton>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+  
+  
+  </b:panel>
+  <b:panel title="Filter results from the table below for any column  - Enter filter text  in the Search field below and click Enter" look="primary" collapsible="false" fluid="true">
+	
+	<b:dataTable value="#{responseManager.requests}" 
+                 var="req"
+                 excel="true"
+                 csv="true"
+                 pdf="true"
+                 columnVisibility="true"
+                 copy="true" fixedHeader="true" 
+                 print="true"  row-highlight="true" id="reqs">
+ 
+        <b:dataTableColumn label="Request Name" value="#{req.requestName}"  />
+        <b:dataTableColumn value="#{req.company}" />
+        <b:dataTableColumn label="Request Type" value="#{req.requestType}" />
+        <b:dataTableColumn value="#{req.project}"  order="asc"/>
+        <b:dataTableColumn value="#{req.buyer}" />
+	<b:dataTableColumn label="Request Open Date" >
+		<h:outputText value="#{req.requestOpenDate}">
+			<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+		    </h:outputText>
+	</b:dataTableColumn>
+	<b:dataTableColumn label="Request Close Date" >
+		<h:outputText value="#{req.requestCloseDate}">
+			<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+		    </h:outputText>
+	</b:dataTableColumn>
+	<b:dataTableColumn label="Project Location" value="#{req.projectLocation}" />
+	
+        <b:dataTableColumn label="Communicate" >
+		<h:commandLink  value="Click to Respond" action="#{responseManager.respond(req)}" styleClass="general" />   
+	</b:dataTableColumn>
+    </b:dataTable>
+  
+  </b:panel>
+</b:panelGrid>
+
+
+	
+
+
+
+
+</h:body>  
+</html>  

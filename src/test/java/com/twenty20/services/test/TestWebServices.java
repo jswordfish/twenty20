@@ -32,11 +32,11 @@ public class TestWebServices {
 	
 	private Rebate getRebate(){
 		Rebate rebate = new Rebate();
-		rebate.setSuppilierNo("Supp_Test");
-		rebate.setCompany("Comp_Test");
-		rebate.setBaseOfferSalesValue(100000d);
-		rebate.setRebateUniqueId("Supp_Test-Comp_Test-1503917379063");
-		rebate.setBaseOfferRebateOfferInPercent(23.5f);
+//		rebate.setSuppilierNo("Supp_Test");
+//		rebate.setCompany("Comp_Test");
+//		rebate.setBaseOfferSalesValue(100000d);
+//		rebate.setRebateUniqueId("Supp_Test-Comp_Test-1503917379063");
+//		rebate.setBaseOfferRebateOfferInPercent(23.5f);
 		return rebate;
 	}
 }

@@ -2,12 +2,12 @@ package com.twenty20.jsf.managedBeans;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
+import javax.faces.context.FacesContext;
 
-@ManagedBean(name="tabtest")
+@ManagedBean(name="tab")
 @SessionScoped 
 public class TabManager {
-	String displayTab = "Companies";
+	String displayTab = "Dashboard";
 
 	public String getDisplayTab() {
 		return displayTab;
@@ -17,11 +17,6 @@ public class TabManager {
 		this.displayTab = displayTab;
 	}
 	
-	public void activateTab(ActionEvent ae)
-	{
-	    String componentId = ae.getComponent().getId();
-	    ae.getComponent().getAttributes();
-	    setDisplayTab(componentId);
-	}
+
 			
 }

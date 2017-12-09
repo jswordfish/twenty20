@@ -44,6 +44,27 @@ public class TestUser {
 		userService.saveOrUpdate(user);
 	}
 	
+	@Test
+	@Rollback(value=false)
+	public void testUserSupplier() throws Exception{
+		User user = new User();
+		user.setFirstName("Jatin");
+		user.setLastName("Sutaria");
+		user.setUserName("jsutaria");
+		user.setPassword("secret");
+		user.setEmail("jatin.sutaria@thev2technologies.com");
+		user.setUserType(UserType.SUPPLIER);
+		UserForgotQuestions userForgotQuestions = new UserForgotQuestions();
+		userForgotQuestions.setQuestionChosen("question2");
+		userForgotQuestions.setAnswer("Nilesh");
+		user.setUserForgotQuestions(userForgotQuestions);
+		Company company = new Company("V2 Tech", "AXN");
+		user.setCompany(company);
+		userService.saveOrUpdate(user);
+	}
+	
+	
+	
 
 
 }

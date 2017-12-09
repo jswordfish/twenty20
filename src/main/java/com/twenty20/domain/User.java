@@ -4,6 +4,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -45,8 +46,10 @@ public class User extends Base{
 	UserForgotQuestions userForgotQuestions = new UserForgotQuestions();
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	Company company;
+	
+	
 
 	public String getFirstName() {
 		return firstName;
@@ -119,6 +122,8 @@ public class User extends Base{
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+
+	
 	
 	
 }

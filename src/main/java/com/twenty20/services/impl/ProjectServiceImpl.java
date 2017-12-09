@@ -104,5 +104,16 @@ public class ProjectServiceImpl extends BaseServiceImpl<Long, Project> implement
 		super.delete(id);
 	}
 
+	@Override
+	public List<Project> getProjectsByCompany(String company) throws Twenty20Exception {
+		// TODO Auto-generated method stub
+		Map<String, String> queryParams = new HashMap<String, String>();
+		queryParams.put("company", company);
+		
+		List<Project> projects = findByNamedQueryAndNamedParams(
+				"Project.getProjectsByCompany", queryParams);
+		return projects;
+	}
+
 	
 }

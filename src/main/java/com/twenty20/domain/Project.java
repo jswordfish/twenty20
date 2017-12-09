@@ -16,7 +16,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Project.getProject", 
-			query="SELECT p FROM Project p WHERE p.projectName=:projectName AND p.buyer=:buyer")
+			query="SELECT p FROM Project p WHERE p.projectName=:projectName AND p.buyer=:buyer"),
+	@NamedQuery(name="Project.getProjectsByCompany", 
+	query="SELECT p FROM Project p WHERE p.company=:company")
 })
 public class Project extends Base{
 

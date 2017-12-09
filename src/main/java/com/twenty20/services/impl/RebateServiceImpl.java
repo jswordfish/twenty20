@@ -66,19 +66,15 @@ public class RebateServiceImpl extends BaseServiceImpl<Long, Rebate> implements 
 		if(violations.size() > 0){
 			throw new Twenty20Exception("INVALID_REBATE_PARAMS");
 		}
-			
-		if(rebate.getRebateUniqueId() == null){
+		
+		Rebate rebate2 = getUniqueRebateByNameAndCompany(rebate.getRebateName(), rebate.getCompany());
+		if(rebate2 == null){
 			//create mode
-			String rebateUniqueId = rebate.getSuppilierNo()+"-"+rebate.getCompany()+"-"+System.currentTimeMillis();
-			rebate.setRebateUniqueId(rebateUniqueId);
+		
 			dao.persist(rebate);
 		}
 		else{
-			Rebate rebate2 = getUniqueRebate(rebate.getRebateUniqueId());
-				if(rebate2 == null){
-					throw new Twenty20Exception("INVALID_REBATE_UNIQUE_ID");
-				}
-			rebate.setId(rebate2.getId());
+			
 			org.dozer.Mapper mapper = new DozerBeanMapper();
 			mapper.map(rebate, rebate2);
 			dao.merge(rebate2);
@@ -86,12 +82,13 @@ public class RebateServiceImpl extends BaseServiceImpl<Long, Rebate> implements 
 	}
 
 	@Override
-	public Rebate getUniqueRebate(String rebateId) throws Twenty20Exception {
+	 public Rebate getUniqueRebateByNameAndCompany(String rebateName, String company) throws Twenty20Exception{
 		Map<String, String> queryParams = new HashMap<String, String>();
-		queryParams.put("rebateUniqueId", rebateId);
+		queryParams.put("rebateName", rebateName);
+		queryParams.put("company", company);
 		
 		List<Rebate> rebates = findByNamedQueryAndNamedParams(
-				"Rebate.getRebateUniqueId", queryParams);
+				"Rebate.getUniqueRebateByNameAndCompany", queryParams);
 		if(rebates.size() > 1){
 			throw new Twenty20Exception("MULTIPLE_REBATES_SAME_IDENTITY");
 		}
@@ -115,7 +112,7 @@ public class RebateServiceImpl extends BaseServiceImpl<Long, Rebate> implements 
 	public List<Rebate> getActiveRebatesBySupplierAndCompany(String supplierNo, String companyNo)
 			throws Twenty20Exception {
 		Map<String, Object> queryParams = new HashMap<String, Object>();
-		queryParams.put("suppilierNo", supplierNo);
+		queryParams.put("supplier", supplierNo);
 		queryParams.put("company", companyNo);
 		
 		List<Rebate> rebates = findByNamedQueryAndNamedParams(
@@ -134,14 +131,12 @@ public class RebateServiceImpl extends BaseServiceImpl<Long, Rebate> implements 
 	}
 
 	@Override
-	public List<Rebate> getDeletedRebates() throws Twenty20Exception {
-		Map<String, Object> queryParams = new HashMap<String, Object>();
-		queryParams.put("rebateActive", true);
-		
-		List<Rebate> rebates = findByNamedQueryAndNamedParams(
-				"Rebate.getRebates", queryParams);
-		return rebates;
+	public void deleteById(Long rebateId) throws Twenty20Exception {
+		// TODO Auto-generated method stub
+		super.delete(rebateId);
 	}
+
+	
 
 	
 }

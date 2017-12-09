@@ -11,15 +11,19 @@ Persistence unit for the JPA tutorial of the Hibernate Getting Started Guide
 <class>com.twenty20.domain.Base</class>
 <class>com.twenty20.domain.Address</class>
 <class>com.twenty20.domain.Company</class>
-
-
- 
+<class>com.twenty20.domain.Project</class>
+<class>com.twenty20.domain.Request</class>
+<class>com.twenty20.domain.Rebate</class>
+ <class>com.twenty20.domain.Response</class>
 	<properties>
 	
 	<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 	<property name="hibernate.show_sql" value="true" />
 	<property name="hibernate.hbm2ddl.auto" value="update" />
-	
+	<property name="hibernate.search.default.directory_provider"
+          value="filesystem"/>
+    <property name="hibernate.search.default.indexBase"
+          value="D:\codebase\twenty20\luceneData"/>
 	<!-- Important -->
         <property name="hibernate.c3p0.max_size" value="300" />
         <property name="hibernate.c3p0.min_size" value="1" />
