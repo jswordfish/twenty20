@@ -171,7 +171,7 @@ public class RequestManager {
 		requestService.saveOrUpdate(request);
 		this.requests = requestService.findAll();
 		tabManager.setDisplayTab("Requests");
-		return "bootstrapTabs.xhtml?faces-redirect=false";
+		return "bootstrapTabs.xhtml?faces-redirect=true";
 	}
 
 	public List<Request> getRequests() {
@@ -348,7 +348,7 @@ public class RequestManager {
 	
 	public String navigateToHomePage() {
 		tabManager.setDisplayTab("Requests");
-		return "bootstrapTabs.xhtml?faces-redirect=false";
+		return "bootstrapTabs.xhtml?faces-redirect=true";
 	}
 	
 	public void deleteRequestDescription(RequestDescription desc) {

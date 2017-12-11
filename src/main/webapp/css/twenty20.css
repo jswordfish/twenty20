@@ -5,6 +5,17 @@
 	font-weight: normal;
 	}
 
+.fontClassWithRightMargin	{
+	text-align:left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	  border-collapse: separate; 
+	border-spacing: 5px; 
+	*border-collapse: expression('separate', cellSpacing = '5px');
+	}
+
+
 .signOff{
 	text-align:right;
 	align:right;

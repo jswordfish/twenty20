@@ -27,6 +27,9 @@ xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
             if("#{tab.displayTab}"=="Responses"){
 		$('#third_tab').trigger('click');
 	    }
+	    else if("#{tab.displayTab}"=="Rebates"){
+	    $('#second_tab').trigger('click');
+	    }
 	    else{
 		$('#first_tab').trigger('click');
 	    }
@@ -49,7 +52,7 @@ xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <li class="rounded"><a href="#zero" data-toggle="tab" id="zero_tab">Settings</a></li>
     <li class="rounded"><a href="#first" data-toggle="tab" id="first_tab">Dashboard</a></li>
    
-    <li class="rounded active"><a href="#second" data-toggle="tab" id="second_tab" >Rebates Management</a></li>
+    <li class="rounded"><a href="#second" data-toggle="tab" id="second_tab" >Rebates Management</a></li>
      <li class="rounded"><a href="#third" data-toggle="tab" id="third_tab" >Respond to Buyer Requests</a></li>
      <li class="rounded"><a href="#fourth" data-toggle="tab" id="fourth_tab" >Rebate Ready Reckoner</a></li>
      <li class="rounded"><a href="#fifth" data-toggle="tab" id="fifth_tab" >Meeting Invites</a></li>

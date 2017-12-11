@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
@@ -58,6 +59,8 @@ public class Response extends Base{
 	Date responseCreationDate  = new Date();
 	
 	Date responseValidFromDate = new Date();
+	
+	
 	
 	Date responseValidToDate;
 	

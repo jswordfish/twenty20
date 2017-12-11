@@ -12,6 +12,10 @@ public class ResponseToRequestDescription {
 	
 	String price;
 	
+	public ResponseToRequestDescription() {
+		
+	}
+	
 	public ResponseToRequestDescription(String subProduct, Double volumeRequired, String unit, String price) {
 		this.subProduct = subProduct;
 		this.volumeRequired = volumeRequired;

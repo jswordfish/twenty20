@@ -12,32 +12,7 @@
     <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
     <link type="text/css" rel="stylesheet" href="css/response.css" />
     <title>"#{responseManager.responsePageTitle}"</title>
-    <style type="text/css">
-        .col-xs-updated {        
-            width: 92% !important;
-        }
-	
-	
-	.indivcheckbox .ui-chkbox-icon {
-	   background-position-x: -66px;
-    background-position-y: -147px;
-	}
 
-	.indivcheckbox .ui-icon-check {
-	    text-align:left;
-	display:block;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	margin-left: 80px;
-	font-weight: normal;
-	}
-	
-	.table-light thead > tr > th {
-	    border-bottom: none;
-	}
-
-	
-    </style>
 </h:head>
 
 
@@ -53,14 +28,15 @@
 	    </div>
         </div>
 	<b><hr/> </b>
+	<h:form id="responseForm" enctype="multipart/form-data" >  
 		<h2 class="general"> Request Details </h2>
 		
 		<div class="panel panel-default panel-table">
 		    <div class="panel-heading">
 			<div class="tr">
-			    <div class="td">Basic Request Info</div>
-			    <div class="td">Specifics</div>
-			    <div class="td">Pre-Requisites forSupplier</div>
+			    <div class="td"><b>Basic Request Info</b></div>
+			    <div class="td"><b>Specifics</b></div>
+			    <div class="td"><b>Request Description If Available</b></div>
 			</div>
 		    </div>
 		    <div class="panel-body">
@@ -71,31 +47,31 @@
 				  <tbody>
 				    <tr>
 				      <td>Request Name</td>
-				      <td><h:outputText id="requestName" value="#{responseManager.response.requestName}" /></td>
+				      <td><h:outputText id="requestName" value="#{responseManager.response.requestName}" styleClass="fontClass" /></td>
 				    </tr>
 				    <tr>
 				      <td>Originator</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.buyer}" /></td>
+				      <td><h:outputText id="buyer" value="#{responseManager.response.buyer}"  styleClass="fontClass"/></td>
 				    </tr>
 				    <tr>
 				      <td>Company</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.buyerCompany}" /></td>
+				      <td><h:outputText id="buyerCompany" value="#{responseManager.response.buyerCompany}" styleClass="fontClass" /></td>
 				    </tr>
 				     <tr>
 				      <td>Request Type</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.request.requestType}" /></td>
+				      <td><h:outputText id="requestType" value="#{responseManager.response.request.requestType}" styleClass="fontClass" /></td>
 				    </tr>
 				     <tr>
 				      <td>Project</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.request.project}" /></td>
+				      <td><h:outputText id="project" value="#{responseManager.response.request.project}" styleClass="fontClass" /></td>
 				    </tr>
 				    <tr>
 				      <td>Project Location</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.request.projectLocation}" /></td>
+				      <td><h:outputText id="projectLocation" value="#{responseManager.response.request.projectLocation}" styleClass="fontClass"/></td>
 				    </tr>
 				    <tr>
 				      <td>Download Specification Document</td>
-				      <td><h:outputLink value="#{responseManager.response.request.requestSpecificationUrl}" >Download</h:outputLink></td>
+				      <td><h:outputLink value="#{responseManager.response.request.requestSpecificationUrl}" styleClass="fontClass" >Download</h:outputLink></td>
 				    </tr>
 				  </tbody>
 				</table>
@@ -109,65 +85,316 @@
 				  <tbody>
 				    <tr>
 				      <td>Request Open Date</td>
-				      <td><h:outputText id="requestName" value="#{responseManager.response.request.requestOpenDate.toString()}" /></td>
+				      <td><h:outputText id="requestOpenDate" value="#{responseManager.response.request.requestOpenDate}" styleClass="fontClass" >
+							 <f:convertDateTime pattern="dd-MMM-yyyy" />
+						</h:outputText>
+				      
+				      </td>
 				    </tr>
 				    <tr>
 				      <td>Request Close Date</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.request.requestCloseDate.toString()}" /></td>
+				      <td><h:outputText id="requestCloseDate" value="#{responseManager.response.request.requestCloseDate}" styleClass="fontClass" >
+						<f:convertDateTime pattern="dd-MMM-yyyy" />
+						</h:outputText>
+				      </td>
 				    </tr>
 				    <tr>
 				      <td>Approximate Fixed Value</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.request.approxValueFixed}" /></td>
+				      <td><h:outputText id="approxValueFixed" value="#{responseManager.response.request.approxValueFixed}"  styleClass="fontClass">
+							<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+						</h:outputText>
+				      </td>
 				    </tr>
 				     <tr>
 				      <td>Approximate Fixed Value Range</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.request.approxValueInRange	}" /></td>
+				      <td><h:outputText id="approxValueInRange" value="#{responseManager.response.request.approxValueInRange	}" styleClass="fontClass">
+						<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+						</h:outputText>
+				      </td>
 				    </tr>
 				     <tr>
 				      <td>Project Delivery Start Date</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.request.deliveryStartDate.toString()}" /></td>
+				      <td><h:outputText id="deliveryStartDate" value="#{responseManager.response.request.deliveryStartDate}" styleClass="fontClass">
+						<f:convertDateTime pattern="dd-MMM-yyyy" />
+						</h:outputText>
+				      </td>
 				    </tr>
 				    <tr>
 				      <td>Minimum Turnover Required by Supplier</td>
-				      <td><h:outputText id="buyer" value="#{responseManager.response.request.minimumTurnOverRequiredText}" /></td>
+				      <td><h:outputText id="minimumTurnOverRequiredText" value="#{responseManager.response.request.minimumTurnOverRequiredText}" styleClass="fontClass">
+						<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+						</h:outputText>
+				      </td>
 				    </tr>
 				    <tr>
 				      <td>References Required</td>
-				      <td>No</td>
+				      <td>
+						<c:choose>
+						    <c:when test="${responseManager.response.request.referencesRequired == false}">
+							<label class="fontClass">Not Required</label>
+							
+						    </c:when>    
+						    <c:otherwise>
+							<label class="fontClass">Required</label>
+							
+						    </c:otherwise>
+						</c:choose>
+						
+						
+					</td>
 				    </tr>
 				    <tr>
 				      <td>Trade Associations Required</td>
-				      <td>No</td>
+				       <td>
+						<c:choose>
+						    <c:when test="${responseManager.response.request.tradeAssociationRequired == false}">
+							<label class="fontClass">Not Required</label>
+							
+						    </c:when>    
+						    <c:otherwise>
+							<label class="fontClass">Required</label>
+							
+						    </c:otherwise>
+						</c:choose>
+						
+						
+					</td>
 				    </tr>
 				    <tr>
 				      <td>Certificates Required </td>
-				      <td>No</td>
+				      <td>
+						<c:choose>
+						    <c:when test="${responseManager.response.request.certificateRequired == false}">
+							<label class="fontClass">Not Required</label>
+							
+						    </c:when>    
+						    <c:otherwise>
+							<label class="fontClass">Required</label>
+							
+						    </c:otherwise>
+						</c:choose>
+						
+						
+					</td>
 				    </tr>
 				    <tr>
 				      <td>Insurances Required </td>
-				      <td>No</td>
+					<td>
+						<c:choose>
+						    <c:when test="${responseManager.response.request.insurancesRequired == false}">
+							<label class="fontClass">Not Required</label>
+							
+						    </c:when>    
+						    <c:otherwise>
+							<label class="fontClass">Required</label>
+							
+						    </c:otherwise>
+						</c:choose>
+						
+						
+					</td>
 				    </tr>
 				  </tbody>
 				</table>
 			    </div>
 			    <div class="td">
-			  dd
+				<h:dataTable  value="#{responseManager.response.request.requestDescriptions}"  var="des" styleClass="fontClassWithRightMargin" >  
+					  
+
+					<h:column>  
+						<f:facet name="header" >Product   </f:facet>  
+						<h:outputText value="#{des.subProduct}" />  
+					</h:column>
+
+					<h:column>  
+						<f:facet name="header" >Volume Required   </f:facet>  
+						<h:outputText value="#{des.volumeRequired}" />  
+					</h:column>					
+
+					<h:column>  
+						<f:facet name="header" >Unit</f:facet>  
+						<h:outputText value="#{des.unit}" />  
+					</h:column>
+					
+					</h:dataTable>  
+			    
+			 
+
 			    </div>
 			</div>
 		    </div>
-		    <div class="panel-footer">
-			<div class="tr">
-			    <div class="td">Basic Request Info</div>
-			    <div class="td">Specifics</div>
-			    <div class="td">Pre-Requisites forSupplier</div>
-			</div>
-		    </div>
+		   
 		</div>
 	<b><hr/> </b>
        
-		<h2 class="general"> Add or Update Response </h2>
-	     
-	<b><hr/> </b>
+		<h1 class="underConstruction"> Your Response </h1>
+	
+	 <div class="panel panel-default panel-table">
+		    <div class="panel-heading">
+			<div class="tr">
+			    <div class="td"><b>Add or Update Basic Details</b></div>
+			    <div class="td"><b>Associate Rebate Offer and Extra Info</b></div>
+			    <div class="td"><b>Add Pricing  for Products if listed</b></div>
+			</div>
+		    </div>
+		    <div class="panel-body">
+			<div class="tr">
+			    <div class="td">
+				<table class="table">
+				  
+				  <tbody>
+				    <tr>
+				      <td>Request Name</td>
+				      <td><h:outputText id="requestName2" value="#{responseManager.response.requestName}" styleClass="fontClass" /></td>
+				    </tr>
+				    <tr>
+				      <td>Supplier</td>
+				      <td><h:outputText id="supplier" value="#{responseManager.response.supplier}"  styleClass="fontClass"/></td>
+				    </tr>
+				    <tr>
+				      <td>Supplier Company</td>
+				      <td><h:outputText id="supplierCompany" value="#{responseManager.response.supplierCompany}" styleClass="fontClass" /></td>
+				    </tr>
+				     <tr>
+				      <td>Supplier Email</td>
+				      <td><p:inputText id="supplierEmail" value="#{responseManager.response.supplierEmail}"  pt:placeholder="Email" styleClass="fontClass" validatorMessage="Enter Valid Email"   >
+							 <f:validateRegex pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+						</p:inputText>
+						
+						<h:message for="supplierEmail" style="color:red"  errorStyle="color:red; display:block"/>
+						
+				      </td>
+				    </tr>
+				     <tr>
+				      <td>Response Creation Date(As dd-MMM-yyyy )</td>
+				      <td>
+						<input type="date" id="requestOpenDate" a:value="#{responseManager.responseCreationDt}"  class="fontClass"  />
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Response Validity From Date</td>
+				      <td>
+				       <input type="date" id="requestOpenDate" a:value="#{responseManager.responseValidFromDt}"  class="fontClass" required="true" />
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Response Validity Till Date</td>
+				      <td>
+				        <input type="date" id="requestOpenDate" a:value="#{responseManager.responseValidToDt}"  class="fontClass" required="true" />
+				      </td>
+				      
+				    </tr>
+				    
+				  </tbody>
+				</table>
+			    
+			 
+
+			    </div>
+			    <div class="td">
+				<table class="table">
+				  
+				  <tbody>
+				    <tr>
+				      <td>Select Rebate Offer</td>
+				      <td>
+				      <h:selectOneMenu id="rOffer" value="#{responseManager.response.rebateName}" styleClass="fontClass" >  
+									 <f:selectItems value="#{responseManager.rebates}"
+								            var="rebate"
+								            itemValue="#{rebate}"
+								            itemLabel="#{rebate}" /> 
+								
+								</h:selectOneMenu>
+				      
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Is Rebate Offer for this Request Only?</td>
+				      <td>
+					     <h:selectBooleanCheckbox id="requestSpecificRebateOffer" value="#{responseManager.response.requestSpecificRebateOffer}" styleClass="fontClass" >
+						   
+						</h:selectBooleanCheckbox>
+					</td>
+				    </tr>
+				    <tr>
+				      <td>Authority of Responder</td>
+				      <td>
+					<p:inputText id="responseAuthority" value="#{responseManager.response.responseAuthority}" styleClass="fontClass" validatorMessage="Enter your authority info" >
+					
+						<f:validateRequired />
+					</p:inputText>
+						
+						<h:message for="responseAuthority" style="color:red"  errorStyle="color:red; display:block"/>
+				      </td>
+				    </tr>
+				     <tr>
+				      
+				      <td>
+					
+						<h:inputFile  value="#{responseManager.part}"   styleClass="fontClass">
+							 <f:ajax listener="#{responseManager.handleFileUpload}" render="@form" />
+							
+						</h:inputFile>
+						
+				      </td>
+				       <td><h:outputText id="fileAttached" value="#{responseManager.fileAttached}" styleClass="fontClass" /></td>
+				    </tr>
+				    <tr>
+					<td>
+						<h:commandButton id="saveRequest" value="Respond" action="#{responseManager.saveOrUpdate()}" class="btn btn-success col-sm-7" update="supplierEmail" style="width:100px;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;">
+						 <f:ajax execute="@form" render="@form"  />
+						</h:commandButton>  
+				
+					</td>
+					<td>
+						<h:button value="Go Back"  outcome="supplierTabs"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:button>    
+				
+					</td>
+				    
+				    </tr>
+				     
+				  </tbody>
+				</table>
+			    </div>
+			    <div class="td">
+				<h:dataTable  value="#{responseManager.response.responseToRequestDescriptions}"  var="res" styleClass="fontClassWithRightMargin" >  
+					  
+
+					<h:column>  
+						<f:facet name="header" >Product   </f:facet>  
+						<h:outputText value="#{res.subProduct}" />  
+					</h:column>
+
+					<h:column>  
+						<f:facet name="header" >Volume Required   </f:facet>  
+						<h:outputText value="#{res.volumeRequired}" />  
+					</h:column>					
+
+					<h:column>  
+						<f:facet name="header" >Unit</f:facet>  
+						<h:outputText value="#{res.unit}" />  
+					</h:column>
+					<h:column>  
+						<f:facet name="header" >Price</f:facet>  
+						<p:inputText id="price" value="#{res.price}"   styleClass="fontClass" validatorMessage="Enter value" >
+							 <f:validateRequired />
+						</p:inputText>
+						
+						<h:message for="price" style="color:red"  errorStyle="color:red; display:block"/>
+					</h:column>
+					
+					</h:dataTable>  
+			    
+			 
+
+			    </div>
+			</div>
+		    </div>
+		   
+		</div>
+	
+		</h:form>
+	
 </div>	
   
 </h:body>  

@@ -124,7 +124,7 @@ public class ResponseServiceImpl extends BaseServiceImpl<Long, Response> impleme
     		
 			if(response.getAdditionalDocument() != null && response.getAdditionalDocumentExtension()!=  null && response.getAdditionalDocumentExtension().trim().length()!= 0){
 				FileUtils.writeByteArrayToFile(new File(newResponseLoc.getAbsolutePath()+File.separator+"Response-"+response.getRequestName()+"."+response.getAdditionalDocumentExtension()), response.getAdditionalDocument());
-				response.setAdditionalDocumentUrl(confService.getDocumentsServerBaseUrl()+File.separator+"Responses"+File.separator+response.getSupplierCompany()+File.separator+response.getSupplier()+File.separator+"Response-"+response.getRequestName()+"."+response.getAdditionalDocumentExtension());
+				response.setAdditionalDocumentUrl(confService.getDocumentsServerBaseUrl()+"Responses/"+response.getSupplierCompany()+"/"+response.getSupplier()+"/"+"Response-"+response.getRequestName()+"."+response.getAdditionalDocumentExtension());
 			}
 			
 			
