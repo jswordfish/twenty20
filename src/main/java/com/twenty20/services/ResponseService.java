@@ -17,4 +17,8 @@ public interface ResponseService extends BaseService{
 	 public List<Response> getResponsesByCompany(String suplierCompany)throws Twenty20Exception;
 	 
 	 public List<Response> getResponsesBySupplierNameAndCompany(String supplierName, String suplierCompany)throws Twenty20Exception;
+	 
+	 public List<Response> getResponsesForRequentNameAndBuyerCompany(String requestName, String buyerCompany)throws Twenty20Exception;
+	 
+	 
 }

@@ -1,7 +1,7 @@
 package com.twenty20.domain;
 
 public enum ResponseStatus {
-	HOLD("HOLD"), NEGOTIATE("NEGOTIATE"), ACCEPT("ACCEPT"), DECLINE("DECLINE");
+	HOLD("HOLD"), NEGOTIATE("NEGOTIATE"), ACCEPT("ACCEPT"), DECLINE("DECLINE"), CANCEL("CANCEL");
 	public String status;
 	
 	private ResponseStatus(String status){

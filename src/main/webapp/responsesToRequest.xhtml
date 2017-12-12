@@ -45,52 +45,61 @@ xmlns:a="http://xmlns.jcp.org/jsf">
 <h:form id="responseForm" method="POST">
  <b:panelGrid colSpans="12" size="sm" fluid="true">
  
-  <b:panel title="My Responses - Filter results from the table below for any column - Enter filter text in the Search field below and click Enter" look="primary" collapsible="false" fluid="true">
+  <b:panel title="Responses to #{requestManager.request.requestName}- Filter results from the table below for any column - Enter filter text in the Search field below and click Enter" look="primary" collapsible="false" fluid="true">
 	
-	<b:dataTable value="#{responseManager.myResponses}" 
+	<b:dataTable value="#{requestManager.responsesToRequest}" 
                  var="res"
                  excel="true"
                  csv="true"
                  pdf="true"
                  columnVisibility="true"
                  copy="true" fixedHeader="true" 
-                 print="true"  row-highlight="true" id="myResponses">
+                 print="true"  row-highlight="true" id="responsesToRequest">
 		 
-	<b:dataTableColumn label="Date when last Modified" >
-		<h:outputText value="#{res.lastModifiedDate}">
-			<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-		    </h:outputText>
-	</b:dataTableColumn>
- 
-        <b:dataTableColumn label="Responded to Following" value="#{res.requestName}"  />
-        <b:dataTableColumn label="Buyer Company" value="#{res.buyerCompany}" />
-	<b:dataTableColumn label="Buyer Contact Person" value="#{res.buyer}" />
-	<b:dataTableColumn label="Buyer Contact Info" value="98203XXXXX" />
-        <b:dataTableColumn label="Rebate Offer Associated" value="#{res.rebateName}" />
-        <b:dataTableColumn label="Response Status" value="#{res.responseStatus}" />
-       
+	 <h:column>
+                    <h:outputText label="No" value="#{res.rowIndex}" />
+                </h:column>
+		 
 	<b:dataTableColumn label="Response Creation Date" >
 		<h:outputText value="#{res.responseCreationDate}">
 			<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 		    </h:outputText>
 	</b:dataTableColumn>
+ 
+        <b:dataTableColumn label="Submitted by Company" value="#{res.supplierCompany}"  />
+       
 	
-	
-	<b:dataTableColumn label="Supporing Document" value="#{res.additionalDocumentUrl}" />
-	
-	<b:dataTableColumn label="Edit Response" >
-		<h:commandLink  value="Click to Modify" action="#{responseManager.editResponse(res)}" styleClass="general" >
+	<b:dataTableColumn label="Supplier Contact Info" value="98204XXXXX" />
+        <b:dataTableColumn label="Rebate Offer Associated" value="#{res.rebateName}" />
+        <b:dataTableColumn label="Response Status" value="#{res.responseStatus}" />
+       
+	<b:dataTableColumn label="Decline Response" >
+		<h:commandLink  value="Click to Modify" action="#{requestManager.rejectResponse(res)}" styleClass="general" >
+			<f:ajax execute="@form" render="@form"  />
+		</h:commandLink>		
+	</b:dataTableColumn>
+	<b:dataTableColumn label="Negotiate" >
+		<h:commandLink  value="Click to Modify" action="#{requestManager.negotiateResponse(res)}" styleClass="general" >
+			<f:ajax execute="@form" render="@form"  />
+		</h:commandLink>		
+	</b:dataTableColumn>
+	<b:dataTableColumn label="Accept" >
+		<h:commandLink  value="Click to Modify" action="#{requestManager.acceptResponse(res)}" styleClass="general" >
 			<f:ajax execute="@form" render="@form"  />
 		</h:commandLink>		
 	</b:dataTableColumn>
 	
+	<b:dataTableColumn label="See Rebate Offer Details" >
+		<h:commandLink  value="Click to Modify" action="#{requestManager.showRebateOffer(res)}" styleClass="general" >
+			<f:ajax execute="@form" render="@form"  />
+		</h:commandLink>		
+	</b:dataTableColumn>
       
     </b:dataTable>
  
   </b:panel>
-	<h:commandLink  value="Go Back" action="#{responseManager.goBack}" styleClass="general" >
-			<f:ajax execute="@form" render="@form"  />
-		</h:commandLink>	
+	<h:button value="Go Back"  outcome="bootstrapTabs"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:button>  
+				
 </b:panelGrid>
 
 </h:form>

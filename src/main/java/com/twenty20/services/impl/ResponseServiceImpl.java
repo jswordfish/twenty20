@@ -164,5 +164,17 @@ public class ResponseServiceImpl extends BaseServiceImpl<Long, Response> impleme
 		return responses;
 	}
 
+	@Override
+	public List<Response> getResponsesForRequentNameAndBuyerCompany(String requestName, String buyerCompany)
+			throws Twenty20Exception {
+		Map<String, String> queryParams = new HashMap<String, String>();
+		queryParams.put("requestName", requestName);
+		queryParams.put("buyerCompany", buyerCompany);
+		
+		List<Response> responses = findByNamedQueryAndNamedParams(
+				"Response.getResponsesForRequentNameAndBuyerCompany", queryParams);
+		return responses;
+	}
+
 	
 }

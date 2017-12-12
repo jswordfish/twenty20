@@ -278,7 +278,7 @@ xmlns:a="http://xmlns.jcp.org/jsf">
 		<h:commandLink  value="Click to Respond" action="#{responseManager.respond(req)}" styleClass="general" />   
 	</b:dataTableColumn>
     </b:dataTable>
-  <h:button value="See my submitted Responses"  outcome="myResponses" styleClass="general" ></h:button>    
+  <h:commandButton value="See My submitted Responses"  action="#{responseManager.myResponses}" styleClass="underConstruction" ></h:commandButton>    
   </b:panel>
   
 </b:panelGrid>

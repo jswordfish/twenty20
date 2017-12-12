@@ -3,6 +3,7 @@ package com.twenty20.jsf.managedBeans;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,11 +17,16 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.UploadedFile;
 
 import com.twenty20.domain.Project;
+import com.twenty20.domain.Rebate;
 import com.twenty20.domain.Request;
 import com.twenty20.domain.RequestDescription;
+import com.twenty20.domain.Response;
+import com.twenty20.domain.ResponseStatus;
 import com.twenty20.domain.User;
 import com.twenty20.services.ProjectService;
+import com.twenty20.services.RebateService;
 import com.twenty20.services.RequestService;
+import com.twenty20.services.ResponseService;
 
 @ManagedBean(name = "requestManager", eager = true)
 @SessionScoped
@@ -65,11 +71,21 @@ public class RequestManager {
 	 Boolean enableCertificateRequired = false;
 	 
 	 Boolean enableInsurancesRequired = false;
+	 
+	 transient ResponseService responseService;
+	 
+	 transient RebateService rebateService;
+	 
+	 List<Response> responsesToRequest = new ArrayList<>();
+	 
+	 Response response;
 	
 	@PostConstruct
 	public void init() {
 		requestService = SpringUtil.getService(RequestService.class);
 		projectService = SpringUtil.getService(ProjectService.class);
+		responseService = SpringUtil.getService(ResponseService.class);
+		rebateService = SpringUtil.getService(RebateService.class);
 		requests = requestService.findAll();
 		//projectService.getProjectsByCompany(user)
 	}
@@ -80,6 +96,10 @@ public class RequestManager {
 		
 		setDates();
 		setQualificationFields();
+		/**
+		 * Its always better to reload projects incase if any new is added
+		 */
+		getProjects();
 		return "request.xhtml?faces-redirect=false";
 	}
 	
@@ -360,4 +380,59 @@ public class RequestManager {
 		getRequest().getRequestDescriptions().add(new RequestDescription());
 		RequestContext.getCurrentInstance().update("requestForm:reqDescsTable");
 	}
+	
+	public String seeResponsesToRequest(Request request) {
+		tabManager.setDisplayTab("Requests");
+		setRequest(request);
+		responsesToRequest = responseService.getResponsesForRequentNameAndBuyerCompany(request.getRequestName(), request.getCompany());
+		return "responsesToRequest.xhtml?faces-redirect=true";
+	}
+	
+	public void rejectResponse(Response res) {
+		res.setResponseStatus(ResponseStatus.DECLINE.getStatus());
+		responseService.saveOrUpdate(res);
+	}
+	
+	public void negotiateResponse(Response res) {
+		res.setResponseStatus(ResponseStatus.NEGOTIATE.getStatus());
+		responseService.saveOrUpdate(res);
+	}
+
+	public void acceptResponse(Response res) {
+		res.setResponseStatus(ResponseStatus.ACCEPT.getStatus());
+		responseService.saveOrUpdate(res);
+	}
+	
+	public String showRebateOffer(Response res) {
+		tabManager.setDisplayTab("Requests");
+		setResponse(res);
+		Rebate rebate = rebateService.getUniqueRebateByNameAndCompany(response.getRebateName(), response.getSupplierCompany());
+		res.setRebate(rebate);
+		return "showRebateDetails.xhtml?faces-redirect=false";
+	}
+
+	public List<Response> getResponsesToRequest() {
+		return responsesToRequest;
+	}
+
+	public void setResponsesToRequest(List<Response> responsesToRequest) {
+		this.responsesToRequest = responsesToRequest;
+	}
+
+	public Response getResponse() {
+		return response;
+	}
+
+	public void setResponse(Response response) {
+		this.response = response;
+	}
+	
+	public String seeResponseDetails(Response response) {
+		tabManager.setDisplayTab("Requests");
+		this.response = response;
+		return "showResponseDetails.xhtml?faces-redirect=false";
+	}
+	
+	
+	
 }

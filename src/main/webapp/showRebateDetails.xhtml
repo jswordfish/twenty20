@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <link type="text/css" rel="stylesheet" href="css/response.css" />
+    <title>View Rebate Details</title>
+
+</h:head>
+
+
+
+<h:body>  
+ 
+ <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand" style="bitBold">
+		
+		<h:outputText id="displayTitle" value="#{requestManager.response.rebate.rebateName}" />
+	    
+	    </div>
+        </div>
+	<b><hr/> </b>
+	
+		<div class="panel panel-default panel-table">
+		    <div class="panel-heading">
+			<div class="tr">
+			    <div class="td"><b>Basic Details</b></div>
+			    <div class="td"><b>Rebate Structure</b></div>
+			    <div class="td"><b>Validity</b></div>
+			</div>
+		    </div>
+		    <div class="panel-body">
+			<div class="tr">
+			    <div class="td">
+				<table class="table">
+				  
+				  <tbody>
+				    <tr>
+				      <td>Rebate Name</td>
+				      <td><h:outputText id="rebateName" value="#{requestManager.response.rebate.rebateName}" styleClass="fontClass" /></td>
+				    </tr>
+				    <tr>
+				      <td>Created By</td>
+				      <td><h:outputText id="supplier" value="#{requestManager.response.rebate.supplier}"  styleClass="fontClass"/></td>
+				    </tr>
+				    <tr>
+				      <td>Supplier Company</td>
+				      <td><h:outputText id="company" value="#{requestManager.response.rebate.company}" styleClass="fontClass" /></td>
+				    </tr>
+				     <tr>
+				      <td>Request Reference</td>
+				      <td><h:outputText id="rebateReference" value="#{requestManager.response.rebate.rebateReference}" styleClass="fontClass" /></td>
+				    </tr>
+				    
+				  </tbody>
+				</table>
+			    
+			 
+
+			    </div>
+			    <div class="td">
+				<table class="table">
+				  
+				  <tbody>
+				    <tr>
+				      <td>Base Offer Sales Value INR</td>
+				      <td><h:outputText id="baseOfferSalesValue" value="#{requestManager.response.rebate.baseOfferSalesValue}" styleClass="fontClass">
+						<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+						</h:outputText>
+				      
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Base Offer Rebate Percent</td>
+				      <td><<h:outputText id="baseOfferRebateOfferInPercent" value="#{requestManager.response.rebate.baseOfferRebateOfferInPercent}" styleClass="fontClass">
+						
+						</h:outputText>
+				      </td>
+				    </tr>
+				   <tr>
+				      <td>Tier 1 Offer Sales Value INR</td>
+				      <td><h:outputText id="tier1OfferSalesValue" value="#{requestManager.response.rebate.tier1OfferSalesValue}" styleClass="fontClass">
+						<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+						</h:outputText>
+				      
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Tier 1 Offer Rebate Percent</td>
+				      <td><<h:outputText id="tier1OfferRebateOfferInPercent" value="#{requestManager.response.rebate.tier1OfferRebateOfferInPercent}" styleClass="fontClass">
+						
+						</h:outputText>
+				      </td>
+				    </tr>
+				    
+				    <tr>
+				      <td>Tier 2 Offer Sales Value INR</td>
+				      <td><h:outputText id="tier2OfferSalesValue" value="#{requestManager.response.rebate.tier2OfferSalesValue}" styleClass="fontClass">
+						<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+						</h:outputText>
+				      
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Tier 2 Offer Rebate Percent</td>
+				      <td><<h:outputText id="tier2OfferRebateOfferInPercent" value="#{requestManager.response.rebate.tier2OfferRebateOfferInPercent}" styleClass="fontClass">
+						
+						</h:outputText>
+				      </td>
+				    </tr>
+				    
+				    <tr>
+				      <td>Tier 3 Offer Sales Value INR</td>
+				      <td><h:outputText id="tier3OfferSalesValue" value="#{requestManager.response.rebate.tier3OfferSalesValue}" styleClass="fontClass">
+						<f:convertNumber maxIntegerDigits="15" maxFractionDigits="1" pattern="##############0.0"/>
+						</h:outputText>
+				      
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Tier 3 Offer Rebate Percent</td>
+				      <td><<h:outputText id="tier3OfferRebateOfferInPercent" value="#{requestManager.response.rebate.tier3OfferRebateOfferInPercent}" styleClass="fontClass">
+						
+						</h:outputText>
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Seen Enough!</td>
+				      <td><h:button value="Go Back"  outcome="responsesToRequest"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:button>    
+				
+				      </td>
+				    </tr>
+				    
+				     
+				   
+				  </tbody>
+				</table>
+			    </div>
+			    <div class="td">
+				<tr>
+				      <td>Rebate Offer Valid From</td>
+				      <td><h:outputText id="rebateValidFrom" value="#{requestManager.response.rebate.rebateValidFrom}" styleClass="fontClass">
+						<f:convertDateTime pattern="dd-MMM-yyyy" />
+						</h:outputText>
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Rebate Offer Valid To</td>
+				      <td><h:outputText id="rebateValidTo" value="#{requestManager.response.rebate.rebateValidTo}" styleClass="fontClass">
+						<f:convertDateTime pattern="dd-MMM-yyyy" />
+						</h:outputText>
+				      </td>
+				    </tr>
+			    
+			 
+
+			    </div>
+			</div>
+		    </div>
+		   
+		</div>
+	<b><hr/> </b>
+       
+	
+	
+		
+	
+</div>	
+  
+</h:body>  
+</html>  

@@ -8,7 +8,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -24,6 +27,7 @@ import com.twenty20.domain.Rebate;
 import com.twenty20.domain.Request;
 import com.twenty20.domain.RequestDescription;
 import com.twenty20.domain.Response;
+import com.twenty20.domain.ResponseStatus;
 import com.twenty20.domain.ResponseToRequestDescription;
 import com.twenty20.services.RebateService;
 import com.twenty20.services.RequestService;
@@ -71,6 +75,8 @@ public class ResponseManager {
 		String responseValidToDt = "";
 		
 		String fileAttached;
+		
+		List<Response> myResponses = new ArrayList<>();
 	
 	@PostConstruct
 	public void init() {
@@ -193,6 +199,11 @@ public class ResponseManager {
 		Response response = responseService.getResponse(request.getRequestName(), request.getBuyer(), request.getCompany(), userManager.getUser(), userManager.getUsr().getCompany().getCompanyName());
 		//step 3 - Assosicate request with response
 		
+		/**
+		 * Always better to reload request incase it changed.
+		 */
+		request = requestService.getUniqueRequest(request.getRequestName(), request.getBuyer(), request.getCompany());
+		
 		if(response == null) {
 				//create
 				this.response = new Response();
@@ -222,12 +233,52 @@ public class ResponseManager {
 //					descriptions.add(description);
 //				}
 				//this.response.setResponseToRequestDescriptions(descriptions);
+				List<ResponseToRequestDescription> descriptions = figure(response, request);
+				response.setResponseToRequestDescriptions(descriptions);
+				
 				setResponse(response);
 				setFileAttached(response.getAdditionalDocumentUrl());
 			}
 		setDates();
+		
+		
 		this.response.setRequest(request);
 		return "response.xhtml?faces-redirect=false";
+	}
+	
+	private List<ResponseToRequestDescription> figure(Response response, Request request){
+		/**
+		 * Step 1 Find Response descrs that are not mapped to Req Descs and discard them
+		 */
+		Map<String,RequestDescription> map = new HashMap<>();
+		for(RequestDescription description : request.getRequestDescriptions()) {
+			map.put(description.getSubProduct()+description.getUnit()+description.getVolumeRequired(), description);
+		}
+		
+		for(Iterator<ResponseToRequestDescription> itr = response.getResponseToRequestDescriptions().iterator(); itr.hasNext();) {
+			ResponseToRequestDescription des = itr.next();
+			if(map.get(des.getSubProduct()+des.getUnit()+des.getVolumeRequired()) == null ) {
+				itr.remove();
+			}
+		}
+		
+		/**
+		 * Step 2 Find out those req descs who does not have a coreesponding res desc and then create response desc for it.
+		 */
+		Map<String,ResponseToRequestDescription> map2 = new HashMap<>();
+		for(ResponseToRequestDescription responseToRequestDescription : response.getResponseToRequestDescriptions()) {
+			map2.put(responseToRequestDescription.getSubProduct()+responseToRequestDescription.getUnit()+responseToRequestDescription.getVolumeRequired(), responseToRequestDescription);
+			
+		}
+		
+		for(RequestDescription requestDescription : request.getRequestDescriptions()) {
+			if(map2.get(requestDescription.getSubProduct()+requestDescription.getUnit()+requestDescription.getVolumeRequired()) == null) {
+				ResponseToRequestDescription description = new ResponseToRequestDescription(requestDescription.getSubProduct(), requestDescription.getVolumeRequired(), requestDescription.getUnit(), "");
+				response.getResponseToRequestDescriptions().add(description);
+			}
+		}
+		
+	return response.getResponseToRequestDescriptions();
 	}
 
 	public String getResponsePageTitle() {
@@ -377,5 +428,38 @@ public class ResponseManager {
 		this.fileAttached = fileAttached;
 	}
 	
+	public String myResponses() {
+		tabManager.setDisplayTab("Responses");
+		myResponses = responseService.getResponsesByCompany(userManager.getUsr().getCompany().getCompanyName());
+		return "myResponses.xhtml?faces-redirect=false";
+	}
 	
+	public void markResponseAsVoid(Response response) {
+		response.setResponseStatus(ResponseStatus.CANCEL.getStatus());
+		responseService.saveOrUpdate(response);
+		myResponses = responseService.getResponsesByCompany(userManager.getUsr().getCompany().getCompanyName());
+		RequestContext.getCurrentInstance().update("myResponseForm:myResponses");
+	}
+	
+	public String editResponse(Response response) {
+		this.response = response;
+		setError(false);
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		String time = df.format(response.getLastModifiedDate());
+		setResponsePageTitle("You are updating the response submited on "+time+". If you don't want to update click on Back Button");
+		setResponse(response);
+		setFileAttached(response.getAdditionalDocumentUrl());
+		Request request = requestService.getUniqueRequest(response.getRequestName(), response.getBuyer(), response.getBuyerCompany());
+		this.response.setRequest(request);
+		setDates();
+		return "response.xhtml?faces-redirect=false";
+	}
+
+	public List<Response> getMyResponses() {
+		return myResponses;
+	}
+
+	public void setMyResponses(List<Response> myResponses) {
+		this.myResponses = myResponses;
+	}
 }

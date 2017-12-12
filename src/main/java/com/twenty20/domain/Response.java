@@ -15,7 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
@@ -24,9 +23,11 @@ import org.hibernate.search.annotations.Store;
 	@NamedQuery(name="Response.getUniqueResponse", 
 			query="SELECT p FROM Response p WHERE p.requestName=:requestName AND p.buyer=:buyer AND p.buyerCompany=:buyerCompany AND p.supplier=:supplier AND p.supplierCompany=:supplierCompany"),
 	@NamedQuery(name="Response.getResponseByCompany", 
-	query="SELECT p FROM Response p WHERE p.supplierCompany=:supplierCompany"),
+	query="SELECT p FROM Response p WHERE p.supplierCompany=:supplierCompany AND p.responseStatus <> 'CANCEL'"),
 	@NamedQuery(name="Response.getResponseBySupplierNameAndCompany", 
-	query="SELECT p FROM Response p WHERE p.supplier=:supplier AND p.supplierCompany=:supplierCompany")
+	query="SELECT p FROM Response p WHERE p.supplier=:supplier AND p.supplierCompany=:supplierCompany"),
+	@NamedQuery(name="Response.getResponsesForRequentNameAndBuyerCompany", 
+	query="SELECT p FROM Response p WHERE p.requestName=:requestName AND p.buyerCompany=:buyerCompany")
 })
 @Indexed
 public class Response extends Base{
@@ -53,6 +54,9 @@ public class Response extends Base{
 	
 	@Transient
 	Request request;
+	
+	@Transient
+	Rebate rebate;
 	
 	String supplierEmail;
 	
@@ -231,6 +235,14 @@ public class Response extends Base{
 
 	public void setRequest(Request request) {
 		this.request = request;
+	}
+
+	public Rebate getRebate() {
+		return rebate;
+	}
+
+	public void setRebate(Rebate rebate) {
+		this.rebate = rebate;
 	}
 	
 	
