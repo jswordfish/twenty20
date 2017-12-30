@@ -27,7 +27,9 @@ import com.twenty20.lucene.bridges.RequestFieldBridge;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Request.getUniqueRequest", 
-			query="SELECT p FROM Request p WHERE p.requestName=:requestName AND p.buyer=:buyer AND p.company=:company")
+			query="SELECT p FROM Request p WHERE p.requestName=:requestName AND p.buyer=:buyer AND p.company=:company"),
+	@NamedQuery(name="Request.getAllOpenRequests", 
+	query="SELECT p FROM Request p WHERE p.closed=false ")
 })
 @Indexed
 public class Request extends Base{
@@ -105,6 +107,8 @@ public class Request extends Base{
 	
 	
 	Boolean termsAndConditionsAccepted = true;
+	
+	Boolean closed = false;
 
 
 	public String getBuyer() {
@@ -409,5 +413,17 @@ public class Request extends Base{
 	public void setProjectLocation(String projectLocation) {
 		this.projectLocation = projectLocation;
 	}
+
+
+	public Boolean getClosed() {
+		return closed;
+	}
+
+
+	public void setClosed(Boolean closed) {
+		this.closed = closed;
+	}
+	
+	
 
 }

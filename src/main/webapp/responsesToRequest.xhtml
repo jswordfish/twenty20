@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"  
 xmlns:h="http://xmlns.jcp.org/jsf/html"  
 xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -57,7 +56,7 @@ xmlns:a="http://xmlns.jcp.org/jsf">
                  print="true"  row-highlight="true" id="responsesToRequest">
 		 
 	 <h:column>
-                    <h:outputText label="No" value="#{res.rowIndex}" />
+                    <h:outputText label="No" value="#{table.rowIndex + 1}" styleClass="fontClass"/>  
                 </h:column>
 		 
 	<b:dataTableColumn label="Response Creation Date" >
@@ -71,28 +70,34 @@ xmlns:a="http://xmlns.jcp.org/jsf">
 	
 	<b:dataTableColumn label="Supplier Contact Info" value="98204XXXXX" />
         <b:dataTableColumn label="Rebate Offer Associated" value="#{res.rebateName}" />
-        <b:dataTableColumn label="Response Status" value="#{res.responseStatus}" />
+        <b:dataTableColumn label="Response Status" value="#{res.responseStatus}" style="#{res.responseStatus} " />
        
-	<b:dataTableColumn label="Decline Response" >
-		<h:commandLink  value="Click to Modify" action="#{requestManager.rejectResponse(res)}" styleClass="general" >
-			<f:ajax execute="@form" render="@form"  />
-		</h:commandLink>		
+	<b:dataTableColumn label="Click to Decline" >
+		<p:commandButton  value="Reject" action="#{requestManager.rejectResponse(res)}"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;" >
+			<f:ajax  />
+		</p:commandButton>		
 	</b:dataTableColumn>
-	<b:dataTableColumn label="Negotiate" >
-		<h:commandLink  value="Click to Modify" action="#{requestManager.negotiateResponse(res)}" styleClass="general" >
-			<f:ajax execute="@form" render="@form"  />
-		</h:commandLink>		
+	<b:dataTableColumn label="Click to Negotiate" >
+		<p:commandButton  value="Negotiate" action="#{requestManager.negotiateResponse(res)}"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;" >
+			<f:ajax  />
+		</p:commandButton>		
 	</b:dataTableColumn>
-	<b:dataTableColumn label="Accept" >
-		<h:commandLink  value="Click to Modify" action="#{requestManager.acceptResponse(res)}" styleClass="general" >
-			<f:ajax execute="@form" render="@form"  />
-		</h:commandLink>		
+	<b:dataTableColumn label="Click to Accept" >
+		<p:commandButton  value="Accept" action="#{requestManager.acceptResponse(res)}"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;" >
+			<f:ajax  />
+		</p:commandButton>		
 	</b:dataTableColumn>
 	
-	<b:dataTableColumn label="See Rebate Offer Details" >
-		<h:commandLink  value="Click to Modify" action="#{requestManager.showRebateOffer(res)}" styleClass="general" >
+	<b:dataTableColumn label="Applicable Rebate Offer" >
+		<p:commandLink  value="Click to View" action="#{requestManager.showRebateOffer(res)}" styleClass="general" >
 			<f:ajax execute="@form" render="@form"  />
-		</h:commandLink>		
+		</p:commandLink>		
+	</b:dataTableColumn>
+	
+	<b:dataTableColumn label="View Response Details" >
+		<p:commandLink  value="Click to View" action="#{requestManager.seeResponseDetails(res)}" styleClass="general" >
+			<f:ajax execute="@form" render="@form"  />
+		</p:commandLink>		
 	</b:dataTableColumn>
       
     </b:dataTable>

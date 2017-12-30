@@ -36,7 +36,9 @@ xmlns:a="http://xmlns.jcp.org/jsf">
 }
 
 </style>
-
+<f:metadata>
+          <f:event type="preRenderView" listener="#{responseManager.refresh}"/>
+      </f:metadata>
 </h:head>  
 
 
@@ -59,6 +61,12 @@ xmlns:a="http://xmlns.jcp.org/jsf">
 	<b:dataTableColumn label="Date when last Modified" >
 		<h:outputText value="#{res.lastModifiedDate}">
 			<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+		    </h:outputText>
+	</b:dataTableColumn>
+	
+	<b:dataTableColumn label="Request Status?" >
+		<h:outputText value="#{res.request.closed ? 'Closed' : 'Open'}"   style="#{res.request.closed ? 'color:red;':'color:green;'}">
+			
 		    </h:outputText>
 	</b:dataTableColumn>
  

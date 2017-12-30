@@ -114,17 +114,27 @@ public class RequestDaoImpl extends JpaDAOImpl<Long, Request> implements Request
 			SetView<Request> rs = Sets.intersection(r1, r2);
 			List<Request> list = new ArrayList<>();
 			list.addAll(rs);
-			return list;
+			return getOpenRequests(list);
 		}
 		
 		if(reqsLucene != null) {
-			return reqsLucene;
+			return getOpenRequests(reqsLucene);
 		}
 		
 		if(requestsDb != null) {
-			return requestsDb;
+			return getOpenRequests(requestsDb);
 		}
 		return null;
+	}
+	
+	private List<Request> getOpenRequests(List<Request> list){
+		List<Request> ret = new ArrayList<>();
+		for(Request r : list) {
+			if(!r.getClosed()) {
+				ret.add(r);
+			}
+		}
+	return ret;
 	}
 	
 	private List<Request> getRequestsFromDatabase(SearchParams params){

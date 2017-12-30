@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -105,6 +106,7 @@ public class ProjectController {
 	}
 
 	public String edit(Project project1){
+		tabManager.setDisplayTab("Projects");
 		setTitle("Update Project- "+project1.getProjectValue()+" And Type- "+project1.getProjectType());
 		//RequestContext.getCurrentInstance().update("form:displayTitle");
 		this.project = project1;
@@ -124,12 +126,17 @@ public class ProjectController {
 	
 	
 	
-	public void delete(Long id){
-		projectService.remove(id);
+	public void close(Project project){
+		tabManager.setDisplayTab("Projects");
+		project.setClosed(true);
+		projectService.saveOrUpdate(project);
 		this.projects = projectService.findAll();
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Status - Project Close Attempt", "Success");
+		RequestContext.getCurrentInstance().showMessageInDialog(msg);
 	}
 	
 	public String createNew(){
+		tabManager.setDisplayTab("Projects");
 		setProject(new Project());
 		setTitle("New Project Creation");UserService userService = (UserService) SpringUtil.getService(UserService.class);
 		user = userService.getUniqueUser("mglover");

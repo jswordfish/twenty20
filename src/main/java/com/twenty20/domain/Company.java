@@ -9,12 +9,19 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.primefaces.model.UploadedFile;
+
 import com.twenty20.common.OrganizationType;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Company.getUniqueCompany", 
-			query="SELECT c FROM Company c WHERE c.companyName=:companyName AND c.companyRegistrationNumber=:companyRegistrationNumber")
+			query="SELECT c FROM Company c WHERE c.companyName=:companyName AND c.companyRegistrationNumber=:companyRegistrationNumber"),
 	
+	@NamedQuery(name="Company.getAllCompanies", 
+	query="SELECT c FROM Company c order by c.companyName"),
+	
+	@NamedQuery(name="Company.getCompaniesByName", 
+	query="SELECT c FROM Company c WHERE c.companyName=:companyName")
 })
 public class Company extends com.twenty20.domain.Base{
 	@NotNull
@@ -39,10 +46,15 @@ public class Company extends com.twenty20.domain.Base{
 	@Transient
 	byte[] companyLogo;
 	
+	@Transient
+	UploadedFile uploadedFile;
+	
 	String companyLogoUrl;
 	
 	@Transient
 	String companyLogoExtension;
+	
+	
 	
 	public Company(){
 		
@@ -70,7 +82,7 @@ public class Company extends com.twenty20.domain.Base{
 	String website;
 	
 	@Embedded
-	Address address;
+	Address address = new Address();;
 	
 	String headQuarters;
 	
@@ -227,6 +239,14 @@ public class Company extends com.twenty20.domain.Base{
 
 	public void setSourceofReferal(String sourceofReferal) {
 		this.sourceofReferal = sourceofReferal;
+	}
+
+	public UploadedFile getUploadedFile() {
+		return uploadedFile;
+	}
+
+	public void setUploadedFile(UploadedFile uploadedFile) {
+		this.uploadedFile = uploadedFile;
 	}
 	
 	

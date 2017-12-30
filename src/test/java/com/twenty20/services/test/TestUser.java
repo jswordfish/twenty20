@@ -58,7 +58,7 @@ public class TestUser {
 		userForgotQuestions.setQuestionChosen("question2");
 		userForgotQuestions.setAnswer("Nilesh");
 		user.setUserForgotQuestions(userForgotQuestions);
-		Company company = new Company("V2 Tech", "AXN");
+		Company company = new Company("V2 Tech", "anxdswdwd");
 		user.setCompany(company);
 		userService.saveOrUpdate(user);
 	}

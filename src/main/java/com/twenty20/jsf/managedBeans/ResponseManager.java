@@ -88,6 +88,11 @@ public class ResponseManager {
 		reloadRebates();
 	}
 	
+	public void refresh() {
+		myResponses = responseService.getResponsesByCompany(userManager.getUsr().getCompany().getCompanyName());
+		reloadRebates();
+	}
+	
 	private void reloadRebates() {
 		List<Rebate> rbs = rebateService.getActiveRebatesByCompany(userManager.getUsr().getCompany().getCompanyName());
 		rebates = new String[rbs.size()];

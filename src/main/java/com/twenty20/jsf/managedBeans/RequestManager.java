@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -86,8 +87,13 @@ public class RequestManager {
 		projectService = SpringUtil.getService(ProjectService.class);
 		responseService = SpringUtil.getService(ResponseService.class);
 		rebateService = SpringUtil.getService(RebateService.class);
-		requests = requestService.findAll();
+		//requests = requestService.findAll();
+		reload();
 		//projectService.getProjectsByCompany(user)
+	}
+	
+	public void reload() {
+		requests = requestService.getAllOpenRequests();
 	}
 	
 	public String edit(Request request) {
@@ -158,10 +164,12 @@ public class RequestManager {
 		}
 	}
 	
-	public void delete(Request request) {
+	public void close(Request request) {
 		setTitle("Create New Request");
-		requestService.delete(request.getId());
-		requests = requestService.findAll();
+		//request.setr
+		request.setClosed(true);
+		requestService.saveOrUpdate(request);
+		requests = requestService.getAllOpenRequests();
 	}
 	
 	public String createNew() {
@@ -189,7 +197,7 @@ public class RequestManager {
 	
 	public String saveOrUpdate() {
 		requestService.saveOrUpdate(request);
-		this.requests = requestService.findAll();
+		requests = requestService.getAllOpenRequests();
 		tabManager.setDisplayTab("Requests");
 		return "bootstrapTabs.xhtml?faces-redirect=true";
 	}
@@ -389,18 +397,28 @@ public class RequestManager {
 	}
 	
 	public void rejectResponse(Response res) {
-		res.setResponseStatus(ResponseStatus.DECLINE.getStatus());
+		
 		responseService.saveOrUpdate(res);
+		res.setResponseStatus(ResponseStatus.DECLINE.getStatus());
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success - Status Changed to", "Decline");
+		RequestContext.getCurrentInstance().showMessageInDialog(msg);
+		RequestContext.getCurrentInstance().update("responseForm:responsesToRequest");
 	}
 	
 	public void negotiateResponse(Response res) {
-		res.setResponseStatus(ResponseStatus.NEGOTIATE.getStatus());
 		responseService.saveOrUpdate(res);
-	}
+		res.setResponseStatus(ResponseStatus.NEGOTIATE.getStatus());
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success - Status Changed to", "Negotiate");
+		RequestContext.getCurrentInstance().showMessageInDialog(msg);
+		RequestContext.getCurrentInstance().update("responseForm:responsesToRequest");
+	}	
 
 	public void acceptResponse(Response res) {
-		res.setResponseStatus(ResponseStatus.ACCEPT.getStatus());
 		responseService.saveOrUpdate(res);
+		res.setResponseStatus(ResponseStatus.ACCEPT.getStatus());
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success - Status Changed to", "Accept");
+		RequestContext.getCurrentInstance().showMessageInDialog(msg);
+		RequestContext.getCurrentInstance().update("responseForm:responsesToRequest");
 	}
 	
 	public String showRebateOffer(Response res) {

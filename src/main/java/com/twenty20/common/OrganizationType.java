@@ -13,6 +13,12 @@ public enum OrganizationType {
 	public String getOrgType() {
 		return orgType;
 	}
+
+	public void setOrgType(String orgType) {
+		this.orgType = orgType;
+	}
+	
+	
 	
 	
 

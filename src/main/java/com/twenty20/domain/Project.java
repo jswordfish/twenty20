@@ -53,6 +53,8 @@ public class Project extends Base{
 	
 	@Embedded
 	Address address = new Address();
+	
+	Boolean closed = false;
 
 	public String getBuyer() {
 		return buyer;
@@ -153,6 +155,14 @@ public class Project extends Base{
 	public void setType(String type) {
 		this.type = type;
 		setProjectType(ProjectType.valueOf(type));
+	}
+
+	public Boolean getClosed() {
+		return closed;
+	}
+
+	public void setClosed(Boolean closed) {
+		this.closed = closed;
 	}
 	
 	

@@ -30,6 +30,7 @@ import com.twenty20.domain.User;
 import com.twenty20.services.CompanyService;
 import com.twenty20.services.UserService;
 import com.twenty20.util.ConfUtil;
+import com.twenty20.util.EmailUtil;
 
 @Service("userService")
 @org.springframework.transaction.annotation.Transactional(propagation= Propagation.REQUIRED, rollbackFor=Twenty20Exception.class)
@@ -119,4 +120,42 @@ public class UserServiceImpl extends BaseServiceImpl<Long, User> implements User
 		}
     	return company;
     }
+
+	@Override
+	public void createUserWithMailSent(User user) throws Twenty20Exception {
+		// TODO Auto-generated method stub
+		Company company = companyService.getUniqueCompany(user.getCompany().getCompanyName(), user.getCompany().getCompanyRegistrationNumber());
+		if(company == null){
+			throw new Twenty20Exception("NO_COMPANY_EXISTS");
+		}
+	user.setCompany(company);
+	
+	Set<ConstraintViolation<User>> violations = validator.validate(user);
+	if(violations.size() > 0){
+		throw new Twenty20Exception("INVALID_USER_PARAMS");
+	}
+		
+	User user2 = getUniqueUser(user.getUserName());
+		if(user2 == null){
+			EmailUtil emailUtil = new EmailUtil(user);
+			Thread th = new Thread(emailUtil);
+			th.start();
+			dao.persist(user);
+		}
+		else{
+			throw new Twenty20Exception("USER_ALREADY_EXISTS");
+		}
+	}
+
+	@Override
+	public void validateUser(User user) throws Twenty20Exception {
+		// TODO Auto-generated method stub
+		User user2 = getUniqueUser(user.getUserName());
+		if(user2 == null) {
+			throw new Twenty20Exception("NO_USER_EXISTS");
+		}
+		
+		user2.setValidated(true);
+		dao.merge(user2);
+	}
 }

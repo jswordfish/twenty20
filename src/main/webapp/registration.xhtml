@@ -1,0 +1,259 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <link type="text/css" rel="stylesheet" href="css/response.css" />
+    <title>Registration</title>
+
+</h:head>
+
+
+<f:event listener="#{userManager.setCheck}" type="preRenderView" />
+<h:body>  
+ 
+ <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand" style="bitBold">
+		
+		<h:outputText id="displayTitle" value="Buyer Registration" />
+	    
+	    </div>
+        </div>
+	<b><hr/> </b>
+	<h:form id="userForm" class="form-horizontal"  >
+		<div class="panel panel-default panel-table">
+		    <div class="panel-heading">
+			<div class="tr">
+			    <div class="td"><b>Your Details</b></div>
+			    <div class="td"><b> Company Details </b></div>
+			 
+			</div>
+		    </div>
+		    <div class="panel-body">
+			<div class="tr">
+			    <div class="td">
+				
+				<table class="table" >
+				  
+				  <tbody>
+				    
+				    <tr>
+				      <td><h:outputLabel for="firstName"  styleClass="fontClass" >First Name</h:outputLabel></td>
+				      <td><p:inputText id="firstName" value="#{userManager.usr.firstName}" styleClass="fontClass" size="40" pt:required="required" >
+				      <f:validateRequired />
+				      </p:inputText>
+				      </td>
+				      <h:message for="firstName" style="color:red"  errorStyle="color:red; display:block"/>
+				    </tr>
+				   
+				    
+				    <tr>
+				      <td><h:outputLabel for="lastName"  styleClass="fontClass" >Last Name</h:outputLabel></td>
+				      <td><p:inputText id="lastName" value="#{userManager.usr.lastName}"  styleClass="fontClass" size="40" required="true" pt:required="required" /></td>
+				    </tr>
+				    
+				   
+				    
+				    <tr>
+				      <td><h:outputLabel for="userName"  styleClass="fontClass" >User Name</h:outputLabel></td>
+				      <td><p:inputText id="userName" value="#{userManager.usr.userName}" styleClass="fontClass" size="40" required="true" pt:required="required"  /></td>
+				     
+				    </tr>
+				    
+				   
+				    
+				     <tr>
+				      <td><h:outputLabel for="password"  styleClass="fontClass" >Password</h:outputLabel></td>
+				      <td><p:password id="password" value="#{userManager.usr.password}" feedback="false" styleClass="fontClass" size="40" match="repeatpassword" pt:required="required" label="Password"/></td>
+				      
+				    </tr>
+				    <tr>
+					<td><h:message for="password"   errorStyle="color:red; display:block;font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;"/>  </td>
+				    </tr>
+				    
+				    <tr>
+				      <td><h:outputLabel for="repeatpassword"  styleClass="fontClass" >Repeat Password</h:outputLabel></td>
+				      <td><p:password id="repeatpassword" feedback="false" styleClass="fontClass" size="40" pt:required="required" label="Repeat Password" /></td>
+				     
+				    </tr>
+				   <tr>
+					<td><h:message for="repeatpassword"   errorStyle="color:red; display:block;font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;"/>  </td>
+				    </tr>
+				     <tr>
+				      <td><h:outputLabel for="email"  styleClass="fontClass" >Email</h:outputLabel></td>
+				      <td>
+				      
+					
+				      <p:inputText id="email" value="#{userManager.usr.email}"  pt:placeholder="Email" styleClass="fontClass" validatorMessage="Enter Valid Email"   >
+							 <f:validateRegex pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+						</p:inputText>
+				      <h:message for="email"   errorStyle="color:red; display:block;font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;"/>
+				      </td>
+				    </tr>
+				 
+				    
+					<tr>
+				      <td><h:outputLabel for="userType"  styleClass="fontClass" >Are you a Buyer or a Supplier?</h:outputLabel></td>
+				      <td>
+							<p:selectOneMenu id="userType" value="#{userManager.usr.userType}" styleClass="fontClass" >  
+										<f:selectItem itemValue="SUPPLIER" itemLabel="SUPPLIER"  />  
+										<f:selectItem itemValue="BUYER" itemLabel="BUYER" style="color:green;"	 />
+										
+									
+									</p:selectOneMenu>
+					      </td>
+					</tr>
+					
+				
+					
+				      <tr>
+				      <td><h:outputLabel for="questionChosen"  styleClass="fontClass" >Choose your secret Question</h:outputLabel></td>
+				      <td>
+						<p:selectOneMenu id="questionChosen" value="#{userManager.usr.userForgotQuestions.questionChosen}" required="true" styleClass="fontClass">  
+									<f:selectItem itemValue="question1" itemLabel="What was your childhood nickname?" />  
+									<f:selectItem itemValue="question2" itemLabel="What was the name of your best friend at school?" />
+									<f:selectItem itemValue="question3" itemLabel="What is your Maternal Grandmother's maiden name?" />  
+									<f:selectItem itemValue="question4" itemLabel="In what city does your nearest sibling live?" />
+									<f:selectItem itemValue="question5" itemLabel="In what city or town was your first job?" />  
+									<f:selectItem itemValue="question6" itemLabel="Where did you meet your partner?" />
+									<f:selectItem itemValue="question7" itemLabel="What is your favourite holiday destination?" />
+									
+								
+								</p:selectOneMenu>
+				      </td>
+				    </tr>
+				    
+				  <tr>
+				      <td><h:outputLabel for="answer"  styleClass="fontClass" >Answer to your Secret Question</h:outputLabel></td>
+				      <td><p:inputText id="answer" value="#{userManager.usr.userForgotQuestions.answer}" styleClass="fontClass" size="40" required="true" pt:required="required"  /></td>
+				    </tr>
+				    
+				     <tr>
+					      <td><h:outputLabel for="companyNameSelected"  styleClass="fontClass" >Select your Company If listed. (If not Create it)</h:outputLabel></td>
+					     <td>
+						<p:selectOneMenu id="pType" value="#{userManager.companyNameSelected}" styleClass="fontClass" >  
+									 <f:selectItems value="#{userManager.companies}"
+								            var="company"
+								            itemValue="#{company.companyName}" noSelectionOption="true"
+								            itemLabel="#{company.companyName}" /> 
+									    
+									    <f:ajax listener="#{userManager.updateCompanyDetails}"/> 
+								
+								</p:selectOneMenu>
+				     
+				     </td>
+				    </tr>
+				 
+				   
+				   
+				     <tr>
+				      
+				      <td>
+						<h:button id="newComp" value="Create New Company"   outcome="create" disabled="#{!(userManager.companyNameSelected == null || userManager.companyNameSelected.equals('Not Listed'))}" styleClass="underConstruction"></h:button>  
+			
+				      </td>
+				      
+				         <td>
+						<h:commandButton id="saveUser" value="Save User"  disabled="#{(userManager.companyNameSelected == null || userManager.companyNameSelected.equals('Not Listed'))}"  action="#{userManager.saveUser}"   styleClass="underConstruction">
+						
+						</h:commandButton>  
+			
+				      </td>
+				    </tr>
+				    
+				  </tbody>
+			</table>
+			 
+
+			    </div>
+			    <div class="td">
+				<table class="table">
+				  
+				  <tbody>
+				    <tr>
+				      <td><h:outputLabel for="companyName"  styleClass="fontClass" >Company Name</h:outputLabel> </td>
+				     <td>
+					<h:outputText id="companyName-id" size="40" value="#{userManager.usr.company.companyName != null and !userManager.usr.company.companyName.equals('Not Listed') ? userManager.usr.company.companyName: ' - Company Not selected yet'}"  style="#{userManager.styleIfNotSelected}"  >  
+					
+					</h:outputText> 
+				      
+				      </td>
+				      
+				    </tr>
+				
+				   <tr>
+				      <td><h:outputLabel for="companyRegistrationNumber"  styleClass="fontClass" >Company Registration</h:outputLabel> </td>
+				     <td>
+					<h:outputText id="companyRegistrationNumber-id" style="#{userManager.styleIfNotSelected}" value="#{userManager.usr.company.companyName != null and !userManager.usr.company.companyName.equals('Not Listed') ? userManager.usr.company.companyRegistrationNumber : ' - Company Not selected'}"    >  
+					
+					</h:outputText> 
+				      
+				      </td>
+				    </tr>
+				 
+				   <tr>
+				      <td><h:outputLabel for="tradingAs"  styleClass="fontClass" >Trading As</h:outputLabel> </td>
+				     <td>
+					<h:outputText id="tradingAs-id" style="#{userManager.styleIfNotSelected}" value="#{userManager.usr.company.companyName != null and !userManager.usr.company.companyName.equals('Not Listed') ? userManager.usr.company.tradingAs : ' - Company Not Selected'}"    >  
+					
+					</h:outputText> 
+				      
+				      </td>
+				    </tr>
+				   
+				  
+				    
+				   
+				    <tr>
+				      <td><h:outputLabel for="companyLogoUrl"  styleClass="fontClass" >Company Logo</h:outputLabel> </td>
+				     <td>
+					<h:outputLink id="companyLogoUrl-id" style="#{userManager.styleIfNotSelected}" value="#{userManager.usr.company.companyLogoUrl}"    >  
+					#{userManager.usr.company.companyLogoUrl}
+					</h:outputLink> 
+				      
+				      </td>
+				    </tr>
+				    
+				    <tr>
+					 
+				    
+				    </tr>
+				    
+				 
+				    
+				    <tr>
+				      <td>
+						
+						
+						
+			
+				      </td>
+				    </tr>
+				     
+				   
+				  </tbody>
+				</table>
+			    </div>
+			   
+			</div>
+		    </div>
+		   
+		</div>
+		
+	</h:form>
+	<b><hr/> </b>
+       
+	
+	
+		
+	
+</div>	
+  
+</h:body>  
+</html>  

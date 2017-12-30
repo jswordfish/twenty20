@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:a="http://xmlns.jcp.org/jsf" 
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ct="http://www.chartistjsf.org/charts">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <link type="text/css" rel="stylesheet" href="css/response.css" />
+    <title>My Dashboard</title>
+
+</h:head>
+
+
+
+<h:body>  
+ 
+ <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand" style="bitBold">
+		
+		
+	    
+	    </div>
+        </div>
+	<b><hr/> </b>
+	
+		<div class="panel panel-default panel-table">
+		    <div class="panel-heading">
+			<div class="tr">
+			    <div class="td"><b>Total Spend Profile By Region</b></div>
+			    <div class="td"><b>Total Spend Profile By Operation</b></div>
+			    <div class="td"><b>Total Spend Profile By Tiered Category</b></div>
+			</div>
+		    </div>
+		    <div class="panel-body">
+			<div class="tr">
+			    <div class="td">
+				<div style="width: 300px; height: 300px%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
+				   <p:chart type="pie" id="pieChartRegion" style="width:350px;height:300px" title="Spends By Region" value="#{buyerDashboard.pieChartTotalSpendProfileByRegion.pieChartModel}" legendPosition="w">
+				     
+				   </p:chart>
+				   
+				 </div>
+			    
+			 
+
+			    </div>
+			    <div class="td">
+				<p:chart type="pie" id="pieChartRegion" style="width:350px;height:300px" title="Spends By Region" value="#{buyerDashboard.pieChartTotalSpendProfileByOperation.pieChartModel}" legendPosition="w">
+				     
+				   </p:chart>
+			    
+				
+				
+			    </div>
+			    <div class="td">
+				<p:chart type="pie" id="pieChartRegion" style="width:350px;height:300px" title="Spends By Region" value="#{buyerDashboard.pieChartTotalSpendProfileByTieredCategory.pieChartModel}" legendPosition="w">
+				     
+				   </p:chart>
+			    
+				
+				
+			    </div>
+			    
+			 
+
+			    </div>
+			</div>
+		    </div>
+		   
+		</div>
+	<b><hr/> </b>
+       <div class="panel panel-default panel-table">
+		    <div class="panel-heading">
+			<div class="tr">
+			    <div class="td"><b>ISO Gross Well Count</b></div>
+			    <div class="td"><b>Top 10 Vendors</b></div>
+			   
+			</div>
+		    </div>
+		    <div class="panel-body">
+			<div class="tr">
+			    <div class="td">
+				
+			    
+			 
+
+			    </div>
+			    <div class="td">
+				
+			    </div>
+			    <div class="td">
+				
+			    
+			 
+
+			    </div>
+			</div>
+		    </div>
+		   
+		</div>
+	
+	
+		
+	
+	
+  
+</h:body>  
+</html>  

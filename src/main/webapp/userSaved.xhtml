@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <title>JSF Bootstrap Example</title>
+    <style type="text/css">
+        .col-xs-updated {        
+            width: 92% !important;
+        }
+	
+	.choices label {
+	   text-align:left;
+	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-weight: normal;
+	}
+	
+	
+    </style>
+</h:head>
+
+
+
+<h:body>  
+   <h:form id="valForm">
+ <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand" style="text-align: center;font-size:16px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;">Check your Email to read the token.</div>
+        </div>
+	<b><hr/> </b>
+     <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3 class="text-center" style="general">
+                        User Verification</h3>
+                   
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                           <h:outputText id="line1-id" value="#{userManager.usr.userName}" class="form-control"  >  
+							
+						</h:outputText>  
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
+                            </span>
+                             <h:outputText id="email-id" value="#{userManager.usr.email}" class="form-control"  >  
+							
+						</h:outputText>
+                        </div>
+                    </div>
+		    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-ok"></span>
+                            </span>
+                            <h:inputText id="otp-id" value="#{userManager.token}" class="form-control"  pt:required="required">  
+							
+						</h:inputText>
+			     
+                        </div>
+                    </div>
+                   </div>
+		   
+		   <h:commandLink action="#{userManager.validateUser}" value="VERIFY"  class="btn btn-sm btn-primary btn-block" role="button" style="general">
+		   
+		   </h:commandLink>
+              
+            </div>
+        </div>
+    </div>
+	<b><hr/> </b>
+	
+</div>	
+  </h:form>
+</h:body>  
+</html>  

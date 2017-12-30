@@ -72,6 +72,7 @@ public class CompanyServiceImpl extends BaseServiceImpl<Long, Company> implement
 			}
 			else{
 				company.setId(company2.getId());
+				company.setUploadedFile(null);
 				org.dozer.Mapper mapper = new DozerBeanMapper();
 				mapper.map(company, company2);
 				dao.merge(company2);
@@ -112,4 +113,23 @@ public class CompanyServiceImpl extends BaseServiceImpl<Long, Company> implement
 		}
     	return company;
     }
+
+	@Override
+	public List<Company> getAllCompaniesSortedByName() throws Twenty20Exception {
+		Map<String, String> queryParams = new HashMap<String, String>();
+	
+		
+		List<Company> companies = findByNamedQueryAndNamedParams(
+				"Company.getAllCompanies", queryParams);
+		return companies;
+	}
+	
+	public List<Company> getCompaniesByName(String companyName) throws Twenty20Exception{
+		Map<String, String> queryParams = new HashMap<String, String>();
+		queryParams.put("companyName", companyName);
+		
+		List<Company> companies = findByNamedQueryAndNamedParams(
+				"Company.getCompaniesByName", queryParams);
+		return companies;
+	}
 }

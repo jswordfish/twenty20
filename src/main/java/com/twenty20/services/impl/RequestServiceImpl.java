@@ -142,6 +142,7 @@ public class RequestServiceImpl extends BaseServiceImpl<Long, Request> implement
 	@Override
 	public void delete(Long id) throws Twenty20Exception {
 		// TODO Auto-generated method stub
+		
 		super.delete(id);
 	}
 
@@ -149,6 +150,13 @@ public class RequestServiceImpl extends BaseServiceImpl<Long, Request> implement
 	public List<Request> getRequests(SearchParams searchParams) throws Twenty20Exception {
 		// TODO Auto-generated method stub
 		return dao.getRequests(searchParams);
+	}
+
+	@Override
+	public List<Request> getAllOpenRequests() throws Twenty20Exception {
+		List<Request> requests = findByNamedQueryAndNamedParams(
+				"Request.getAllOpenRequests", new HashMap<>());
+		return requests;
 	}
 	
 	

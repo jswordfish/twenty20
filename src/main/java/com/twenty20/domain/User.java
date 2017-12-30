@@ -49,7 +49,7 @@ public class User extends Base{
 	@ManyToOne(fetch=FetchType.EAGER)
 	Company company;
 	
-	
+	String token;
 
 	public String getFirstName() {
 		return firstName;
@@ -122,6 +122,16 @@ public class User extends Base{
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	
 
 	
 	

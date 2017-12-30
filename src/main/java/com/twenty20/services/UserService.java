@@ -7,8 +7,9 @@ public interface UserService extends BaseService{
 
 	public void saveOrUpdate(User user) throws Twenty20Exception;
 	
+	public void createUserWithMailSent(User user) throws Twenty20Exception;
 	
 	 public User getUniqueUser(String userName) throws Twenty20Exception;
 	 
-	 
+	 public void validateUser(User user) throws Twenty20Exception;
 }

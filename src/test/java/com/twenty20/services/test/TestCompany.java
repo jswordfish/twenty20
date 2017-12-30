@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twenty20.domain.Company;
 import com.twenty20.services.CompanyService;
 
@@ -26,13 +27,14 @@ CompanyService companyService;
 	@Rollback(value=false)
 	public void testCompany() throws Exception{
 		Company company = new Company();
-		company.setCompanyName("Abc Inc");
+		company.setCompanyName("V2 Tech");
 		company.setCompanyRegistrationNumber("anxdswdwd");
 		File fi = new File("testImages/download.jpg");
 		byte[] fileContent = Files.readAllBytes(fi.toPath());
 		company.setCompanyLogoExtension("jpg");
 		company.setCompanyLogo(fileContent);
 		companyService.saveOrUpdate(company);
+		
 	}
 
 }

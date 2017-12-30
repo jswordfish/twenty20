@@ -71,6 +71,12 @@
 	    <artifactId>primefaces</artifactId>
 	    <version>6.1</version>
 	</dependency>
+	
+	<dependency>
+	    <groupId>org.chartistjsf</groupId>
+	    <artifactId>ChartistJSF</artifactId>
+	    <version>2.1</version>     
+	</dependency>
 		
 	<!-- https://mvnrepository.com/artifact/org.richfaces/richfaces -->
 <dependency>
@@ -419,7 +425,13 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
-		</dependency>                   
+		</dependency>       
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.4</version>
+		</dependency>            
 	</dependencies>
 	<profiles>
 		

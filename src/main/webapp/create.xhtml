@@ -48,7 +48,7 @@
 			<div class="form-group">  
 				<h:outputLabel for="companyName" class="control-label col-sm-10" styleClass="general" >Company Name</h:outputLabel>  
 				<div class="col-sm-10">  
-					<h:inputText id="name-id" value="#{companiesManager.companyName}" class="form-control"   pt:required="required"
+					<h:inputText id="name-id" value="#{userManager.usr.company.companyName}" class="form-control"   pt:required="required"
 					validatorMessage="Company name is required">  
 					<f:validateRequired />  
 					</h:inputText>  
@@ -57,7 +57,7 @@
 			<div class="form-group">  
 				<h:outputLabel for="registrationNo" class="control-label col-sm-10" styleClass="general">Registration Number</h:outputLabel>  
 					<div class="col-sm-10">  
-						<h:inputText id="registrationNo-id" value="#{companiesManager.companyRegistrationNumber}" class="form-control"  pt:required="required" 
+						<h:inputText id="registrationNo-id" value="#{userManager.usr.company.companyRegistrationNumber}" class="form-control"  pt:required="required" 
 						validatorMessage="Registration No is required">  
 						
 						</h:inputText>  
@@ -67,14 +67,14 @@
 			<div class="form-group">  
 			<h:outputLabel for="logo" class="control-label col-sm-10" styleClass="general">Upload Company Logo</h:outputLabel>  
 				<div class="col-sm-10">  
-					<p:fileUpload mode="simple" value="#{companiesManager.uploadedFile}"  class="control-label col-sm-7" style="text-align:left;font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;"/>
-					<p:commandButton value="Upload" action="#{companiesManager.upload}" ajax="false" class="control-label col-sm-2" styleClass="general">
+					<p:fileUpload mode="simple" value="#{userManager.usr.company.uploadedFile}"  class="control-label col-sm-7" style="text-align:left;font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;"/>
+					<p:commandButton value="Upload" action="#{userManager.upload}" ajax="false" class="control-label col-sm-2" styleClass="general">
 						
 					</p:commandButton>
 					
 				
-					<c:if test="${companiesManager.uploadedFile != null}">  
-						(File Attached - "${companiesManager.uploadedFile.fileName}")
+					<c:if test="${userManager.usr.company.uploadedFile != null}">  
+						(File Attached - "${userManager.usr.company.uploadedFile.fileName}")
 					</c:if>
 				
 				</div>  
@@ -83,7 +83,7 @@
 			<div class="form-group">  
 				<h:outputLabel for="cons" class="control-label col-sm-10" styleClass="general">Type of Construction Work Undertaken</h:outputLabel>  
 					<div class="col-sm-10">  
-						<h:inputText id="cons-id" value="#{companiesManager.typeOConstrunctionWorkUndertaken}" class="form-control">  
+						<h:inputText id="cons-id" value="#{userManager.usr.company.typeOConstrunctionWorkUndertaken}" class="form-control">  
 						
 						</h:inputText>  
 					</div>  
@@ -93,7 +93,7 @@
 				<h:outputLabel for="nop" class="control-label col-sm-10" styleClass="general">No of Projects Under Construction
 				</h:outputLabel>  
 					<div class="col-sm-10">  
-						<h:inputText id="nop-id" value="#{companiesManager.numberOfPRojectsUnderConstruction}" class="form-control" pt:type="number" p:title="Enter a number" pt:required="required">  
+						<h:inputText id="nop-id" value="#{userManager.usr.company.numberOfPRojectsUnderConstruction}" class="form-control" pt:type="number" p:title="Enter a number" pt:required="required">  
 							
 						</h:inputText>  
 					</div>  
@@ -102,7 +102,7 @@
 			<div class="form-group" >  
 				<h:outputLabel for="orgType" class="control-label col-sm-10" styleClass="general">Select Organization Type </h:outputLabel>  
 					<div class="col-sm-10">  
-						<h:selectOneRadio value="#{companiesManager.orgType}" validatorMessage="Org Type is required" pt:required="required" styleClass="choices">  
+						<h:selectOneRadio value="#{userManager.usr.company.orgType}" validatorMessage="Org Type is required" pt:required="required" styleClass="choices">  
 							<f:selectItem itemValue="COMPANY_LIMITED_BY_SHARES" itemLabel="Company limited by Shares"  />  
 							<f:selectItem itemValue="CORPORATION" itemLabel="Corporation"  />
 							<f:selectItem itemValue="LIMITED_LIABILITY_PARTNERSHIP" itemLabel="Limited Liability Partnership"  />  
@@ -111,18 +111,130 @@
 						</h:selectOneRadio>  
 					</div>  
 			</div>  
+			
+			<div class="form-group">  
+				<h:outputLabel for="companySize" class="control-label col-sm-10" styleClass="general">Company Size in Turnover
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="companySize-id" value="#{userManager.usr.company.companySize}" class="form-control" pt:type="number" p:title="Enter a number" pt:required="required">  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			
+			<div class="form-group">  
+				<h:outputLabel for="tel" class="control-label col-sm-10" styleClass="general">Telephone Number
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="tel-id" value="#{userManager.usr.company.telephoneNumber}" class="form-control" pt:type="number" p:title="Enter a number" >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			
+			<div class="form-group">  
+				<h:outputLabel for="website" class="control-label col-sm-10" styleClass="general">Website
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="website-id" value="#{userManager.usr.company.website}" class="form-control"  >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			<div class="form-group">  
+				<h:outputLabel for="headQuarters" class="control-label col-sm-10" styleClass="general">HeadQuarters
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="headQuarters-id" value="#{userManager.usr.company.headQuarters}" class="form-control" >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			<hr></hr>
+			<p style="underConstruction">Address</p>
+			<hr></hr>
+			
+			<div class="form-group">  
+				<h:outputLabel for="line1" class="control-label col-sm-10" styleClass="general">Line 1
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="line1-id" value="#{userManager.usr.company.address.line1}" class="form-control"  >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			
+			<div class="form-group">  
+				<h:outputLabel for="line2" class="control-label col-sm-10" styleClass="general">Line 2
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="line2-id" value="#{userManager.usr.company.address.line2}" class="form-control"  >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			<div class="form-group">  
+				<h:outputLabel for="line3" class="control-label col-sm-10" styleClass="general">Line 3
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="line3-id" value="#{userManager.usr.company.address.line3}" class="form-control"  >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			<div class="form-group">  
+				<h:outputLabel for="line4" class="control-label col-sm-10" styleClass="general">Line 4
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="line4-id" value="#{userManager.usr.company.address.line4}" class="form-control"  >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			
+			<div class="form-group">  
+				<h:outputLabel for="town" class="control-label col-sm-10" styleClass="general">Town
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="town-id" value="#{userManager.usr.company.address.town}" class="form-control"  >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			
+			<div class="form-group">  
+				<h:outputLabel for="zip" class="control-label col-sm-10" styleClass="general">Zip
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="zip-id" value="#{userManager.usr.company.address.zip}" class="form-control"  >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
+			
+			<div class="form-group">  
+				<h:outputLabel for="state" class="control-label col-sm-10" styleClass="general">State
+				</h:outputLabel>  
+					<div class="col-sm-10">  
+						<h:inputText id="state-id" value="#{userManager.usr.company.address.state}" class="form-control"  >  
+							
+						</h:inputText>  
+					</div>  
+			</div>
 
 			<div class="form-group">  
 
 				<div class="col-sm-10" >  
 					<div class="col-sm-6" style="align:center;">  
 					
-					<h:commandButton value="Save" action="#{companiesManager.addCompany()}" class="btn btn-success col-sm-7" style="width:100px;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:commandButton>  
+					<p:commandButton value="Save" action="#{userManager.saveCompany()}" class="btn btn-success col-sm-7" style="width:100px;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;">
+						<f:ajax execute="@form" render="@none" />	
+					</p:commandButton>  
 					</div>  
 					
 					
 					<div class="col-sm-6" style="align:center;">  
-					<h:button value="Go Back"  outcome="bootstrapTabs"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:button>  
+					<h:button value="Go Back"  outcome="registration"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:button>  
 					</div>
 					
 				</div>  

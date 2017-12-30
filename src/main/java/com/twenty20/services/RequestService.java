@@ -17,4 +17,6 @@ public interface RequestService extends BaseService{
 	public void delete(Long id)throws Twenty20Exception;
 	
 	public List<Request> getRequests(SearchParams searchParams) throws Twenty20Exception;
+	
+	public List<Request> getAllOpenRequests() throws Twenty20Exception;
 }
