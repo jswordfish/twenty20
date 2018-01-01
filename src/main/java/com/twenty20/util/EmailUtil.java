@@ -56,6 +56,7 @@ public class EmailUtil implements Runnable{
 					he.setSubject("Verification for User Registration Email from Twenty20");
 					he.setAuthenticator(new DefaultAuthenticator(from, pass));
 					he.setTLS(true);
+					System.out.println("smtp port configured  is "+smtpPort);
 					he.setSmtpPort(Integer.parseInt(smtpPort));
 					he.setSSL(true);
 					

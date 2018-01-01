@@ -80,18 +80,24 @@ public class RequestDaoImpl extends JpaDAOImpl<Long, Request> implements Request
 			params.setReadyMix(true);
 			isLuceneQueryNeeded = true;
 		}
+		
+		boolean isAnySearchParamSelected = false;
 		List<Request> reqsLucene = null;
 		if(isLuceneQueryNeeded) {
 			reqsLucene = getRequestFromLucene(params);
+			isAnySearchParamSelected = true;
 		}
 		
 		List<Request> requestsDb =null;
 			try {
 				requestsDb = getRequestsFromDatabase(params);
+				isAnySearchParamSelected = true;
 			}
 			catch(Twenty20Exception e) {
 				if(e.getMessage()!= null && e.getMessage().equalsIgnoreCase("NO_SEARCH_PARAMS_SELECTED")) {
-					
+					if(!isAnySearchParamSelected) {
+						isAnySearchParamSelected = false;
+					}
 				}
 				else {
 					throw e;
@@ -100,7 +106,13 @@ public class RequestDaoImpl extends JpaDAOImpl<Long, Request> implements Request
 			
 		if(reqsLucene == null && requestsDb == null) {
 			//No Search params around. Fetch all Requests
-			return new ArrayList<Request>();
+				if(!isAnySearchParamSelected) {
+					return findAll();
+				}
+				else {
+					return new ArrayList<Request>();
+				}
+			
 			//return findAll();
 		}
 		
@@ -322,8 +334,8 @@ public class RequestDaoImpl extends JpaDAOImpl<Long, Request> implements Request
 			
 			
 			if(query == null || query.trim().length() == 0) {
-				//	throw new Twenty20Exception("NO_SEARCH_PARAMS_SELECTED");
-					return null;
+					throw new Twenty20Exception("NO_SEARCH_PARAMS_SELECTED");
+					//return null;
 				}
 			
 			javax.persistence.Query query2 = getEntityManager().createQuery(query);

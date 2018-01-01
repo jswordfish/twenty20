@@ -13,12 +13,13 @@ import javax.faces.bean.SessionScoped;
 import org.primefaces.context.RequestContext;
 import org.springframework.stereotype.Service;
 
-import com.twenty20.common.OrganizationType;
+import com.twenty20.common.Twenty20Exception;
 import com.twenty20.domain.Company;
 import com.twenty20.domain.User;
 import com.twenty20.domain.UserType;
 import com.twenty20.services.CompanyService;
 import com.twenty20.services.UserService;
+import com.twenty20.util.EmailUtil;
 
 @ManagedBean(name = "userManager", eager = true)
 @SessionScoped
@@ -53,6 +54,22 @@ public class UserManager {
 	
 	String token="";
 	
+	 
+//	public void reload() {
+//		this.companies = companyService.getAllCompaniesSortedByName();
+//	
+//		for(Company comp : getCompanies()) {
+//			if(comp.getCompanyName().equals("Not Listed")) {
+//				usr.setCompany(comp);
+//				break;
+//			}
+//		}
+//	
+//	setCompanyNameSelected("Not Listed");
+//	String stl = getStyleIfNotSelected();
+//	stl = stl.replace("color:green", "color:red");
+//	setStyleIfNotSelected(stl);
+//	}
 
 	
 	@PostConstruct
@@ -310,21 +327,34 @@ public class UserManager {
 	public String saveUser() {
 		User temp = userService.getUniqueUser(usr.getUserName());
 			if(temp != null) {
-				if(!temp.getValidated()) {
+				if(temp.getValidated()) {
 					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "User Name Exists", "Try something different");
 					RequestContext.getCurrentInstance().showMessageInDialog(message);
 					usr.setUserName(null);
 					return "";
 				}
+				else {
+					Random random = new Random();
+					String token = String.format("%04d", random.nextInt(10000));
+					usr.setToken(token);
+					usr.setValidated(false);
+					userService.saveOrUpdate(usr);
+					EmailUtil emailUtil = new EmailUtil(usr);
+					Thread th = new Thread(emailUtil);
+					th.start();
+				}
 				
 				
 			
 			}
-		Random random = new Random();
-		String token = String.format("%04d", random.nextInt(10000));
-		usr.setToken(token);
-		usr.setValidated(false);
-		userService.createUserWithMailSent(usr);
+			else {
+				Random random = new Random();
+				String token = String.format("%04d", random.nextInt(10000));
+				usr.setToken(token);
+				usr.setValidated(false);
+				userService.createUserWithMailSent(usr);
+			}
+		
 		return "userSaved.xhtml?faces-redirect=true";
 	}
 
@@ -369,6 +399,7 @@ public class UserManager {
 	
 	public void setCheck() {
 		setCompanyCreateMode(true);
+	//	reload();
 	}
 
 

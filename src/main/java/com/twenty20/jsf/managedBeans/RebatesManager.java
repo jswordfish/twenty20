@@ -44,6 +44,7 @@ public class RebatesManager {
 	
 	@PostConstruct
 	public void init() {
+		user = userManager.getUsr();
 		rebateService = SpringUtil.getService(RebateService.class);
 		rebates = rebateService.getActiveRebatesBySupplierAndCompany(getUser().getUserName(), getUser().getCompany().getCompanyName());
 	}

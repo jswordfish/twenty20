@@ -93,7 +93,9 @@ public class RequestManager {
 	}
 	
 	public void reload() {
-		requests = requestService.getAllOpenRequests();
+		//requests = requestService.getAllOpenRequests();
+		user = userManager.getUsr();
+		requests = requestService.getAllOpenRequestsByBuyer(user.getUserName(), user.getCompany().getCompanyName());
 	}
 	
 	public String edit(Request request) {
@@ -169,7 +171,8 @@ public class RequestManager {
 		//request.setr
 		request.setClosed(true);
 		requestService.saveOrUpdate(request);
-		requests = requestService.getAllOpenRequests();
+		//requests = requestService.getAllOpenRequests();
+		reload();
 	}
 	
 	public String createNew() {
@@ -197,7 +200,8 @@ public class RequestManager {
 	
 	public String saveOrUpdate() {
 		requestService.saveOrUpdate(request);
-		requests = requestService.getAllOpenRequests();
+		//requests = requestService.getAllOpenRequests();
+		reload();
 		tabManager.setDisplayTab("Requests");
 		return "bootstrapTabs.xhtml?faces-redirect=true";
 	}

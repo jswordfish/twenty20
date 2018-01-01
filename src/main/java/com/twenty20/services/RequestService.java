@@ -19,4 +19,6 @@ public interface RequestService extends BaseService{
 	public List<Request> getRequests(SearchParams searchParams) throws Twenty20Exception;
 	
 	public List<Request> getAllOpenRequests() throws Twenty20Exception;
+	
+	public List<Request> getAllOpenRequestsByBuyer(String buyer, String company) throws Twenty20Exception;
 }

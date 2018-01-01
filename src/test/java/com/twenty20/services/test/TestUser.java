@@ -41,6 +41,7 @@ public class TestUser {
 		user.setUserForgotQuestions(userForgotQuestions);
 		Company company = new Company("Abc Inc", "anxdswdwd");
 		user.setCompany(company);
+		user.setValidated(true);
 		userService.saveOrUpdate(user);
 	}
 	
@@ -60,6 +61,7 @@ public class TestUser {
 		user.setUserForgotQuestions(userForgotQuestions);
 		Company company = new Company("V2 Tech", "anxdswdwd");
 		user.setCompany(company);
+		user.setValidated(true);
 		userService.saveOrUpdate(user);
 	}
 	

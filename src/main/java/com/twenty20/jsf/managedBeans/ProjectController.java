@@ -56,14 +56,19 @@ public class ProjectController {
 	
 	 @ManagedProperty(value="#{tab}") 
 	 TabManager tabManager;
+	 
+	 @ManagedProperty(value="#{userManager}") 
+	 UserManager userManager;
 	
 	@PostConstruct
 	public void init(){
 		projectService = (ProjectService) SpringUtil.getService(ProjectService.class);
-		this.projects = projectService.findAll();
+		
+		//this.projects = projectService.findAll();
+		reload();
 		//test user
-		UserService userService = (UserService) SpringUtil.getService(UserService.class);
-		user = userService.getUniqueUser("mglover");
+	
+		
 		getProject().setBuyer(user.getUserName());
 		getProject().setCompany(user.getCompany().getCompanyName());
 		projectSubTypeService = (ProjectSubTypeService)SpringUtil.getService(ProjectSubTypeService.class);
@@ -71,6 +76,11 @@ public class ProjectController {
 		if(getProject().getAddress() == null){
 			getProject().setAddress(new Address());
 		}
+	}
+	
+	public void reload() {
+		user = userManager.getUsr();
+		this.projects = projectService.getProjectsByCompany(user.getCompany().getCompanyName());
 	}
 	
 	public void changeSubTypes(AjaxBehaviorEvent abe){
@@ -92,7 +102,8 @@ public class ProjectController {
 	
 	public String saveProject(){
 		projectService.saveOrUpdate(project);
-		this.projects = projectService.findAll();
+		//this.projects = projectService.findAll();
+		reload();
 		tabManager.setDisplayTab("Projects");
 		return "bootstrapTabs.xhtml?faces-redirect=false&fromSource=Project";
 	}
@@ -130,7 +141,8 @@ public class ProjectController {
 		tabManager.setDisplayTab("Projects");
 		project.setClosed(true);
 		projectService.saveOrUpdate(project);
-		this.projects = projectService.findAll();
+		//this.projects = projectService.findAll();
+		reload();
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Status - Project Close Attempt", "Success");
 		RequestContext.getCurrentInstance().showMessageInDialog(msg);
 	}
@@ -201,4 +213,14 @@ public class ProjectController {
 		tabManager.setDisplayTab("Projects");
 		return "bootstrapTabs.xhtml?faces-redirect=false";
 	}
+
+	public UserManager getUserManager() {
+		return userManager;
+	}
+
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
+	}
+	
+	
 }

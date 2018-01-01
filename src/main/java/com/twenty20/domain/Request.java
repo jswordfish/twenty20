@@ -29,7 +29,9 @@ import com.twenty20.lucene.bridges.RequestFieldBridge;
 	@NamedQuery(name="Request.getUniqueRequest", 
 			query="SELECT p FROM Request p WHERE p.requestName=:requestName AND p.buyer=:buyer AND p.company=:company"),
 	@NamedQuery(name="Request.getAllOpenRequests", 
-	query="SELECT p FROM Request p WHERE p.closed=false ")
+	query="SELECT p FROM Request p WHERE p.closed=false "),
+	@NamedQuery(name="Request.getAllOpenRequestsByBuyer", 
+	query="SELECT p FROM Request p WHERE p.closed=false AND p.buyer=:buyer AND p.company=:company ")
 })
 @Indexed
 public class Request extends Base{

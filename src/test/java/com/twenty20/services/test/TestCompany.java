@@ -27,7 +27,7 @@ CompanyService companyService;
 	@Rollback(value=false)
 	public void testCompany() throws Exception{
 		Company company = new Company();
-		company.setCompanyName("V2 Tech");
+		company.setCompanyName("John Mayers & Co");
 		company.setCompanyRegistrationNumber("anxdswdwd");
 		File fi = new File("testImages/download.jpg");
 		byte[] fileContent = Files.readAllBytes(fi.toPath());

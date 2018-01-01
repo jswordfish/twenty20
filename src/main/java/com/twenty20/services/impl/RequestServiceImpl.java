@@ -158,6 +158,20 @@ public class RequestServiceImpl extends BaseServiceImpl<Long, Request> implement
 				"Request.getAllOpenRequests", new HashMap<>());
 		return requests;
 	}
+
+	@Override
+	public List<Request> getAllOpenRequestsByBuyer(String buyer, String company) throws Twenty20Exception {
+		// TODO Auto-generated method stub
+		//
+		Map<String, String> queryParams = new HashMap<String, String>();
+		queryParams.put("company", company);
+	
+		queryParams.put("buyer", buyer);
+		
+		List<Request> requests = findByNamedQueryAndNamedParams(
+				"Request.getAllOpenRequestsByBuyer", queryParams);
+		return requests;
+	}
 	
 	
 }
