@@ -14,12 +14,12 @@ public class ConfUtil {
 	/**
 	 * Default location
 	 */
-	String documentsLocation ="/opt/hirebuddy/documents";
+	String documentsLocation ="/opt/apache-tomcat-8.5.24/webapps/fileserver";
 	
 	/**
 	 * Default location
 	 */
-	String documentsServerBaseUrl = "http://localhost/hirebuddy/documents/";
+	String documentsServerBaseUrl = "http://13.59.126.83/fileserver/";
 	
 	static Properties properties = new Properties();
 	

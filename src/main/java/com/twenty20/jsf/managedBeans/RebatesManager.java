@@ -12,10 +12,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import org.primefaces.context.RequestContext;
+
 import com.twenty20.domain.Rebate;
 import com.twenty20.domain.User;
 import com.twenty20.services.RebateService;
-import com.twenty20.services.RequestService;
 @ManagedBean(name = "rebateManager", eager = true)
 @SessionScoped
 public class RebatesManager {
@@ -36,7 +37,9 @@ public class RebatesManager {
 	 String toDate;
 	 
 	 
-	 String title = "Create New Rebate Offer";
+	 String title = "Your Main Rebate Offer";
+	 
+	 Boolean saveDisabled = true;
 	 
 	 
 	 @ManagedProperty(value="#{tab}") 
@@ -46,7 +49,8 @@ public class RebatesManager {
 	public void init() {
 		user = userManager.getUsr();
 		rebateService = SpringUtil.getService(RebateService.class);
-		rebates = rebateService.getActiveRebatesBySupplierAndCompany(getUser().getUserName(), getUser().getCompany().getCompanyName());
+		createNew();
+		//rebates = rebateService.getActiveRebatesBySupplierAndCompany(getUser().getUserName(), getUser().getCompany().getCompanyName());
 	}
 
 	public List<Rebate> getRebates() {
@@ -77,10 +81,20 @@ public class RebatesManager {
 	}
 	
 	public String createNew() {
-		this.rebate = new Rebate();
-		this.rebate.setSupplier(this.user.getUserName());
-		this.rebate.setCompany(this.user.getCompany().getCompanyName());
-		setDates();
+		Rebate r = rebateService.getUniqueRebateByNameAndCompany(this.user.getCompany().getCompanyName()+"-MainRebate", this.user.getCompany().getCompanyName());
+			if(r == null) {
+				this.rebate = new Rebate();
+				this.rebate.setRebateName(this.user.getCompany().getCompanyName()+"-MainRebate");
+				this.rebate.setSupplier(this.user.getUserName());
+				this.rebate.setCompany(this.user.getCompany().getCompanyName());
+				setDates();
+			}
+			else {
+				this.rebate = r;
+				setDates();
+			}
+		
+		
 		return "rebate.xhtml?faces-redirect=true";
 	}
 	
@@ -165,6 +179,68 @@ public class RebatesManager {
 
 	public void setTabManager(TabManager tabManager) {
 		this.tabManager = tabManager;
+	}
+	
+	public void validate() {
+		try {
+			if(getRebate().getBaseOfferRebateOfferInPercent() >=100) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Invalid Base Offer rebate percentage ');");	
+				setSaveDisabled(true);
+			}
+			else if(getRebate().getTier1OfferRebateOfferInPercent() >= 100) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Invalid Tier 1 Rebate Percentage');");	
+				setSaveDisabled(true);
+			}
+			else if(getRebate().getTier2OfferRebateOfferInPercent() >= 100) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Invalid Tier 2 Rebate Percentage');");	
+				setSaveDisabled(true);
+			}
+			else if(getRebate().getTier3OfferRebateOfferInPercent() >= 100) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Invalid Tier 3 Rebate Percentagee');");	
+				setSaveDisabled(true);
+			}
+			else if(!(getRebate().getTier1OfferSalesValue() > getRebate().getBaseOfferSalesValue())) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Tier 1 Sales value should be greater than Base Sales value');");	
+				setSaveDisabled(true);
+			}
+			else if(!(getRebate().getTier2OfferSalesValue() > getRebate().getTier1OfferSalesValue())) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Tier 2 Sales value should be greater than Tier 1 Sales value');");	
+				setSaveDisabled(true);
+			}
+			else if(!(getRebate().getTier3OfferSalesValue() > getRebate().getTier2OfferSalesValue())) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Tier 3 Sales value should be greater than Tier 2 Sales value');");	
+				setSaveDisabled(true);
+			}
+			else if(!(getRebate().getTier1OfferRebateOfferInPercent() > getRebate().getBaseOfferRebateOfferInPercent())) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Tier 1 Rebate Percentage should be greater than Base Level Rebate Percent');");	
+				setSaveDisabled(true);
+			}
+			else if(!(getRebate().getTier2OfferRebateOfferInPercent() > getRebate().getTier1OfferRebateOfferInPercent())) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Tier 2 Rebate Percentage should be greater than Tier 1 Rebate Percent');");	
+				setSaveDisabled(true);
+			}
+			else if(!(getRebate().getTier3OfferRebateOfferInPercent() > getRebate().getTier2OfferRebateOfferInPercent())) {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Tier 3 Rebate Percentage should be greater than Tier 2 Rebate Percent');");	
+				setSaveDisabled(true);
+			}
+			else {
+				RequestContext.getCurrentInstance().execute("bootbox.alert('Validation Succesful. Now you can save Rebate');");	
+				setSaveDisabled(false);
+			}
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			RequestContext.getCurrentInstance().execute("bootbox.alert('Fill all the fields before trying to validate');");	
+			setSaveDisabled(true);
+		}
+		
+	}
+
+	public Boolean getSaveDisabled() {
+		return saveDisabled;
+	}
+
+	public void setSaveDisabled(Boolean saveDisabled) {
+		this.saveDisabled = saveDisabled;
 	}
 	
 	

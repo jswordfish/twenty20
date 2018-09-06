@@ -1,23 +1,26 @@
 package com.twenty20.jsf.managedBeans;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.stereotype.Service;
 
 import com.twenty20.jsf.charts.barchart.model.BarChartBean;
 import com.twenty20.jsf.charts.barchart.model.ChartSeriesData;
 import com.twenty20.jsf.charts.piechart.model.LabelValue;
 import com.twenty20.jsf.charts.piechart.model.PieChartBean;
+import com.twenty20.jsf.reports.Report;
 
 @ManagedBean(name = "buyerDashboard", eager = true)
-@RequestScoped
+@SessionScoped
 @Service
 public class BuyerDashboardManager {
 
@@ -30,6 +33,8 @@ public class BuyerDashboardManager {
 	BarChartBean grossWellnessCount ;
 	
 	BarChartBean top10Vendors ;
+	
+	List<Report> reports = new ArrayList<Report>();
 	
 	 @ManagedProperty(value="#{tab}") 
 	 TabManager tabManager;
@@ -81,6 +86,38 @@ public class BuyerDashboardManager {
 		pieChartTotalSpendProfileByTieredCategory.setLabelValues(tiers);
 		pieChartTotalSpendProfileByTieredCategory.buildPieChart();
 		initBarCharts();
+//		RequestContext.getCurrentInstance().update("buyerDashForm:pieChartRegion");
+//		RequestContext.getCurrentInstance().update("buyerDashForm:pieChartOperations");
+//		RequestContext.getCurrentInstance().update("buyerDashForm:pieChartTiers");
+//		RequestContext.getCurrentInstance().update("buyerDashForm:wellness");
+//		RequestContext.getCurrentInstance().update("buyerDashForm:top10");
+		
+		if(reports.size() == 0) {
+			Report report1 = new Report();
+			report1.setReportName("Total Spends By Region");
+			report1.setImageLink("images/report1.jpg");
+			reports.add(report1);
+			
+			Report report2 = new Report();
+			report2.setReportName("Total Spend Profile By Operations");
+			report2.setImageLink("images/report2.jpg");
+			reports.add(report2);
+			
+			Report report3 = new Report();
+			report3.setReportName("Total Spend Profile By Tier Caegory");
+			report3.setImageLink("images/report3.jpg");
+			reports.add(report3);
+			
+			Report report4	 = new Report();
+			report4.setReportName("ISO Gross Wellness Count");
+			report4.setImageLink("images/report3.jpg");
+			reports.add(report4);
+			
+			Report report5	 = new Report();
+			report5.setReportName("Top 10 Vendors");
+			report5.setImageLink("images/report3.jpg");
+			reports.add(report5);
+		}
 	}
 	
 	private void initBarCharts() {
@@ -247,6 +284,30 @@ public class BuyerDashboardManager {
 
 	public void setTabManager(TabManager tabManager) {
 		this.tabManager = tabManager;
+	}
+	
+	
+	public void showReport() {
+		Map<String,Object> options = new HashMap<String, Object>();
+        options.put("resizable", false);
+        options.put("draggable", false);
+        options.put("modal", true);
+        options.put("contentWidth", 700);
+        options.put("contentHeight", 700);
+
+        
+        Map<String, List<String>> params = new HashMap<String, List<String>>();
+
+        RequestContext.getCurrentInstance().openDialog("buyerDashboard",options, params);
+      
+	}
+
+	public List<Report> getReports() {
+		return reports;
+	}
+
+	public void setReports(List<Report> reports) {
+		this.reports = reports;
 	}
 	
 	

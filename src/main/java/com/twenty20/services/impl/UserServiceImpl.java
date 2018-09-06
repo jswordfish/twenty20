@@ -3,6 +3,7 @@ package com.twenty20.services.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +28,7 @@ import com.twenty20.dao.JPADAO;
 import com.twenty20.dao.UserDao;
 import com.twenty20.domain.Company;
 import com.twenty20.domain.User;
+import com.twenty20.domain.UserType;
 import com.twenty20.services.CompanyService;
 import com.twenty20.services.UserService;
 import com.twenty20.util.ConfUtil;
@@ -157,5 +159,28 @@ public class UserServiceImpl extends BaseServiceImpl<Long, User> implements User
 		
 		user2.setValidated(true);
 		dao.merge(user2);
+	}
+
+	@Override
+	public List<User> getUsersByCompanyType(String type) throws Twenty20Exception {
+		Map<String, UserType> queryParams = new HashMap<String, UserType>();
+		queryParams.put("userType", UserType.valueOf(type));
+		
+		List<User> users = findByNamedQueryAndNamedParams(
+				"User.getUsersByCompanyType", queryParams);
+		return users;
+	}
+	
+	@Override
+	public Set<String> getCompaniesByType(String type) throws Twenty20Exception {
+		
+		
+		List<User> users = getUsersByCompanyType(UserType.SUPPLIER.getUserType());
+		Set<String> companies = new HashSet<>();
+			for(User user : users) {
+				companies.add(user.getCompany().getCompanyName());
+			}
+		return companies;
+		
 	}
 }

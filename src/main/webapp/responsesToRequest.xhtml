@@ -101,8 +101,25 @@ xmlns:a="http://xmlns.jcp.org/jsf">
 	</b:dataTableColumn>
       
     </b:dataTable>
+    
+        <p:commandButton value="Compare Rebates from All Suppliers" icon="ui-icon-extlink" actionListener="#{requestManager.showReport}" styleClass="fontClass" >
+		
+	    </p:commandButton>
+	    
+	      <p:commandButton value="Compare Rebate Trigger Amounts by Suppliers" icon="ui-icon-extlink" actionListener="#{requestManager.showRebateAmountReport}" styleClass="fontClass" >
+		
+	    </p:commandButton>
+	    
+	      <p:commandButton value="YOUR SAVINGS - To Illustrate" icon="ui-icon-extlink" actionListener="#{requestManager.showExampleSavingsReport}" styleClass="fontClass" >
+		
+	    </p:commandButton>
+	     <p:commandButton value="Compare Pricing" icon="ui-icon-extlink" actionListener="#{requestManager.showPriceComparisionReport}" styleClass="fontClass" >
+		
+	    </p:commandButton>
  
   </b:panel>
+  
+    
 	<h:button value="Go Back"  outcome="bootstrapTabs"  style="width:100px;float:right;height:30px;font-size:12px;font-family: Verdana, Arial, Helvetica, sans-serif;font-weight:bold;"></h:button>  
 				
 </b:panelGrid>

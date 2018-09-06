@@ -44,6 +44,10 @@ color: white;
   background-color: lightblue;
 }
 </style>  
+
+<f:metadata>
+          <f:event type="preRenderView" listener="#{projectsManager.reload}"/>
+      </f:metadata>
 </h:head>  
 <h:body>  
  

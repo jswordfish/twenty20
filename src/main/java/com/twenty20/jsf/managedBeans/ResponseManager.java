@@ -14,9 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.Application;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.Part;
 
@@ -39,7 +42,7 @@ public class ResponseManager {
 	
 	List<Request> requests = new ArrayList<>();
 	
-
+	List<Request> requestsDirect = new ArrayList<>();
 	
 	transient RequestService  requestService;
 	
@@ -80,17 +83,26 @@ public class ResponseManager {
 	
 	@PostConstruct
 	public void init() {
+		rebateService = SpringUtil.getService(RebateService.class);
+			
+		
 		requestService = SpringUtil.getService(RequestService.class);
 		
 		requests = requestService.findAll();
+		requestsDirect = requestService.getAllOpenRequestsByBuyerForSupplier(userManager.getUsr().getCompany().getCompanyName());
 		responseService = SpringUtil.getService(ResponseService.class);
-		rebateService = SpringUtil.getService(RebateService.class);
+		
 		reloadRebates();
 	}
 	
 	public void refresh() {
 		myResponses = responseService.getResponsesByCompany(userManager.getUsr().getCompany().getCompanyName());
+		
 		reloadRebates();
+	}
+	
+	public void directRequests() {
+		requestsDirect = requestService.getAllOpenRequestsByBuyerForSupplier(userManager.getUsr().getCompany().getCompanyName());
 	}
 	
 	private void reloadRebates() {
@@ -439,6 +451,12 @@ public class ResponseManager {
 		return "myResponses.xhtml?faces-redirect=false";
 	}
 	
+//	public String myResponsesToDirectRequests() {
+//		tabManager.setDisplayTab("Responses");
+//		myResponses = responseService.getResponsesByCompany(userManager.getUsr().getCompany().getCompanyName());
+//		return "myResponses.xhtml?faces-redirect=false";
+//	}
+	
 	public void markResponseAsVoid(Response response) {
 		response.setResponseStatus(ResponseStatus.CANCEL.getStatus());
 		responseService.saveOrUpdate(response);
@@ -467,4 +485,14 @@ public class ResponseManager {
 	public void setMyResponses(List<Response> myResponses) {
 		this.myResponses = myResponses;
 	}
+
+	public List<Request> getRequestsDirect() {
+		return requestsDirect;
+	}
+
+	public void setRequestsDirect(List<Request> requestsDirect) {
+		this.requestsDirect = requestsDirect;
+	}
+	
+	
 }

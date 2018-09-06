@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Built-By: jsutaria
-Build-Jdk: 1.7.0_40
-Created-By: Apache Maven 3.2.1
 Archiver-Version: Plexus Archiver
+Built-By: jsutaria
+Created-By: Apache Maven 3.2.1
+Build-Jdk: 1.8.0_45
 

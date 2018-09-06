@@ -249,6 +249,8 @@ public class Company extends com.twenty20.domain.Base{
 		this.uploadedFile = uploadedFile;
 	}
 	
-	
-
+	@Override
+	public int hashCode() {
+		return getCompanyRegistrationNumber().hashCode();
+	}
 }

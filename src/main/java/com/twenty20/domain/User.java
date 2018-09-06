@@ -16,8 +16,10 @@ import javax.validation.constraints.Size;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="User.getUniqueUser", 
-			query="SELECT u FROM User u WHERE u.userName=:userName")
+			query="SELECT u FROM User u WHERE u.userName=:userName"),
 	
+	@NamedQuery(name="User.getUsersByCompanyType", 
+	query="SELECT u FROM User u WHERE u.userType=:userType AND u.validated=true")
 })
 public class User extends Base{
 

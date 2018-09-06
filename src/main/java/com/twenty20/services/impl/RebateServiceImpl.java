@@ -66,8 +66,12 @@ public class RebateServiceImpl extends BaseServiceImpl<Long, Rebate> implements 
 		if(violations.size() > 0){
 			throw new Twenty20Exception("INVALID_REBATE_PARAMS");
 		}
+		//rebate.setRebateName(rebate.getSupplier()+"-Main-Rebate");
+		Rebate rebate2 = null;
+			if(rebate.getId() != null) {
+				rebate2 = dao.findById(rebate.getId());
+			}
 		
-		Rebate rebate2 = getUniqueRebateByNameAndCompany(rebate.getRebateName(), rebate.getCompany());
 		if(rebate2 == null){
 			//create mode
 		

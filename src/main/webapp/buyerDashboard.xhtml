@@ -17,6 +17,8 @@
     <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
     <link type="text/css" rel="stylesheet" href="css/response.css" />
     <title>My Dashboard</title>
+    
+
 
 </h:head>
 
@@ -25,14 +27,7 @@
 <h:body>  
  
  <div class="container">
-        <div class="navbar navbar-inverse">
-            <div class="navbar-brand" style="bitBold">
-		
-		
-	    
-	    </div>
-        </div>
-	<b><hr/> </b>
+     
 	
 		<div class="panel panel-default panel-table">
 		    <div class="panel-heading">
@@ -46,7 +41,7 @@
 			<div class="tr">
 			    <div class="td">
 				<div style="width: 300px; height: 300px%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
-				   <p:chart type="pie" id="pieChartRegion" style="width:350px;height:300px" title="Spends By Region" value="#{buyerDashboard.pieChartTotalSpendProfileByRegion.pieChartModel}" legendPosition="w">
+				   <p:chart type="pie" id="pieChartRegion" style="width:250px;height:200px" title="Spends By Region" model="#{buyerDashboard.pieChartTotalSpendProfileByRegion.pieChartModel}" legendPosition="w">
 				     
 				   </p:chart>
 				   
@@ -56,19 +51,19 @@
 
 			    </div>
 			    <div class="td">
-				<p:chart type="pie" id="pieChartRegion" style="width:350px;height:300px" title="Spends By Region" value="#{buyerDashboard.pieChartTotalSpendProfileByOperation.pieChartModel}" legendPosition="w">
+				<div style="width: 300px; height: 300px%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
+			    <p:chart type="pie" id="pieChartOperations" style="width:250px;height:200px" title="Spends By Operation" model="#{buyerDashboard.pieChartTotalSpendProfileByOperation.pieChartModel}" legendPosition="w">
 				     
 				   </p:chart>
-			    
-				
+				</div>
 				
 			    </div>
 			    <div class="td">
-				<p:chart type="pie" id="pieChartRegion" style="width:350px;height:300px" title="Spends By Region" value="#{buyerDashboard.pieChartTotalSpendProfileByTieredCategory.pieChartModel}" legendPosition="w">
+				<div style="width: 300px; height: 300px%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
+			    <p:chart type="pie" id="pieChartTiers" style="width:250px;height:200px" title="Spends By Tiers" model="#{buyerDashboard.pieChartTotalSpendProfileByTieredCategory.pieChartModel}" legendPosition="w">
 				     
 				   </p:chart>
-			    
-				
+				</div>
 				
 			    </div>
 			    
@@ -78,8 +73,8 @@
 			</div>
 		    </div>
 		   
-		</div>
-	<b><hr/> </b>
+		
+	
        <div class="panel panel-default panel-table">
 		    <div class="panel-heading">
 			<div class="tr">
@@ -92,7 +87,11 @@
 			<div class="tr">
 			    <div class="td">
 				
-			    
+			    <div style="width: 300px; height: 300px%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
+			    <p:chart type="bar" id="wellness" style="width:250px;height:200px" title="Spends By Tiers" model="#{buyerDashboard.grossWellnessCount.barModel}" legendPosition="w">
+				     
+				   </p:chart>
+				</div>
 			 
 
 			    </div>
@@ -101,7 +100,11 @@
 			    </div>
 			    <div class="td">
 				
-			    
+			     <div style="width: 300px; height: 300px%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
+			    <p:chart type="bar" id="top10" style="width:250px;height:200px" title="Spends By Tiers" model="#{buyerDashboard.top10Vendors.barModel}" legendPosition="w">
+				     
+				   </p:chart>
+				</div>
 			 
 
 			    </div>
@@ -111,7 +114,7 @@
 		</div>
 	
 	
-		
+	</div>	
 	
 	
   

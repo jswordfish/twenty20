@@ -2,9 +2,10 @@ package com.twenty20.services.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,17 +27,24 @@ import org.springframework.transaction.annotation.Propagation;
 import com.twenty20.common.Twenty20Exception;
 import com.twenty20.dao.JPADAO;
 import com.twenty20.dao.RequestDao;
+import com.twenty20.dao.UserDao;
 import com.twenty20.domain.Project;
 import com.twenty20.domain.Request;
+import com.twenty20.domain.RequestDescription;
+import com.twenty20.domain.User;
 import com.twenty20.services.ProjectService;
 import com.twenty20.services.RequestService;
 import com.twenty20.util.ConfUtil;
+import com.twenty20.util.EmailGeneralUtil;
 import com.twenty20.util.SearchParams;
 @Service("requestService")
 @org.springframework.transaction.annotation.Transactional(propagation= Propagation.REQUIRED, rollbackFor=Twenty20Exception.class)
 public class RequestServiceImpl extends BaseServiceImpl<Long, Request> implements RequestService{
 	@Autowired
     protected RequestDao dao;
+	
+	@Autowired
+	UserDao userDao;
 	
 	
 //	ValidatorFactor
@@ -77,6 +85,11 @@ public class RequestServiceImpl extends BaseServiceImpl<Long, Request> implement
 		Request request2 = getUniqueRequest(request.getRequestName(), request.getBuyer(), request.getCompany());
 			if(request2 == null){
 				request.setCreatedDate(new Date());
+				if(request.getSupplierCompaniesSubset().size() != 0) {
+					//Send communication to users for those supplier companies
+					sendCommunicationToSuppliers(request);
+				}
+				
 				dao.persist(request);
 			}
 			else{
@@ -88,8 +101,12 @@ public class RequestServiceImpl extends BaseServiceImpl<Long, Request> implement
 				
 				request.setId(request2.getId());
 				org.dozer.Mapper mapper = new DozerBeanMapper();
+			
 				mapper.map(request, request2);
 				request2.setRequestDescriptions(request.getRequestDescriptions());
+//				request2.getSupplierCompaniesSubset().clear();
+				request2.setSupplierCompaniesSubset(request.getSupplierCompaniesSubset());
+				
 				dao.merge(request2);
 			}
 	}
@@ -151,6 +168,14 @@ public class RequestServiceImpl extends BaseServiceImpl<Long, Request> implement
 		// TODO Auto-generated method stub
 		return dao.getRequests(searchParams);
 	}
+	
+	private List<Request> lazyFetch(List<Request> reqs){
+		for(Request r : reqs) {
+			int size = r.getSupplierCompaniesSubset().size();
+			int size2 = r.getRequestDescriptions().size();
+		}
+		return reqs;
+	}
 
 	@Override
 	public List<Request> getAllOpenRequests() throws Twenty20Exception {
@@ -171,6 +196,66 @@ public class RequestServiceImpl extends BaseServiceImpl<Long, Request> implement
 		List<Request> requests = findByNamedQueryAndNamedParams(
 				"Request.getAllOpenRequestsByBuyer", queryParams);
 		return requests;
+	}
+
+	@Override
+	public List<Request> getAllOpenRequestsByBuyerForSupplier( String supplierCompany)
+			throws Twenty20Exception {
+		// TODO Auto-generated method stub
+		List<Request> reqs = getAllOpenRequests();
+		List<Request> ret = new ArrayList<Request>();
+			for(Request r : reqs) {
+				if(r.getSupplierCompaniesSubset().contains(supplierCompany)) {
+					ret.add(r);
+				}
+			}
+ 		return ret;
+	}
+
+	@Override
+	public void sendCommunicationToSuppliers(Request req) {
+		// TODO Auto-generated method stub
+		List<String> supplierCompanies = req.getSupplierCompaniesSubset();
+		Set<String> emails = fetchEmailsForSupplierCompanies(supplierCompanies);
+		String message = msg;
+		message = message.replace("&BUYER&", req.getBuyer()+" from "+req.getCompany());
+		String data = "";
+		for (RequestDescription des : req.getRequestDescriptions()){
+			data+= "Product - "+des.getSubProduct()+". Required - "+des.getVolumeRequired()+" "+des.getUnit()+"<br/>";
+		}
+		message = message.replace("{REQUEST}", req.getRequestName());
+		message = message.replace("&DETAILS&", data);
+		String bcc[] = new String[emails.size()];
+		emails.toArray(bcc);
+		String to1[] = {"jatin.sutaria@gmail.com"};
+		
+		Thread th1 = new Thread(new EmailGeneralUtil(to1, null, bcc, req.getCompany()+" is interested to buy from you", message));
+		th1.start();
+	}
+	
+	private static String msg = 
+			"<p>&BUYER& has requested you to go through the request submitted on the platform and respond as quickly as you can</p>\r\n" + 
+			"<p>Here are the details of the request</p>\r\n" + 
+			"<p>Request Details for <strong>{REQUEST}</strong> -  </p>\r\n" + 
+			"<p>&DETAILS&</p>\r\n" + 
+			"<p>You can see all requests from buyers where the buyer has specifically shown interest for you in 'Requests By Buyer' tab after you login to the platform.</p>\r\n" + 
+			"<p>Thanks and Regards,</p>\r\n" + 
+			"<p>Twenty20 Admin</p>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<p>&nbsp;</p>";
+	
+	private Set<String> fetchEmailsForSupplierCompanies(List<String> supplierCompanies){
+	Set<String> emails = new HashSet<>();	
+		for(String comp : supplierCompanies) {
+			List<User> users = userDao.fetchValidatedUsersForCompanies(comp);
+				for(User user : users) {
+					emails.add(user.getEmail());
+				}
+			
+		}
+	return emails;	
 	}
 	
 	

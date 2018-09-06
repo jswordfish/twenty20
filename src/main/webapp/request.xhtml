@@ -331,6 +331,27 @@
 	
     </div>
     
+    <div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="notifySuppliers"  styleClass="general" >Select Suppliers subset (Optional)</h:outputLabel>  
+				
+			<h:selectManyListbox  id="suppsType" value="#{requestManager.request.supplierCompaniesSubset}" styleClass="general" collectionType="java.util.ArrayList">  
+									 <f:selectItems value="#{requestManager.supplierCompanies}"
+								            var="supplier"
+								            itemValue="#{supplier}"
+								            itemLabel="#{supplier}" /> 
+								
+								</h:selectManyListbox >
+				
+            </div>
+        </div>
+        
+		
+	
+    </div>
+    
     <b>Request Description </b>
     <hr></hr>
 	<div class='row'>

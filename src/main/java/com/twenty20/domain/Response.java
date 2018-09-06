@@ -27,7 +27,9 @@ import org.hibernate.search.annotations.Store;
 	@NamedQuery(name="Response.getResponseBySupplierNameAndCompany", 
 	query="SELECT p FROM Response p WHERE p.supplier=:supplier AND p.supplierCompany=:supplierCompany"),
 	@NamedQuery(name="Response.getResponsesForRequentNameAndBuyerCompany", 
-	query="SELECT p FROM Response p WHERE p.requestName=:requestName AND p.buyerCompany=:buyerCompany")
+	query="SELECT p FROM Response p WHERE p.requestName=:requestName AND p.buyerCompany=:buyerCompany"),
+	@NamedQuery(name="Response.getAcceptedResponsesForBuyer", 
+	query="SELECT p FROM Response p WHERE p.buyerCompany=:buyerCompany AND p.responseStatus='ACCEPT'")
 })
 @Indexed
 public class Response extends Base{
@@ -64,7 +66,7 @@ public class Response extends Base{
 	
 	Date responseValidFromDate = new Date();
 	
-	
+	Float supplementaryRebatePercent;
 	
 	Date responseValidToDate;
 	
@@ -243,6 +245,14 @@ public class Response extends Base{
 
 	public void setRebate(Rebate rebate) {
 		this.rebate = rebate;
+	}
+
+	public Float getSupplementaryRebatePercent() {
+		return supplementaryRebatePercent;
+	}
+
+	public void setSupplementaryRebatePercent(Float supplementaryRebatePercent) {
+		this.supplementaryRebatePercent = supplementaryRebatePercent;
 	}
 	
 	

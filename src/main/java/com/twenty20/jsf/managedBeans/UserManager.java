@@ -5,15 +5,17 @@ import java.util.List;
 import java.util.Random;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.stereotype.Service;
 
-import com.twenty20.common.Twenty20Exception;
 import com.twenty20.domain.Company;
 import com.twenty20.domain.User;
 import com.twenty20.domain.UserType;
@@ -35,9 +37,9 @@ public class UserManager {
 	
 	String errorDetails;
 	
-	User usr;
+	User usr = new User();
 	
-	@ManagedProperty(value="#{tab}") 
+	@ManagedProperty("#{tab}") 
 	TabManager tabManager;
 	
 	transient CompanyService  companyService;
@@ -103,12 +105,21 @@ public class UserManager {
 			if(user.getPassword().equals(getPassword())) {
 				usr = user;
 				if(usr.getUserType() == UserType.BUYER) {
-					tabManager.setDisplayTab("Dashboard");
+						if(tabManager != null) {
+							tabManager.setDisplayTab("Dashboard");
+						}
+					
 					//RequestContext.getCurrentInstance().update("buyerDashboardForm:pieChartRegion");
 					return "bootstrapTabs.xhtml?faces-redirect=true";
 				}
 				else {
-					tabManager.setDisplayTab("Responses");
+					FacesContext context = FacesContext.getCurrentInstance();
+					Application application = context.getApplication();
+					tabManager = application.evaluateExpressionGet(context, "#{tab}", TabManager.class);
+						if(tabManager != null) {
+							tabManager.setDisplayTab("Dashboard");
+						}
+					
 					return "supplierTabs.xhtml?faces-redirect=true";
 				}
 				
@@ -178,6 +189,10 @@ public class UserManager {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Company Saved. Click on Go Back Button");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		//return "registration.xhtml?faces-redirect=true";
+	}
+	
+	public void registerAction() {
+		registerUser();
 	}
 	
 	public String registerUser() {
@@ -369,12 +384,18 @@ public class UserManager {
 			userService.validateUser(usr);
 			setToken("");
 			if(usr.getUserType() == UserType.BUYER) {
-				tabManager.setDisplayTab("Dashboard");
+					if(tabManager != null) {
+						tabManager.setDisplayTab("Dashboard");
+					}
+				
 				//RequestContext.getCurrentInstance().update("buyerDashboardForm:pieChartRegion");
 				return "bootstrapTabs.xhtml?faces-redirect=true";
 			}
 			else {
-				tabManager.setDisplayTab("Responses");
+					if(tabManager != null) {
+						tabManager.setDisplayTab("Responses");
+					}
+				
 				return "supplierTabs.xhtml?faces-redirect=true";
 			}
 		}
@@ -399,6 +420,7 @@ public class UserManager {
 	
 	public void setCheck() {
 		setCompanyCreateMode(true);
+		//registerAction();
 	//	reload();
 	}
 
@@ -416,7 +438,10 @@ public class UserManager {
 
 
 
-	
+	public String logout() {
+		 ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
+		     return "login.xhtml?faces-redirect=true";
+	}
 	
 
 }

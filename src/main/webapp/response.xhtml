@@ -11,7 +11,20 @@
     
     <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
     <link type="text/css" rel="stylesheet" href="css/response.css" />
+    <script src="js/bootbox.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/font-awesome.css" />
     <title>"#{responseManager.responsePageTitle}"</title>
+    
+    
+      <script type="text/javascript">
+      function showinfo(){
+      var info = 'It is an entirely optional offer which you can use to sweeten a deal for a specific Buyer Request - applicable to the specific Buyer Request only. The Supplementary Rebate can be varied at any time until the offer is “Accepted” by both the Buyer and Supplier when it becomes “contractually” binding through a Platform electronic “handshake”.\n';
+	      
+	      bootbox.alert(info);
+      }
+      
+     
+      </script>
 
 </h:head>
 
@@ -296,7 +309,7 @@
 				  
 				  <tbody>
 				    <tr>
-				      <td>Select Rebate Offer</td>
+				      <td>Main Rebate Offer</td>
 				      <td>
 				      <h:selectOneMenu id="rOffer" value="#{responseManager.response.rebateName}" styleClass="fontClass" >  
 									 <f:selectItems value="#{responseManager.rebates}"
@@ -305,6 +318,16 @@
 								            itemLabel="#{rebate}" /> 
 								
 								</h:selectOneMenu>
+				      
+				      </td>
+				    </tr>
+				    <tr>
+				      <td>Supplimentary Rebate Percentage <a class="icon fa-info" href="#" onClick="javascript:showinfo()"></a> </td>
+				      <td>
+				      <p:inputText id="supplementaryRebate" value="#{responseManager.response.supplementaryRebatePercent}" styleClass="fontClass"  >
+					
+						
+					</p:inputText>
 				      
 				      </td>
 				    </tr>

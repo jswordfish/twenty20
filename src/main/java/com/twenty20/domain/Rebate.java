@@ -56,21 +56,25 @@ public class Rebate extends Base{
 	
 	Double baseOfferSalesValue = 0d;
 	
-	Float baseOfferRebateOfferInPercent = 3f;
+	Float baseOfferRebateOfferInPercent = 5f;
 	
 	Double tier1OfferSalesValue;
 	
-	Float tier1OfferRebateOfferInPercent = 5f;
+	Float tier1OfferRebateOfferInPercent;
 	
 	Double tier2OfferSalesValue;
 	
-	Float tier2OfferRebateOfferInPercent = 7f;
+	Float tier2OfferRebateOfferInPercent ;
 	
 	Double tier3OfferSalesValue;
 	
-	Float tier3OfferRebateOfferInPercent = 10f;
+	Float tier3OfferRebateOfferInPercent;
 	
 	Boolean rebateActive = true;
+	
+	
+	
+	Boolean isMain = true;
 	
 	public Rebate(){
 		this.rebateValidFrom = new Date();
@@ -252,6 +256,26 @@ public class Rebate extends Base{
 	public void setToDt(String toDt) {
 		this.toDt = toDt;
 	}
+
+
+
+	
+
+
+
+	public Boolean getIsMain() {
+		return isMain;
+	}
+
+
+
+	public void setIsMain(Boolean isMain) {
+		this.isMain = isMain;
+	}
+
+
+
+	
 	
 	
 	

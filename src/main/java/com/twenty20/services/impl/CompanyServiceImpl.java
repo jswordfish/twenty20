@@ -27,7 +27,9 @@ import com.twenty20.common.Twenty20Exception;
 import com.twenty20.dao.CompanyDao;
 import com.twenty20.dao.JPADAO;
 import com.twenty20.domain.Company;
+import com.twenty20.domain.Rebate;
 import com.twenty20.services.CompanyService;
+import com.twenty20.services.RebateService;
 import com.twenty20.util.ConfUtil;
 
 
@@ -43,6 +45,9 @@ public class CompanyServiceImpl extends BaseServiceImpl<Long, Company> implement
 	
 	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	Validator validator = factory.getValidator();
+	
+	@Autowired
+	RebateService rebateService;
 
 	@PostConstruct
     public void init() throws Exception {
@@ -69,6 +74,8 @@ public class CompanyServiceImpl extends BaseServiceImpl<Long, Company> implement
 		Company company2 = getUniqueCompany(company.getCompanyName(), company.getCompanyRegistrationNumber());
 			if(company2 == null){
 				dao.persist(company);
+				
+				
 			}
 			else{
 				company.setId(company2.getId());

@@ -24,6 +24,10 @@ import com.twenty20.services.ProjectService;
 import com.twenty20.services.ProjectSubTypeService;
 import com.twenty20.services.UserService;
 
+import javax.faces.application.Application;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
 @ManagedBean(name = "projectsManager", eager = true)
 @SessionScoped
 public class ProjectController {
@@ -151,7 +155,13 @@ public class ProjectController {
 		tabManager.setDisplayTab("Projects");
 		setProject(new Project());
 		setTitle("New Project Creation");UserService userService = (UserService) SpringUtil.getService(UserService.class);
-		user = userService.getUniqueUser("mglover");
+		//user = userService.getUniqueUser("mglover");
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		Application application = context.getApplication();
+		UserManager um = application.evaluateExpressionGet(context, "#{userManager}", UserManager.class);
+		user = um.getUsr();
+		//user = userManager.getUsr();
 		getProject().setBuyer(user.getUserName());
 		getProject().setCompany(user.getCompany().getCompanyName());
 		projectSubTypeService = (ProjectSubTypeService)SpringUtil.getService(ProjectSubTypeService.class);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -18,12 +19,16 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 
+import com.twenty20.jsf.managedBeans.SpringUtil;
 import com.twenty20.lucene.bridges.RequestFieldBridge;
+import com.twenty20.services.RequestService;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Request.getUniqueRequest", 
@@ -51,11 +56,13 @@ public class Request extends Base{
 	@org.hibernate.search.annotations.Field(analyze = Analyze.YES, store=Store.YES)
 	String requestType;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@org.hibernate.search.annotations.Field(analyze = Analyze.YES, store=Store.YES)
 	@NotNull
 	String project = "";
 	
 	String projectLocation = "";
+	
 	
 	@ElementCollection(fetch=FetchType.EAGER)
     @CollectionTable(joinColumns=@JoinColumn(name = "RequestDescription_ID"))
@@ -111,8 +118,13 @@ public class Request extends Base{
 	Boolean termsAndConditionsAccepted = true;
 	
 	Boolean closed = false;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ElementCollection
+	List<String> supplierCompaniesSubset = new ArrayList();
 
-
+	
+	
 	public String getBuyer() {
 		return buyer;
 	}
@@ -154,6 +166,7 @@ public class Request extends Base{
 
 
 	public List<RequestDescription> getRequestDescriptions() {
+		System.out.println(this.requestDescriptions.size());
 		return requestDescriptions;
 	}
 
@@ -425,7 +438,33 @@ public class Request extends Base{
 	public void setClosed(Boolean closed) {
 		this.closed = closed;
 	}
+
+
+	public List<String> getSupplierCompaniesSubset() {
+		try {
+			System.out.println(this.supplierCompaniesSubset.size());
+			return supplierCompaniesSubset;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+//			RequestService ser = SpringUtil.getService(RequestService.class);
+//			Request r = (Request) ser.find(getId());
+//			this.supplierCompaniesSubset =  r.getSupplierCompaniesSubset();
+//			System.out.println(this.supplierCompaniesSubset.size());
+		}
+		return this.supplierCompaniesSubset;
+	}
+
+
+	public void setSupplierCompaniesSubset(List<String> supplierCompaniesSubset) {
+		this.supplierCompaniesSubset = supplierCompaniesSubset;
+	}
+
+
 	
+
+
+
+
 	
 
 }

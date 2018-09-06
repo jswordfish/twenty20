@@ -5,7 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -17,6 +21,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.UploadedFile;
 
+import com.mysql.jdbc.Util;
 import com.twenty20.domain.Project;
 import com.twenty20.domain.Rebate;
 import com.twenty20.domain.Request;
@@ -24,10 +29,15 @@ import com.twenty20.domain.RequestDescription;
 import com.twenty20.domain.Response;
 import com.twenty20.domain.ResponseStatus;
 import com.twenty20.domain.User;
+import com.twenty20.domain.UserType;
+import com.twenty20.jsf.charts.barchart.model.RebatesChart;
+import com.twenty20.jsf.reports.model.RebateModel;
+import com.twenty20.jsf.reports.model.TableModel;
 import com.twenty20.services.ProjectService;
 import com.twenty20.services.RebateService;
 import com.twenty20.services.RequestService;
 import com.twenty20.services.ResponseService;
+import com.twenty20.services.UserService;
 
 @ManagedBean(name = "requestManager", eager = true)
 @SessionScoped
@@ -77,9 +87,17 @@ public class RequestManager {
 	 
 	 transient RebateService rebateService;
 	 
+	 transient UserService userService;
+	 
 	 List<Response> responsesToRequest = new ArrayList<>();
 	 
+	 Set<String> supplierCompanies = new HashSet();
+	 
 	 Response response;
+	 
+	 RebatesChart  rebatesChart;
+	 
+	 TableModel pricingModel;
 	
 	@PostConstruct
 	public void init() {
@@ -87,15 +105,25 @@ public class RequestManager {
 		projectService = SpringUtil.getService(ProjectService.class);
 		responseService = SpringUtil.getService(ResponseService.class);
 		rebateService = SpringUtil.getService(RebateService.class);
+		userService = SpringUtil.getService(UserService.class);
 		//requests = requestService.findAll();
 		reload();
 		//projectService.getProjectsByCompany(user)
 	}
 	
+	public Set<String> getSupplierCompanies() {
+		return supplierCompanies;
+	}
+
+	public void setSupplierCompanies(Set<String> supplierCompanies) {
+		this.supplierCompanies = supplierCompanies;
+	}
+
 	public void reload() {
 		//requests = requestService.getAllOpenRequests();
 		user = userManager.getUsr();
 		requests = requestService.getAllOpenRequestsByBuyer(user.getUserName(), user.getCompany().getCompanyName());
+		supplierCompanies = userService.getCompaniesByType(UserType.SUPPLIER.getUserType());
 	}
 	
 	public String edit(Request request) {
@@ -200,6 +228,7 @@ public class RequestManager {
 	
 	public String saveOrUpdate() {
 		requestService.saveOrUpdate(request);
+		
 		//requests = requestService.getAllOpenRequests();
 		reload();
 		tabManager.setDisplayTab("Requests");
@@ -401,8 +430,7 @@ public class RequestManager {
 	}
 	
 	public void rejectResponse(Response res) {
-		
-		responseService.saveOrUpdate(res);
+		responseService.rejectResponse(res);
 		res.setResponseStatus(ResponseStatus.DECLINE.getStatus());
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success - Status Changed to", "Decline");
 		RequestContext.getCurrentInstance().showMessageInDialog(msg);
@@ -410,7 +438,7 @@ public class RequestManager {
 	}
 	
 	public void negotiateResponse(Response res) {
-		responseService.saveOrUpdate(res);
+		responseService.negotiateResponse(res);
 		res.setResponseStatus(ResponseStatus.NEGOTIATE.getStatus());
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success - Status Changed to", "Negotiate");
 		RequestContext.getCurrentInstance().showMessageInDialog(msg);
@@ -418,7 +446,7 @@ public class RequestManager {
 	}	
 
 	public void acceptResponse(Response res) {
-		responseService.saveOrUpdate(res);
+		responseService.acceptResponse(res);
 		res.setResponseStatus(ResponseStatus.ACCEPT.getStatus());
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success - Status Changed to", "Accept");
 		RequestContext.getCurrentInstance().showMessageInDialog(msg);
@@ -454,6 +482,103 @@ public class RequestManager {
 		this.response = response;
 		return "showResponseDetails.xhtml?faces-redirect=false";
 	}
+	
+	
+	public void showReport() {
+		Map<String,Object> options = new HashMap<String, Object>();
+		 options.put("draggable", false);
+         options.put("modal", true);
+         options.put("position", "top"); // <--- not work
+         options.put("width", "90%");
+         options.put("contentWidth", "90%");
+         options.put("height", "500");
+         options.put("contentheight", "90%");
+         options.put("size", "auto");
+
+        rebatesChart = new RebatesChart(responsesToRequest, "Comparing Rebate Offers by Suppliers");
+        Map<String, List<String>> params = new HashMap<String, List<String>>();
+
+        RequestContext.getCurrentInstance().openDialog("barReport",options, params);
+      
+	}
+
+	public void showRebateAmountReport() {
+		Map<String,Object> options = new HashMap<String, Object>();
+		 options.put("draggable", false);
+        options.put("modal", true);
+        options.put("position", "top"); // <--- not work
+        options.put("width", "90%");
+        options.put("contentWidth", "90%");
+        options.put("height", "500");
+        options.put("contentheight", "90%");
+        options.put("size", "auto");
+
+       rebatesChart = new RebatesChart();
+       rebatesChart.setTitle("Compare Rebate Trigger Amounts by Suppliers");
+       rebatesChart.setResponsesToRequest(responsesToRequest);
+       rebatesChart.initForValues();
+       Map<String, List<String>> params = new HashMap<String, List<String>>();
+
+       RequestContext.getCurrentInstance().openDialog("barReport",options, params);
+	}
+	
+	public void showExampleSavingsReport() {
+		Map<String,Object> options = new HashMap<String, Object>();
+		 options.put("draggable", false);
+       options.put("modal", true);
+       options.put("position", "top"); // <--- not work
+       options.put("width", "90%");
+       options.put("contentWidth", "90%");
+       options.put("height", "500");
+       options.put("contentheight", "90%");
+       options.put("size", "auto");
+
+      rebatesChart = new RebatesChart();
+      rebatesChart.setTitle("YOUR EXAMPLE SAVINGS");
+      rebatesChart.setResponsesToRequest(responsesToRequest);
+      rebatesChart.initForExampleSavings();
+      Map<String, List<String>> params = new HashMap<String, List<String>>();
+
+      RequestContext.getCurrentInstance().openDialog("barReport",options, params);
+	}
+	
+	
+	public void showPriceComparisionReport() {
+		Map<String,Object> options = new HashMap<String, Object>();
+		 options.put("draggable", false);
+       options.put("modal", true);
+       options.put("position", "top"); // <--- not work
+       options.put("width", "90%");
+       options.put("contentWidth", "90%");
+       options.put("height", "500");
+       options.put("contentheight", "90%");
+       options.put("size", "auto");
+
+     
+      Map<String, List<String>> params = new HashMap<String, List<String>>();
+      pricingModel = new TableModel();
+      pricingModel.build(responsesToRequest);
+      RequestContext.getCurrentInstance().openDialog("tableModel",options, params);
+	}
+	
+	public RebatesChart getRebatesChart() {
+		return rebatesChart;
+	}
+
+	public void setRebatesChart(RebatesChart rebatesChart) {
+		this.rebatesChart = rebatesChart;
+	}
+
+	public TableModel getPricingModel() {
+		return pricingModel;
+	}
+
+	public void setPricingModel(TableModel pricingModel) {
+		this.pricingModel = pricingModel;
+	}
+
+	
+
 	
 	
 	

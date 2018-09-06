@@ -33,6 +33,7 @@ public class PieChartBean {
 		pieChartModel.setTitle(getTitle());
 		pieChartModel.setLegendPosition("e");
 		pieChartModel.setFill(false);
+		
 		//pieChartModel.set
 	}
 	

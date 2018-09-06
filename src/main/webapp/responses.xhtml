@@ -37,6 +37,10 @@ xmlns:a="http://xmlns.jcp.org/jsf">
 
 </style>
 
+ <f:metadata>
+          <f:event type="preRenderView" listener="#{responseManager.init}"/>
+      </f:metadata>
+
 </h:head>  
 
 
@@ -141,7 +145,7 @@ xmlns:a="http://xmlns.jcp.org/jsf">
 								<div class="checkbox" >
 									<label class="generalSmall">
 										<h:selectBooleanCheckbox value="#{responseManager.searchParams.readyMix}"  />
-										Readymix
+										Ready Mix
 									</label>
 								</div>
 							</li>
