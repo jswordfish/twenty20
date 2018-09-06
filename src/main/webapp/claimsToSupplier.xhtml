@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+xmlns:h="http://xmlns.jcp.org/jsf/html"  
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+xmlns:rich="http://richfaces.org/rich"
+xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>  
+<title>All claims</title>  
+<h:outputStylesheet name="css/bootstrap.min.css"/>  
+
+
+<link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+
+
+
+<style type="text/css">  
+table {  
+border-collapse: collapse;  
+width: 100%;  
+}  
+th, td {  
+text-align: left;  
+padding: 8px;  
+}  
+  
+tr:nth-child(even){background-color: #f2f2f2}  
+th {  
+background-color: #4CAF50;  
+color: white;  
+}  
+
+.rf-tab-lbl{
+	 font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	}
+	
+.rf-tab-hdr.rf-tab-hdr-act
+{
+  background-image : none;
+  background-color: lightblue;
+}
+</style>  
+
+	<f:metadata>
+          <f:event type="preRenderView" listener="#{supplierClaimManager.reload}"/>
+      </f:metadata>
+
+</h:head>  
+<h:body>  
+ 
+
+
+<center>  
+
+
+	<b><hr/> </b>
+	 
+
+ 
+</center>  
+
+<h:dataTable  value="#{supplierClaimManager.claims}" var="claim"   
+class="table table-striped table-hover table-bordered" styleClass="fontClass">  
+<h:column>  
+<f:facet name="header">ID</f:facet>  
+<h:outputText value="#{table.rowIndex + 1}" styleClass="fontClass"/>  
+</h:column>  
+
+<h:column>  
+<f:facet name="header">Invoice Number</f:facet>  
+<h:outputText value="#{claim.invoiceNo}" styleClass="fontClass"/>  
+</h:column>  
+
+<h:column>  
+<f:facet name="header">Request Name</f:facet>  
+<h:outputText value="#{claim.requestName}" styleClass="fontClass"/>  
+</h:column>  
+
+<h:column>  
+<f:facet name="header">Buyer Company</f:facet>  
+<h:outputText value="#{claim.supplierCompany}"/>  
+</h:column>  
+
+<h:column>  
+<f:facet name="header">Invoice Amount</f:facet>  
+<h:outputText value="#{claim.invoiceAmount}"/>  
+</h:column>  
+
+<h:column>  
+<f:facet name="header">Invoice Date</f:facet>  
+<h:outputText value="#{claim.invDate}"/>  
+</h:column>  
+
+<h:column>  
+<f:facet name="header">Accepted by You</f:facet>  
+<h:outputText value="#{claim.accept==null?false:claim.accept}"/>  
+</h:column> 
+
+<h:column>  
+<f:facet name="header">Accept/Reject</f:facet>  
+
+<h:commandLink  value="Update" action="#{supplierClaimManager.edit(claim)}" class="btn btn-primary" style="color:white" />   
+
+</h:column>  
+
+
+
+</h:dataTable>  
+	
+
+
+
+
+
+	
+</h:body>  
+</html>  

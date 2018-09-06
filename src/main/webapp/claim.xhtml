@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <title>"#{rebateManager.title}"</title>
+    <style type="text/css">
+        .col-xs-updated {        
+            width: 92% !important;
+        }
+	
+	
+	.indivcheckbox .ui-chkbox-icon {
+	   background-position-x: -66px;
+    background-position-y: -147px;
+	}
+
+	.indivcheckbox .ui-icon-check {
+	    text-align:left;
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	margin-left: 80px;
+	font-weight: normal;
+	}
+	
+    </style>
+</h:head>
+
+
+
+<h:body>  
+ 
+ <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand" style="bitBold">
+		
+		<h:outputText id="displayTitle" value="#{rebateClaimManager.title}" />
+	    
+	    </div>
+        </div>
+	<b><hr/> </b>
+       
+		<h:form id="rebateClaimForm" class="form-horizontal"  >  
+
+			<fieldset>
+    
+    <div class='row'>
+	        <div class='col-sm-5'>    
+	            <div class='form-group'>
+	                <h:outputLabel for="requestName-id"  styleClass="general" >Select Response</h:outputLabel>  
+	               <h:selectOneMenu id="pType" value="#{rebateClaimManager.rebateClaim.responseId}" styleClass="general" >  
+									<f:selectItem itemValue="#{null}" itemLabel="--please select--" />
+									 <f:selectItems value="#{rebateClaimManager.acceptedResponses}"
+								            var="response"
+								            itemValue="#{response.id}"
+								            itemLabel="#{response.requestName}" /> 
+								            
+								            <f:ajax listener="#{rebateClaimManager.change}"/> 
+								
+								</h:selectOneMenu>
+	            </div>
+	        </div>
+		
+		<div class='col-sm-5'>
+		    <div class='form-group'>
+			<h:outputLabel for="companyName-id"  styleClass="general" >Your Company</h:outputLabel>  
+			<h:inputText id="buyerCompany-id" value="#{rebateClaimManager.user.company.companyName}" disabled="true" class="form-control" styleClass="general" >  
+						
+			</h:inputText>  
+		    </div>
+		</div>
+			
+     </div>
+     <div class='row'>
+     
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="supplierCompany"  styleClass="general" >Supplier Company</h:outputLabel>  
+                <h:inputText id="supplierCompany-id" value="#{rebateClaimManager.rebateClaim.supplierCompany}" disabled="true" class="form-control" styleClass="general" >  
+					
+					</h:inputText> 
+            </div>
+        </div>
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="invDate-id"  styleClass="general" >Invoice Date</h:outputLabel>  
+                <input type="date" id="requestOpenDate" a:value="#{rebateClaimManager.rebateClaim.invDate}"  class="general" required="true" />  
+            </div>
+        </div>
+	
+    </div>
+    
+   
+	
+	<div class='row'>
+        
+        <div class='col-sm-5'>
+            <div class='form-group'>
+                <h:outputLabel for="invoiceNo"  styleClass="general" >Enter Invoice Number</h:outputLabel>  
+				
+		<h:inputText id="invoiceNo-id" value="#{rebateClaimManager.rebateClaim.invoiceNo}"  class="form-control" styleClass="general" pt:required="required">  
+					
+					</h:inputText> 
+				
+            </div>
+        </div>
+        
+		<div class='col-sm-5'>
+		    <div class='form-group'>
+			<h:outputLabel for="invoiceAmount"  styleClass="general" >Enter Invoice Amount</h:outputLabel>  
+					
+			<h:inputText id="invoiceAmount-id" value="#{rebateClaimManager.rebateClaim.invoiceAmount}"  class="form-control" styleClass="general" pt:type="number" pt:required="required">  
+					
+					</h:inputText> 
+					
+		    </div>
+		</div>
+	
+    </div>
+    
+    
+			
+	<div class='row'>
+		<div class='col-sm-5'>    
+		 	<h:commandButton id="saveRebateClaim" value="Save"  disabled="#{rebateClaimManager.saveDisabled and rebateClaimManager.cannotedit}"  action="#{rebateClaimManager.saveOrUpdate()}" class="btn btn-success col-sm-7" ></h:commandButton>  
+					
+		</div>
+		<div class='col-sm-5'>    
+		    	<h:button value="Go Back"  outcome="bootstrapTabs"  class="btn btn-success col-sm-7"></h:button>  
+					
+		</div>
+        </div>
+    
+</fieldset>
+
+			
+		</h:form>	
+	     
+	<b><hr/> </b>
+</div>	
+  
+</h:body>  
+</html>  

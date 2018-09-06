@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:a="http://xmlns.jcp.org/jsf" 
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ct="http://www.chartistjsf.org/charts">
+	
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    
+    <link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+    <link type="text/css" rel="stylesheet" href="css/response.css" />
+    <title>My Dashboard</title>
+    
+ 
+</h:head>
+
+
+
+<h:body>  
+ 
+ <div class="container">
+     
+	
+		<h:form id="form">
+			  
+			    <p:chart type="bar" id="barReport" style="width:1000px;height:500px" title="Comparing Rebate Offers by Suppliers" model="#{requestManager.rebatesChart.barChartBean.barModel}" legendPosition="w">
+				     
+				   </p:chart>
+				
+				
+   
+		</h:form>
+	
+	
+	</div>	
+	
+	
+  
+</h:body>  
+</html>  

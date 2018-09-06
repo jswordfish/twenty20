@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+xmlns:h="http://xmlns.jcp.org/jsf/html"  
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>  
+<title>Buyer Area</title>  
+<h:outputStylesheet name="css/bootstrap.min.css"/>  
+
+
+<link type="text/css" rel="stylesheet" href="css/twenty20.css" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	crossorigin="anonymous"></script>
+	
+<h:outputScript>
+  
+   
+    
+       
+
+</h:outputScript>
+<style type="text/css">  
+.tab-content{
+   padding:20px;
+}
+</style> 
+
+</h:head>  
+
+<h:body>
+ <h:form>	
+ 
+	
+<ul class="nav nav-tabs" style="text-align: left;">
+ <li class="rounded">  <h:commandLink  action="#{suplierTabManager.goToSettings}" value="Settings"  style="#{tab.displayTab=='Settings'?'color:red':'color:blue'}">
+               
+            </h:commandLink> </li>
+     <li class="rounded">  <h:commandLink  action="#{suplierTabManager.goToDashboard}" value="Dashboard" data-toggle="tab" style="#{tab.displayTab=='Dashboard'?'color:red':'color:blue'}">
+               
+            </h:commandLink> </li>
+   
+  <li class="rounded">  <h:commandLink  action="#{suplierTabManager.goToRebates}" value="Rebate Offer" style="#{tab.displayTab=='Rebates'?'color:red':'color:blue'}">
+               
+            </h:commandLink> </li>
+
+   <li class="rounded">  <h:commandLink  action="#{suplierTabManager.goToRespondBuyerRequests}" value="Respond to Buyer Requests" style="#{tab.displayTab=='Responses'?'color:red':'color:blue'}">
+               
+            </h:commandLink> </li>
+       <li class="rounded">  <h:commandLink  action="#{suplierTabManager.goToDirectResponses}" value="Notifications (Direct Requests)" style="#{tab.displayTab=='DirectResponses'?'color:red':'color:blue'}">
+               
+            </h:commandLink> </li>
+            
+      
+       <li class="rounded">  <h:commandLink  action="#{suplierTabManager.goToSupplierClaims}" value="Rebate Claims" style="#{tab.displayTab=='SupplierClaims'?'color:red':'color:blue'}">
+               
+            </h:commandLink> </li>
+      
+     <li class="rounded">  <h:commandLink  action="#{suplierTabManager.goToReadyReckoner}" value="Ready Reckoner" style="#{tab.displayTab=='ReadyReckoner'?'color:red':'color:blue'}">
+               
+            </h:commandLink> </li>
+     <li class="rounded">  <h:commandLink  action="#{suplierTabManager.goToMeetingInvites}" value="Meeting Invites" style="#{tab.displayTab=='MeetingInvites'?'color:red':'color:blue'}">
+               
+            </h:commandLink> </li>
+     
+    <li class="rounded"><h:commandLink  action="#{userManager.logout}" value="Log Off"> </h:commandLink></li>
+</ul>
+</h:form>
+<div class="tab-content">
+
+<div id="zero" class="tab-pane fade in #{tab.displayTab=='Settings'?'active':''}" >
+	<span class="underConstruction"> Under Construction</span>
+
+       
+    </div>
+
+    <div id="first" class="tab-pane fade in #{tab.displayTab=='Dashboard'?'active':''}">
+	<span class="underConstruction"> Under Construction</span>
+
+       
+    </div>
+      
+    <div id="second" class="tab-pane fade in #{tab.displayTab=='Rebates'?'active':''}">
+	
+		 <h:form>
+			<ui:include src="/rebates.xhtml">
+					
+				      </ui:include>
+			
+			
+		</h:form>
+    </div>
+
+    <div id="third" class="tab-pane fade in #{tab.displayTab=='Responses'?'active':''}">
+	<h:form id="responsesForm">
+			<ui:include src="/responses.xhtml">
+					
+				      </ui:include>
+			
+			
+		</h:form>
+    </div>
+    
+    <div id="fourth" class="tab-pane fade in #{tab.displayTab=='DirectResponses'?'active':''}">
+	<h:form id="responsesDirectForm">
+			<ui:include src="/responsesDirect.xhtml">
+					
+				      </ui:include>
+			
+			
+		</h:form>
+    </div>
+    
+    <div id="fourth" class="tab-pane fade in #{tab.displayTab=='SupplierClaims'?'active':''}">
+	<h:form id="responsesDirectForm">
+			<ui:include src="/claimsToSupplier.xhtml">
+					
+				      </ui:include>
+			
+			
+		</h:form>
+    </div>
+    
+    <div id="fifth" class="tab-pane fade in #{tab.displayTab=='ReadyReckoner'?'active':''}">
+	<span class="underConstruction"> Under Construction</span>
+    </div>
+    
+    <div id="sixth" class="tab-pane fade in #{tab.displayTab=='MeetingInvites'?'active':''}">
+	<span class="underConstruction"> Under Construction</span>
+    </div>
+    
+    <div id="seventh" class="tab-pane fade in #{tab.displayTab=='Notifications'?'active':''}">
+	<span class="underConstruction"> Under Construction</span>
+    </div>
+    
+      <div id="eight" class="tab-pane fade in">
+	<span class="underConstruction"> Under Construction</span>
+    </div>
+</div>
+
+
+ 
+
+    
+	
+</h:body>
+</html>  
